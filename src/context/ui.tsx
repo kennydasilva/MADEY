@@ -1,3 +1,4 @@
+import { track } from '@vercel/analytics'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Product } from '../data/products'
 import { buildWhatsAppMessage, whatsappUrl } from '../lib/format'
@@ -85,6 +86,7 @@ export function UiProvider({ children }: { children: ReactNode }) {
       requestWhatsApp: (product, qty = 1) => {
         setQuick(null)
         setSearchOpen(false)
+        track('pedido_whatsapp', { produto: product.name, referencia: product.ref, estado: product.stock })
         // O próprio WhatsApp já mostra a mensagem antes de enviar: em ecrãs táteis o modal seria um passo a mais.
         if (window.matchMedia('(pointer: coarse)').matches) {
           window.open(whatsappUrl(buildWhatsAppMessage(product, qty)), '_blank', 'noopener')

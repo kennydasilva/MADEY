@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { UiProvider } from './context/ui'
@@ -21,6 +22,7 @@ export default function App() {
           </Route>
         </Routes>
       </UiProvider>
+      <Analytics />
     </BrowserRouter>
   )
 }
