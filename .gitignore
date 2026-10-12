@@ -1,0 +1,7 @@
+node_modules
+dist
+*.local
+.DS_Store
+
+# Referência de design (protótipo e screenshots) — não faz parte do site
+designwebsite/
