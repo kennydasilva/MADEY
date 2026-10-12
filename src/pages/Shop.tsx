@@ -26,7 +26,7 @@ function FilterGroup({ title, options }: { title: string; options: FilterOption[
           onClick={o.toggle}
           role="checkbox"
           aria-checked={o.on}
-          className="flex min-h-9 items-center gap-3 text-left text-sm"
+          className="flex min-h-11 items-center gap-3 text-left text-sm lg:min-h-9"
         >
           <span
             className={`flex size-4 flex-none items-center justify-center border text-white ${o.on ? 'border-navy bg-navy' : 'border-faint bg-white'}`}
@@ -125,9 +125,11 @@ export default function Shop() {
             onChange={(e) => update({ q: e.target.value })}
             placeholder="Pesquisar marca, modelo…"
             aria-label="Pesquisar na loja"
-            className="h-11 w-[min(320px,100%)] border border-line bg-white px-4 text-sm placeholder:text-faint focus:border-navy"
+            className="h-11 w-[min(320px,100%)] border border-faint bg-white px-4 text-base placeholder:text-faint focus:border-navy lg:text-sm"
           />
-          <span className="text-[13px] text-muted">{countLabel(all.length)}</span>
+          <span role="status" className="text-[13px] text-muted">
+            {countLabel(all.length)}
+          </span>
           <button
             onClick={() => setPanelOpen((o) => !o)}
             aria-expanded={panelOpen}
@@ -141,7 +143,7 @@ export default function Shop() {
           <select
             value={f.sort}
             onChange={(e) => update({ sort: e.target.value as SortId })}
-            className="h-11 rounded-none border border-line bg-white px-3 text-sm text-navy"
+            className="h-11 rounded-none border border-faint bg-white px-3 text-base text-navy lg:text-sm"
           >
             {SORTS.map((s) => (
               <option key={s.id} value={s.id}>
@@ -159,13 +161,13 @@ export default function Shop() {
               key={c.label}
               onClick={c.remove}
               aria-label={`Remover filtro ${c.label}`}
-              className="flex h-8 items-center gap-2 border border-line bg-mist px-3 text-xs font-semibold hover:border-navy"
+              className="flex h-10 items-center gap-2 border border-line bg-mist px-3 text-xs font-semibold hover:border-navy lg:h-8"
             >
               {c.label}
               <CloseIcon size={12} strokeWidth={2.4} />
             </button>
           ))}
-          <button onClick={clearAll} className="h-8 px-1 text-xs underline underline-offset-[3px]">
+          <button onClick={clearAll} className="h-10 px-1 text-xs underline underline-offset-[3px] lg:h-8">
             Limpar tudo
           </button>
         </div>
@@ -204,7 +206,7 @@ export default function Shop() {
             </>
           ) : (
             <div className="flex flex-col items-center gap-3.5 border border-line px-[clamp(24px,4vw,56px)] py-[clamp(40px,6vw,80px)] text-center">
-              <h3 className="display text-[clamp(28px,3vw,38px)]">Nenhum produto encontrado</h3>
+              <h2 className="display text-[clamp(28px,3vw,38px)]">Nenhum produto encontrado</h2>
               <p className="max-w-[44ch] text-muted">
                 Experimente remover um filtro ou pesquisar por marca ou modelo. Procura algo específico? Pergunte-nos —
                 ajudamos a encontrar.
