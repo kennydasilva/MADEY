@@ -9,6 +9,7 @@ import {
   formatPrice,
   productLink,
   productPath,
+  requestLabel,
   whatsappUrl,
 } from '../lib/format'
 import { img } from '../lib/images'
@@ -60,7 +61,7 @@ export function QuickView() {
           </div>
           <button onClick={() => requestWhatsApp(p)} className="btn btn-wa mt-2 h-[54px] gap-3">
             <WhatsAppIcon size={18} />
-            Solicitar no WhatsApp
+            {requestLabel(p)}
           </button>
           <Link
             to={productPath(p)}
@@ -151,11 +152,11 @@ export function SearchOverlay() {
                   </Link>
                   <button
                     onClick={() => requestWhatsApp(p)}
-                    aria-label={`Solicitar ${p.name} no WhatsApp`}
+                    aria-label={`${requestLabel(p)}: ${p.name}`}
                     className="flex h-11 items-center gap-2 border border-navy px-3.5 text-[11px] font-bold tracking-[0.14em] uppercase hover:border-wa hover:bg-wa hover:text-white"
                   >
                     <WhatsAppIcon size={16} />
-                    <span className="hidden sm:inline">Solicitar</span>
+                    <span className="hidden sm:inline">{requestLabel(p, true)}</span>
                   </button>
                 </div>
               ))}
@@ -218,7 +219,7 @@ export function WhatsAppModal() {
         className="flex max-h-[calc(100vh-32px)] w-[min(540px,100%)] flex-col overflow-y-auto bg-white shadow-[0_24px_60px_rgba(20,31,51,0.3)]"
       >
         <div className="flex items-center justify-between border-b border-line py-3 pr-3 pl-7">
-          <span className="font-serif text-[26px] font-medium">Solicitar no WhatsApp</span>
+          <span className="font-serif text-[26px] font-medium">{requestLabel(p)}</span>
           <CloseButton />
         </div>
         <div className="flex flex-col gap-[18px] px-7 pt-[22px] pb-7">

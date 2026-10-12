@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom'
 import { CopyIcon, ShareIcon, WhatsAppIcon } from '../components/Icons'
 import { Badge, ProductGrid } from '../components/ProductCard'
 import { useUi } from '../context/ui'
-import { PRODUCTS, STOCK_INFO, productBySlug, type Product } from '../data/products'
-import { formatPrice, productLink } from '../lib/format'
+import { PRODUCTS, STOCK_INFO, badgeOf, isSoldOut, productBySlug, type Product } from '../data/products'
+import { formatPrice, productLink, requestLabel } from '../lib/format'
 import { img } from '../lib/images'
 import { shopUrl } from '../lib/shop'
 import NotFound from './NotFound'
@@ -76,7 +76,7 @@ export default function ProductPage() {
           <div className="flex w-full max-w-[560px] min-w-0 flex-col gap-3">
             <div className="relative aspect-[4/5] max-h-[72vh] overflow-hidden bg-stone">
               <img src={gallery[photo]} alt={p.name} className="absolute inset-0 size-full object-cover" />
-              <Badge badge={p.badge} className="absolute top-4 left-4" />
+              <Badge badge={badgeOf(p)} className="absolute top-4 left-4" />
             </div>
             {gallery.length > 1 && (
               <div className="flex gap-2">
@@ -127,7 +127,7 @@ export default function ProductPage() {
 
             <p className="text-[15px] leading-[1.7] text-pretty text-muted">{p.desc}</p>
 
-            <div className="flex items-center gap-4 pt-1">
+            <div className={`items-center gap-4 pt-1 ${isSoldOut(p) ? 'hidden' : 'flex'}`}>
               <span className="eyebrow tracking-[0.2em]">Quantidade</span>
               <div className="flex border border-line">
                 <button
@@ -153,7 +153,7 @@ export default function ProductPage() {
             <div className="flex flex-col gap-2.5">
               <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-wa h-14 gap-3">
                 <WhatsAppIcon />
-                Solicitar no WhatsApp
+                {requestLabel(p)}
               </button>
               <div className="grid grid-cols-2 gap-2.5">
                 <button onClick={share} className="btn btn-outline h-[46px] gap-2 px-2 text-[11px] tracking-[0.14em]">
@@ -214,7 +214,7 @@ export default function ProductPage() {
         </div>
         <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-wa h-[52px] flex-1 tracking-[0.12em]">
           <WhatsAppIcon size={18} className="flex-none" />
-          Solicitar
+          {requestLabel(p, true)}
         </button>
       </div>
     </>

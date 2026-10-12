@@ -1,5 +1,5 @@
 export type CategoryId = 'homem' | 'senhora' | 'desporto' | 'classico' | 'acessorios'
-export type Stock = 'in' | 'low' | 'order'
+export type Stock = 'in' | 'low' | 'order' | 'out'
 export type Badge = 'Promoção' | 'Poucas unidades' | 'Sob encomenda'
 
 export interface Product {
@@ -191,7 +191,12 @@ export const STOCK_INFO: Record<Stock, { label: string; note: string; dot: strin
   in: { label: 'Em stock', note: '', dot: 'bg-wa' },
   low: { label: 'Poucas unidades', note: '— confirme no WhatsApp', dot: 'bg-navy' },
   order: { label: 'Sob encomenda', note: '— prazo confirmado no WhatsApp', dot: 'bg-faint' },
+  out: { label: 'Esgotado', note: '— avisamos quando voltar', dot: 'bg-sale' },
 }
+
+export const isSoldOut = (p: Product) => p.stock === 'out'
+/** Um produto esgotado mostra sempre "Esgotado", mesmo que tivesse outro badge. */
+export const badgeOf = (p: Product): string | undefined => (isSoldOut(p) ? 'Esgotado' : p.badge)
 
 export const productBySlug = (slug: string) => PRODUCTS.find((p) => p.slug === slug)
 export const productById = (id: number) => PRODUCTS.find((p) => p.id === id)

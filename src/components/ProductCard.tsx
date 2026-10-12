@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useUi } from '../context/ui'
-import type { Product } from '../data/products'
-import { formatPrice, productPath } from '../lib/format'
+import { badgeOf, type Product } from '../data/products'
+import { formatPrice, productPath, requestLabel } from '../lib/format'
 import { img } from '../lib/images'
 import { WhatsAppIcon } from './Icons'
 
-export function Badge({ badge, className = '' }: { badge: Product['badge']; className?: string }) {
+export function Badge({ badge, className = '' }: { badge?: string; className?: string }) {
   if (!badge) return null
   const promo = badge === 'Promoção'
   return (
@@ -41,7 +41,7 @@ export function ProductCard({ product: p }: { product: Product }) {
             className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>
-        <Badge badge={p.badge} className="absolute top-3 left-3" />
+        <Badge badge={badgeOf(p)} className="absolute top-3 left-3" />
         {/* A vista rápida só aparece com rato; em ecrãs táteis o toque abre o produto. */}
         <button
           onClick={() => openQuick(p)}
@@ -63,8 +63,8 @@ export function ProductCard({ product: p }: { product: Product }) {
           className="mt-auto flex h-11 items-center justify-center gap-2 border border-navy px-2 text-[10px] font-bold tracking-[0.1em] uppercase transition-colors hover:border-wa hover:bg-wa hover:text-white sm:text-[11px] sm:tracking-[0.14em]"
         >
           <WhatsAppIcon size={16} className="flex-none" />
-          <span className="sm:hidden">Solicitar</span>
-          <span className="hidden sm:inline">Solicitar no WhatsApp</span>
+          <span className="sm:hidden">{requestLabel(p, true)}</span>
+          <span className="hidden sm:inline">{requestLabel(p)}</span>
         </button>
       </div>
     </article>
