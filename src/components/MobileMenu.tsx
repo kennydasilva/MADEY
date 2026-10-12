@@ -2,16 +2,18 @@ import { Link } from 'react-router-dom'
 import { whatsappDisplay } from '../config'
 import { useUi } from '../context/ui'
 import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
+import { useDialog } from '../lib/dialog'
 import { useNavItems } from '../lib/nav'
 import { ArrowIcon, CloseIcon, WhatsAppIcon } from './Icons'
 
 export function MobileMenu() {
   const { menuOpen, closeAll } = useUi()
   const nav = useNavItems()
+  const ref = useDialog<HTMLDivElement>(menuOpen)
   if (!menuOpen) return null
 
   return (
-    <div role="dialog" aria-label="Menu" className="fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-white">
+    <div ref={ref} role="dialog" aria-modal="true" aria-label="Menu" className="overlay-in fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-white">
       <div className="flex h-16 flex-none items-center justify-between border-b border-line px-5">
         <span className="font-serif text-[22px] font-medium tracking-[0.36em]">MADEY</span>
         <button onClick={closeAll} aria-label="Fechar menu" className="-mr-2.5 flex size-11 items-center justify-center">
@@ -27,6 +29,7 @@ export function MobileMenu() {
               closeAll()
               n.onClick?.(e)
             }}
+            aria-current={n.active ? 'page' : undefined}
             className="flex min-h-[60px] items-center justify-between border-b border-line font-serif text-[28px] font-medium"
           >
             {n.label}

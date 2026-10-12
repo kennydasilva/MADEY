@@ -12,6 +12,7 @@ import {
   requestLabel,
   whatsappUrl,
 } from '../lib/format'
+import { useDialog } from '../lib/dialog'
 import { img } from '../lib/images'
 import { matchesQuery, shopUrl } from '../lib/shop'
 import { CloseIcon, CopyIcon, ImageIcon, SearchIcon, WhatsAppIcon } from './Icons'
@@ -30,16 +31,19 @@ function CloseButton({ label = 'Fechar' }: { label?: string }) {
 
 export function QuickView() {
   const { quick: p, closeAll, requestWhatsApp } = useUi()
+  const ref = useDialog<HTMLDivElement>(!!p)
   if (!p) return null
   const stock = STOCK_INFO[p.stock]
 
   return (
-    <div onClick={closeAll} className="fixed inset-0 z-[70] flex justify-end bg-navy/55">
+    <div onClick={closeAll} className="overlay-in fixed inset-0 z-[70] flex justify-end bg-navy/55">
       <div
+        ref={ref}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        aria-modal="true"
         aria-label="Vista rápida"
-        className="flex h-full w-[min(480px,100%)] flex-col overflow-y-auto bg-white"
+        className="panel-right flex h-full w-[min(480px,100%)] flex-col overflow-y-auto bg-white"
       >
         <div className="flex items-center justify-between border-b border-line py-2.5 pr-3 pl-6">
           <span className="eyebrow">Vista rápida</span>
@@ -50,7 +54,7 @@ export function QuickView() {
         </div>
         <div className="flex flex-col gap-3.5 px-6 py-7">
           <span className="eyebrow text-muted">{p.brand}</span>
-          <h3 className="display text-[32px] leading-[1.1]">{p.name}</h3>
+          <h2 className="display text-[32px] leading-[1.1]">{p.name}</h2>
           <span className="text-[13px] text-muted">
             {p.model} · Ref. {p.ref}
           </span>
@@ -81,6 +85,7 @@ export function SearchOverlay() {
   const navigate = useNavigate()
   const [q, setQ] = useState('')
   const input = useRef<HTMLInputElement>(null)
+  const ref = useDialog<HTMLDivElement>(searchOpen)
 
   useEffect(() => {
     if (!searchOpen) return
@@ -98,12 +103,14 @@ export function SearchOverlay() {
   }
 
   return (
-    <div onClick={closeAll} className="fixed inset-0 z-[80] bg-navy/55">
+    <div onClick={closeAll} className="overlay-in fixed inset-0 z-[80] bg-navy/55">
       <div
+        ref={ref}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        aria-modal="true"
         aria-label="Pesquisar"
-        className="max-h-[88vh] overflow-y-auto bg-white"
+        className="panel-top max-h-[88vh] overflow-y-auto bg-white"
       >
         <div className="mx-auto max-w-[880px] px-[clamp(20px,4vw,48px)] pt-5 pb-8">
           <div className="flex items-center gap-3.5 border-b border-navy">
@@ -128,7 +135,7 @@ export function SearchOverlay() {
                   <button
                     key={label}
                     onClick={() => setQ(label)}
-                    className="h-9 border border-line px-3.5 text-[13px] hover:border-navy"
+                    className="h-11 border border-faint px-3.5 text-[13px] hover:border-navy sm:h-9"
                   >
                     {label}
                   </button>
@@ -171,7 +178,9 @@ export function SearchOverlay() {
 
           {term && results.length === 0 && (
             <div className="flex flex-col items-start gap-3.5 pt-6 pb-1">
-              <span className="text-[15px]">Sem resultados para “{term}”.</span>
+              <span role="status" className="text-[15px]">
+                Sem resultados para “{term}”.
+              </span>
               <a
                 href={whatsappUrl(GENERAL_MESSAGE)}
                 target="_blank"
@@ -191,6 +200,7 @@ export function SearchOverlay() {
 
 export function WhatsAppModal() {
   const { wa, closeAll, copy, flash } = useUi()
+  const ref = useDialog<HTMLDivElement>(!!wa)
   if (!wa) return null
   const { product: p, qty } = wa
   const message = buildWhatsAppMessage(p, qty)
@@ -211,15 +221,17 @@ export function WhatsAppModal() {
   const small = 'btn btn-outline h-[46px] gap-2 px-2 text-[11px] tracking-[0.12em]'
 
   return (
-    <div onClick={closeAll} className="fixed inset-0 z-[100] grid place-items-center bg-navy/60 p-4">
+    <div onClick={closeAll} className="overlay-in fixed inset-0 z-[100] grid place-items-center bg-navy/60 p-4">
       <div
+        ref={ref}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        aria-modal="true"
         aria-label="Solicitar no WhatsApp"
-        className="flex max-h-[calc(100vh-32px)] w-[min(540px,100%)] flex-col overflow-y-auto bg-white shadow-[0_24px_60px_rgba(20,31,51,0.3)]"
+        className="panel-pop flex max-h-[calc(100dvh-32px)] w-[min(540px,100%)] flex-col overflow-y-auto bg-white shadow-[0_24px_60px_rgba(20,31,51,0.3)]"
       >
         <div className="flex items-center justify-between border-b border-line py-3 pr-3 pl-7">
-          <span className="font-serif text-[26px] font-medium">{requestLabel(p)}</span>
+          <h2 className="font-serif text-[26px] font-medium">{requestLabel(p)}</h2>
           <CloseButton />
         </div>
         <div className="flex flex-col gap-[18px] px-7 pt-[22px] pb-7">
