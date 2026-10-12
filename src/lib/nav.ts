@@ -24,8 +24,6 @@ export function useNavItems(): NavItem[] {
   return [
     { label: 'Início', to: '/', active: pathname === '/' },
     { label: 'Loja', to: shopUrl(), active: inShop && !f.cats.length && !f.brands.length },
-    { label: 'Homem', to: shopUrl({ cats: ['homem'] }), active: only('homem') },
-    { label: 'Senhora', to: shopUrl({ cats: ['senhora'] }), active: only('senhora') },
     { label: 'Marcas', to: '/#marcas', active: inShop && f.brands.length > 0 },
     { label: 'Acessórios', to: shopUrl({ cats: ['acessorios'] }), active: only('acessorios') },
     {
