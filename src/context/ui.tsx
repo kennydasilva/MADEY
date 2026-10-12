@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Product } from '../data/products'
+import { buildWhatsAppMessage, whatsappUrl } from '../lib/format'
 
 interface WaRequest {
   product: Product
@@ -15,7 +16,7 @@ interface UiState {
   openMenu: () => void
   openSearch: () => void
   openQuick: (p: Product) => void
-  /** Abre a confirmação com a mensagem pré-preenchida antes de ir para o WhatsApp. */
+  /** No telemóvel abre logo o WhatsApp; no desktop mostra primeiro a mensagem para confirmar ou copiar. */
   requestWhatsApp: (p: Product, qty?: number) => void
   closeAll: () => void
   flash: (message: string) => void
@@ -84,6 +85,11 @@ export function UiProvider({ children }: { children: ReactNode }) {
       requestWhatsApp: (product, qty = 1) => {
         setQuick(null)
         setSearchOpen(false)
+        // O próprio WhatsApp já mostra a mensagem antes de enviar: em ecrãs táteis o modal seria um passo a mais.
+        if (window.matchMedia('(pointer: coarse)').matches) {
+          window.open(whatsappUrl(buildWhatsAppMessage(product, qty)), '_blank', 'noopener')
+          return
+        }
         setWa({ product, qty })
       },
       closeAll,
