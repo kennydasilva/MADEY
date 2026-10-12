@@ -1,1 +1,116 @@
 @import 'tailwindcss';
+
+@theme {
+  --color-navy: #141f33;
+  --color-navy-deep: #0f1a2e;
+  --color-navy-soft: #22304a;
+  --color-line: #d9dee5;
+  --color-mist: #f4f5f7;
+  --color-stone: #e8e9eb;
+  --color-muted: #5e6875;
+  --color-faint: #7d8794;
+  --color-wa: #17853f;
+  --color-wa-dark: #126b33;
+  --color-sale: #b3261e;
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    background: #fff;
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  button,
+  a {
+    cursor: pointer;
+  }
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--color-line);
+  }
+}
+
+@layer components {
+  /* Largura máxima e margens laterais de todas as secções */
+  .wrap {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 4vw, 48px);
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.05;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 50px;
+    padding-inline: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .btn-light {
+    background: #fff;
+    color: var(--color-navy);
+    border-color: #fff;
+  }
+  .btn-light:hover {
+    background: var(--color-line);
+    border-color: var(--color-line);
+  }
+  .btn-dark {
+    background: var(--color-navy);
+    color: #fff;
+    border-color: var(--color-navy);
+  }
+  .btn-dark:hover {
+    background: var(--color-navy-soft);
+  }
+  .btn-outline {
+    background: #fff;
+    color: var(--color-navy);
+    border-color: var(--color-navy);
+  }
+  .btn-outline:hover {
+    background: var(--color-mist);
+  }
+  .btn-wa {
+    background: var(--color-wa);
+    color: #fff;
+    border-color: var(--color-wa);
+  }
+  .btn-wa:hover {
+    background: var(--color-wa-dark);
+    border-color: var(--color-wa-dark);
+  }
+}
