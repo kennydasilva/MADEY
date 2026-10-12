@@ -2,8 +2,11 @@
 export const config = {
   /** Número do WhatsApp só com dígitos, com indicativo do país. */
   whatsappNumber: '258840000000',
-  /** Domínio público do site, sem barra final. Usado nos links enviados no WhatsApp. */
-  siteUrl: 'https://madey.co.mz',
+  /**
+   * Endereço público do site, sem barra final. Vai nos links enviados no WhatsApp,
+   * nas meta tags e no sitemap — tem de ser o endereço onde o site está mesmo publicado.
+   */
+  siteUrl: 'https://madey.vercel.app',
   instagramUrl: '',
   location: 'Maputo, Moçambique',
 }
