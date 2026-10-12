@@ -19,7 +19,7 @@ export function Badge({ badge, className = '' }: { badge?: string; className?: s
 
 export function Price({ product, className = '' }: { product: Product; className?: string }) {
   return (
-    <div className={`flex flex-wrap items-baseline gap-x-2 ${className}`}>
+    <div className={`flex flex-wrap items-baseline gap-x-2 tabular-nums ${className}`}>
       <span className={`font-bold ${product.was ? 'text-sale' : ''}`}>{formatPrice(product.price)}</span>
       {product.was && <span className="text-xs text-faint line-through">{formatPrice(product.was)}</span>}
     </div>
@@ -37,7 +37,10 @@ export function ProductCard({ product: p }: { product: Product }) {
           <img
             src={img(p.image)}
             alt={p.name}
+            width={1024}
+            height={1280}
             loading="lazy"
+            decoding="async"
             className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>
@@ -53,9 +56,11 @@ export function ProductCard({ product: p }: { product: Product }) {
 
       <div className="flex flex-1 flex-col pt-5">
         <span className="text-[10px] font-semibold tracking-[0.22em] text-muted uppercase">{p.brand}</span>
-        <Link to={to} className="mt-1.5 font-serif text-[19px] leading-[1.2] font-medium hover:text-muted sm:text-[22px]">
-          {p.name}
-        </Link>
+        <h3 className="mt-1.5 font-serif text-[19px] leading-[1.2] font-medium sm:text-[22px]">
+          <Link to={to} className="hover:text-muted">
+            {p.name}
+          </Link>
+        </h3>
         <span className="mt-1 text-xs text-muted">{p.model}</span>
         <Price product={p} className="mt-3 mb-4" />
         <button

@@ -78,7 +78,12 @@ export default function ProductPage() {
         <div className="grid items-start gap-[clamp(28px,5vw,80px)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
           <div className="flex w-full max-w-[560px] min-w-0 flex-col gap-3">
             <div className="relative aspect-[4/5] max-h-[72vh] overflow-hidden bg-stone">
-              <img src={gallery[photo]} alt={p.name} className="absolute inset-0 size-full object-cover" />
+              <img
+                src={gallery[photo]}
+                alt={p.name}
+                fetchPriority="high"
+                className="absolute inset-0 size-full object-cover"
+              />
               <Badge badge={badgeOf(p)} className="absolute top-4 left-4" />
             </div>
             {gallery.length > 1 && (
@@ -108,7 +113,7 @@ export default function ProductPage() {
               </span>
             </div>
 
-            <div className="flex flex-wrap items-baseline gap-3.5">
+            <div className="flex flex-wrap items-baseline gap-3.5 tabular-nums">
               <span className={`text-[clamp(24px,2.2vw,28px)] font-bold ${p.was ? 'text-sale' : ''}`}>
                 {formatPrice(p.price)}
               </span>

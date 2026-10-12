@@ -23,10 +23,11 @@ function SectionHeading({ eyebrow, title, action }: { eyebrow: string; title: st
 
 function Hero() {
   return (
-    <section className="relative bg-navy text-white">
+    <section className="on-dark relative bg-navy text-white">
       <img
         src={img('hero')}
         alt="Relógio cronógrafo em aço com mostrador azul"
+        fetchPriority="high"
         className="h-[340px] w-full object-cover object-[78%_center] sm:h-[460px] lg:absolute lg:inset-0 lg:h-full"
       />
       <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-3/5 bg-linear-to-r from-navy-deep/80 to-transparent lg:block" />
@@ -79,7 +80,7 @@ function Collections() {
               className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             />
             <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-linear-to-t to-transparent ${c.dark ? 'from-navy/70' : 'from-white/90'}`}
+              className={`pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t to-transparent ${c.dark ? 'h-[45%] from-navy/75' : 'h-1/2 from-white from-15% via-white/80 via-50%'}`}
             />
             <div className="absolute inset-x-[clamp(16px,2vw,24px)] bottom-[clamp(14px,2vw,22px)] flex items-end justify-between gap-3">
               <span className="display text-[clamp(22px,2.4vw,32px)]">{c.title}</span>
@@ -141,7 +142,7 @@ function Brands() {
 
 function Promo() {
   return (
-    <section className="grid bg-navy text-white lg:grid-cols-2">
+    <section className="on-dark grid bg-navy text-white lg:grid-cols-2">
       <div className="relative min-h-[clamp(320px,40vw,520px)] bg-navy-deep">
         <img
           src={img('promo')}

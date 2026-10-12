@@ -31,8 +31,9 @@ export function buildWhatsAppMessage(p: Product, qty: number) {
   if (qty > 1) lines.push(`Quantidade: ${qty}`)
   lines.push(`Preço: ${formatPrice(p.price)}${qty > 1 ? ` cada · Total: ${formatPrice(p.price * qty)}` : ''}`)
   lines.push(`Referência: ${p.ref}`)
-  const image = img(p.image)
-  if (image) lines.push(`Imagem: ${config.siteUrl}${image}`)
+  // O build copia as fotos para /og com o nome original, sem o hash dos ficheiros do Vite.
+  const ext = img(p.image).split('.').pop()
+  if (ext) lines.push(`Imagem: ${config.siteUrl}/og/${p.image}.${ext}`)
   lines.push(`Link: ${productLink(p)}`, '', 'Podem confirmar a disponibilidade e dar-me mais informações?')
   return lines.join('\n')
 }
