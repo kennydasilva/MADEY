@@ -17,6 +17,7 @@ export function Footer() {
         { label: 'Início', to: '/' },
         { label: 'Ver todos', to: shopUrl() },
         { label: 'Novidades', to: shopUrl({ sort: 'novidades' }) },
+        { label: 'Entregas e pagamentos', to: '/entregas-e-pagamentos' },
       ],
     },
   ]
@@ -51,15 +52,10 @@ export function Footer() {
                   {l.label}
                 </Link>
               ))}
-              {col.title === 'Loja' && (
-                <>
-                  {config.instagramUrl && (
-                    <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                      Instagram
-                    </a>
-                  )}
-                  <span className="py-[5px] text-sm text-faint">Entregas e devoluções: a definir</span>
-                </>
+              {col.title === 'Loja' && config.instagramUrl && (
+                <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  Instagram
+                </a>
               )}
             </div>
           ))}
