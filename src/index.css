@@ -114,3 +114,8 @@
     border-color: var(--color-wa-dark);
   }
 }
+
+/* As âncoras (#marcas, #contacto) param abaixo do header fixo. */
+[id] {
+  scroll-margin-top: 64px;
+}
