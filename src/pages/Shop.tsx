@@ -4,6 +4,7 @@ import { CheckIcon, CloseIcon, WhatsAppIcon } from '../components/Icons'
 import { ProductGrid } from '../components/ProductCard'
 import { BRANDS, CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, categoryLabel, type SortId } from '../data/products'
 import { GENERAL_MESSAGE, countLabel, whatsappUrl } from '../lib/format'
+import { usePageTitle } from '../lib/title'
 import { EMPTY_FILTERS, filterProducts, filtersToSearch, parseFilters, type ShopFilters } from '../lib/shop'
 
 const PER_PAGE = 6
@@ -64,6 +65,8 @@ export default function Shop() {
   let title = 'Todos os relógios'
   if (f.cats.length === 1 && !f.brands.length) title = categoryLabel(f.cats[0])
   else if (f.brands.length === 1 && !f.cats.length) title = f.brands[0]
+
+  usePageTitle(title)
 
   const chips = [
     ...(f.q.trim() ? [{ label: `“${f.q.trim()}”`, remove: () => update({ q: '' }) }] : []),

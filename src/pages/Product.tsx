@@ -7,6 +7,7 @@ import { PRODUCTS, STOCK_INFO, badgeOf, isSoldOut, productBySlug, type Product }
 import { formatPrice, productLink, requestLabel } from '../lib/format'
 import { img } from '../lib/images'
 import { shopUrl } from '../lib/shop'
+import { usePageTitle } from '../lib/title'
 import NotFound from './NotFound'
 
 const MAX_QTY = 9
@@ -36,6 +37,8 @@ export default function ProductPage() {
     setPhoto(0)
     setQty(1)
   }, [slug])
+
+  usePageTitle(p ? `${p.name} · ${p.brand}` : 'Página não encontrada')
 
   if (!p) return <NotFound />
 

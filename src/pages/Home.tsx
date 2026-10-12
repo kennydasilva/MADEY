@@ -7,6 +7,7 @@ import { countLabel } from '../lib/format'
 import { img } from '../lib/images'
 import { scrollToId } from '../lib/nav'
 import { shopUrl, sortProducts } from '../lib/shop'
+import { usePageTitle } from '../lib/title'
 
 function SectionHeading({ eyebrow, title, action }: { eyebrow: string; title: string; action?: ReactNode }) {
   return (
@@ -211,6 +212,7 @@ function Why() {
 }
 
 export default function Home() {
+  usePageTitle()
   return (
     <>
       <Hero />
