@@ -5,7 +5,7 @@ import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
 import { shopUrl } from '../lib/shop'
 import { WhatsAppIcon } from './Icons'
 
-const linkClass = 'self-start py-[5px] text-sm text-white underline-offset-[3px] hover:underline'
+const linkClass = 'self-start py-2.5 text-sm lg:py-[5px] text-white underline-offset-[3px] hover:underline'
 
 export function Footer() {
   const columns = [
@@ -23,7 +23,7 @@ export function Footer() {
   ]
 
   return (
-    <footer id="contacto" className="bg-navy text-white">
+    <footer id="contacto" className="on-dark bg-navy text-white">
       <div className="wrap pt-[clamp(56px,7vw,88px)]">
         <div className="grid grid-cols-2 gap-x-8 gap-y-11 pb-14 lg:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))]">
           <div className="col-span-2 flex flex-col items-start gap-5 lg:col-span-1">

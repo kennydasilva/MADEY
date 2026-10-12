@@ -7,7 +7,7 @@ import { MenuIcon, SearchIcon, WhatsAppIcon } from './Icons'
 
 export function AnnouncementBar() {
   return (
-    <div className="bg-navy px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.16em] text-white uppercase">
+    <div className="on-dark bg-navy px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.16em] text-white uppercase">
       Novidades G-Shock e Seiko já disponíveis · Encomende pelo WhatsApp
     </div>
   )
@@ -54,6 +54,7 @@ export function Header() {
               key={n.label}
               to={n.to}
               onClick={n.onClick}
+              aria-current={n.active ? 'page' : undefined}
               className={`border-b py-1.5 text-xs font-medium tracking-[0.14em] uppercase hover:border-navy ${n.active ? 'border-navy' : 'border-transparent'}`}
             >
               {n.label}
