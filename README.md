@@ -34,5 +34,14 @@ automaticamente.
 
 ## Publicação
 
-É uma SPA: o alojamento tem de devolver `index.html` para qualquer caminho
-(`/loja`, `/produto/...`), senão os links partilhados no WhatsApp dão 404.
+Pensado para a Vercel (`vercel.json` já trata das rotas). O `npm run build`
+gera também, em `dist/`:
+
+- um HTML por página pública (`/loja`, `/produto/<slug>`…) com título,
+  descrição, imagem e dados estruturados — é o que o WhatsApp e o Google leem;
+- `sitemap.xml` e `robots.txt`.
+
+Tudo isto usa `siteUrl` de `src/config.ts`: tem de ser o endereço real do site.
+
+Os pedidos pelo WhatsApp são contados no Vercel Analytics (evento
+`pedido_whatsapp`); é preciso ativar o Analytics no painel do projeto.
