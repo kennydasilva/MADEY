@@ -27,6 +27,8 @@ npm run preview  # servir o build
 Todas as fotografias são lidas da pasta `imagens/`. Para trocar uma imagem,
 substitua o ficheiro mantendo o nome (`hero.jpg`, `promo.jpg`, `p-boss.jpg`…).
 Cada produto aponta para o seu ficheiro no campo `image` do catálogo.
+O build converte-as para WebP em vários tamanhos, por isso pode usar originais
+grandes (pelo menos 1024 px de largura; 1600 px ou mais para `hero` e `promo`).
 
 Para dar mais fotografias a um produto, adicione ficheiros com os sufixos
 `-2` e `-3` (ex.: `p-boss-2.jpg`); a galeria da página de produto mostra-as

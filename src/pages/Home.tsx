@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowIcon, ChatIcon, LayersIcon, SearchIcon, TagIcon } from '../components/Icons'
+import { Photo } from '../components/Photo'
 import { ProductGrid } from '../components/ProductCard'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
 import { countLabel } from '../lib/format'
-import { img } from '../lib/images'
 import { scrollToId } from '../lib/nav'
 import { shopUrl, sortProducts } from '../lib/shop'
 import { usePageTitle } from '../lib/title'
@@ -24,9 +24,11 @@ function SectionHeading({ eyebrow, title, action }: { eyebrow: string; title: st
 function Hero() {
   return (
     <section className="on-dark relative bg-navy text-white">
-      <img
-        src={img('hero')}
+      <Photo
+        name="hero"
+        sizes="100vw"
         alt="Relógio cronógrafo em aço com mostrador azul"
+        loading="eager"
         fetchPriority="high"
         className="h-[340px] w-full object-cover object-[78%_center] sm:h-[460px] lg:absolute lg:inset-0 lg:h-full"
       />
@@ -54,8 +56,8 @@ function Hero() {
   )
 }
 
-const COLLECTIONS: { cat: CategoryId; title: string; image: string; dark?: boolean; place: string }[] = [
-  { cat: 'homem', title: 'Homem', image: 'p-boss', place: 'col-span-2 lg:col-span-1 lg:row-span-2' },
+const COLLECTIONS: { cat: CategoryId; title: string; image: string; dark?: boolean; place: string; sizes?: string }[] = [
+  { cat: 'homem', title: 'Homem', image: 'p-boss', place: 'col-span-2 lg:col-span-1 lg:row-span-2', sizes: '(min-width: 1024px) 50vw, 100vw' },
   { cat: 'senhora', title: 'Senhora', image: 'c-women', dark: true, place: '' },
   { cat: 'desporto', title: 'Desporto & Digital', image: 'p-gshock', place: '' },
   { cat: 'classico', title: 'Clássico & Elegante', image: 'p-prx', place: '' },
@@ -73,10 +75,10 @@ function Collections() {
             to={shopUrl({ cats: [c.cat] })}
             className={`group relative min-w-0 overflow-hidden bg-stone ${c.dark ? 'text-white hover:text-white' : ''} ${c.place}`}
           >
-            <img
-              src={img(c.image)}
+            <Photo
+              name={c.image}
+              sizes={c.sizes ?? '(min-width: 1024px) 25vw, 50vw'}
               alt=""
-              loading="lazy"
               className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             />
             <div
@@ -144,10 +146,10 @@ function Promo() {
   return (
     <section className="on-dark grid bg-navy text-white lg:grid-cols-2">
       <div className="relative min-h-[clamp(320px,40vw,520px)] bg-navy-deep">
-        <img
-          src={img('promo')}
+        <Photo
+          name="promo"
+          sizes="(min-width: 1024px) 50vw, 100vw"
           alt="Relógio desportivo no pulso, com a cidade à noite em fundo"
-          loading="lazy"
           className="absolute inset-0 size-full object-cover"
         />
       </div>

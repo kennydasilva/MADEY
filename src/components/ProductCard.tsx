@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import { useUi } from '../context/ui'
 import { badgeOf, type Product } from '../data/products'
 import { formatPrice, productPath, requestLabel } from '../lib/format'
-import { img } from '../lib/images'
 import { WhatsAppIcon } from './Icons'
+import { Photo } from './Photo'
 
 export function Badge({ badge, className = '' }: { badge?: string; className?: string }) {
   if (!badge) return null
@@ -34,13 +34,12 @@ export function ProductCard({ product: p }: { product: Product }) {
     <article className="group flex min-w-0 flex-col">
       <div className="relative aspect-[4/5] overflow-hidden bg-stone">
         <Link to={to} aria-label={p.name} className="absolute inset-0">
-          <img
-            src={img(p.image)}
+          <Photo
+            name={p.image}
+            sizes="(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
             alt={p.name}
             width={1024}
             height={1280}
-            loading="lazy"
-            decoding="async"
             className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>

@@ -16,6 +16,7 @@ import { useDialog } from '../lib/dialog'
 import { img } from '../lib/images'
 import { matchesQuery, shopUrl } from '../lib/shop'
 import { CloseIcon, CopyIcon, ImageIcon, SearchIcon, WhatsAppIcon } from './Icons'
+import { Photo } from './Photo'
 import { Price } from './ProductCard'
 
 const POPULAR = ['G-Shock', 'Tissot PRX', 'Seiko 5', 'Cronógrafo', 'Vintage', 'Estojo']
@@ -50,7 +51,7 @@ export function QuickView() {
           <CloseButton />
         </div>
         <div className="relative aspect-square flex-none bg-stone">
-          <img src={img(p.image)} alt={p.name} className="absolute inset-0 size-full object-cover" />
+          <Photo name={p.image} sizes="480px" alt={p.name} className="absolute inset-0 size-full object-cover" />
         </div>
         <div className="flex flex-col gap-3.5 px-6 py-7">
           <span className="eyebrow text-muted">{p.brand}</span>
@@ -151,7 +152,7 @@ export function SearchOverlay() {
                   key={p.id}
                   className="grid grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-4 border-b border-line py-3.5"
                 >
-                  <img src={img(p.image)} alt="" className="size-[72px] bg-stone object-cover" />
+                  <Photo name={p.image} sizes="72px" alt="" className="size-[72px] bg-stone object-cover" />
                   <Link to={productPath(p)} onClick={closeAll} className="flex min-w-0 flex-col gap-0.5">
                     <span className="text-[10px] font-semibold tracking-[0.2em] text-muted uppercase">{p.brand}</span>
                     <span className="font-serif text-xl leading-tight font-medium">{p.name}</span>
@@ -236,7 +237,7 @@ export function WhatsAppModal() {
         </div>
         <div className="flex flex-col gap-[18px] px-7 pt-[22px] pb-7">
           <div className="grid grid-cols-[76px_minmax(0,1fr)] items-center gap-4">
-            <img src={img(p.image)} alt="" className="size-[76px] bg-stone object-cover" />
+            <Photo name={p.image} sizes="76px" alt="" className="size-[76px] bg-stone object-cover" />
             <div className="flex min-w-0 flex-col gap-0.5">
               <span className="text-[10px] font-semibold tracking-[0.2em] text-muted uppercase">
                 {p.brand} · {p.ref}
