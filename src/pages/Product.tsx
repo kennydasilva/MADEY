@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { CopyIcon, ShareIcon, WhatsAppIcon } from '../components/Icons'
+import { ArrowIcon, BagIcon, CopyIcon, MinusIcon, PlusIcon, ShareIcon, WhatsAppIcon } from '../components/Icons'
 import { Photo } from '../components/Photo'
-import { Badge, ProductGrid } from '../components/ProductCard'
+import { AddButton, Badge, ProductGrid, StockLine } from '../components/ProductCard'
+import { MAX_QTY, useOrder } from '../context/order'
 import { useUi } from '../context/ui'
-import { PRODUCTS, STOCK_INFO, badgeOf, isSoldOut, productBySlug, type Product } from '../data/products'
-import { formatPrice, productLink, requestLabel } from '../lib/format'
+import { PRODUCTS, badgeOf, isSoldOut, productBySlug, type Product } from '../data/products'
+import { formatPrice, productLink } from '../lib/format'
 import { img } from '../lib/images'
 import { shopUrl } from '../lib/shop'
 import { usePageTitle } from '../lib/title'
 import NotFound from './NotFound'
-
-const MAX_QTY = 9
 
 /** Mesma marca primeiro, depois mesma categoria, depois o resto do catálogo. */
 function relatedTo(p: Product) {
@@ -30,7 +29,8 @@ function galleryOf(p: Product) {
 export default function ProductPage() {
   const { slug = '' } = useParams()
   const p = productBySlug(slug)
-  const { requestWhatsApp, copy } = useUi()
+  const { requestWhatsApp, copy, openOrder } = useUi()
+  const { count } = useOrder()
   const [photo, setPhoto] = useState(0)
   const [qty, setQty] = useState(1)
 
@@ -44,9 +44,9 @@ export default function ProductPage() {
   if (!p) return <NotFound />
 
   const gallery = galleryOf(p)
-  const stock = STOCK_INFO[p.stock]
   const link = productLink(p)
   const crumb = 'text-muted hover:text-navy'
+  const quiet = 'flex h-11 items-center gap-2 text-caption font-semibold underline-offset-4 hover:underline'
 
   const share = async () => {
     try {
@@ -60,7 +60,7 @@ export default function ProductPage() {
   return (
     <>
       <section className="wrap pt-[clamp(24px,3vw,40px)]">
-        <div className="mb-[clamp(20px,3vw,32px)] flex flex-wrap gap-2 text-[11px] font-semibold tracking-[0.18em] text-muted uppercase">
+        <nav aria-label="Caminho" className="mb-[clamp(20px,3vw,32px)] flex flex-wrap gap-2 text-caption text-muted">
           <Link to="/" className={crumb}>
             Início
           </Link>
@@ -74,7 +74,7 @@ export default function ProductPage() {
           </Link>
           <span>/</span>
           <span className="text-navy">{p.name}</span>
-        </div>
+        </nav>
 
         <div className="grid items-start gap-[clamp(28px,5vw,80px)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
           <div className="flex w-full max-w-[560px] min-w-0 flex-col gap-3">
@@ -107,86 +107,96 @@ export default function ProductPage() {
 
           <div className="flex min-w-0 flex-col gap-[22px] lg:sticky lg:top-[100px]">
             <div className="flex flex-col gap-2.5">
-              <Link to={shopUrl({ brands: [p.brand] })} className="eyebrow self-start text-muted hover:text-navy">
-                {p.brand}
-              </Link>
-              <h1 className="display text-[clamp(34px,3.6vw,50px)] text-balance">{p.name}</h1>
-              <span className="text-[13px] text-muted">
-                {p.model} · Ref. {p.ref}
+              <h1 className="display text-headline text-balance">{p.name}</h1>
+              <span className="text-muted">
+                <Link to={shopUrl({ brands: [p.brand] })} className="underline underline-offset-4 hover:text-navy">
+                  {p.brand}
+                </Link>{' '}
+                · {p.model} · Ref. {p.ref}
               </span>
             </div>
 
             <div className="flex flex-wrap items-baseline gap-3.5 tabular-nums">
-              <span className={`text-[clamp(24px,2.2vw,28px)] font-bold ${p.was ? 'text-sale' : ''}`}>
-                {formatPrice(p.price)}
-              </span>
+              <span className={`text-[1.875rem] font-bold ${p.was ? 'text-sale' : ''}`}>{formatPrice(p.price)}</span>
               {p.was && (
                 <>
-                  <span className="text-[15px] text-faint line-through">{formatPrice(p.was)}</span>
-                  <span className="bg-navy px-2 py-1 text-[10px] font-bold tracking-[0.14em] text-white uppercase">
+                  <span className="text-faint line-through">{formatPrice(p.was)}</span>
+                  <span className="bg-navy px-2 py-1 text-label font-bold tracking-[0.14em] text-white uppercase">
                     Poupa {formatPrice(p.was - p.price)}
                   </span>
                 </>
               )}
             </div>
 
-            <div className="flex items-center gap-2.5 text-[13px]">
-              <span className={`size-2 rounded-full ${stock.dot}`} />
-              <span className="font-semibold">{stock.label}</span>
-              <span className="text-muted">{stock.note}</span>
-            </div>
+            <StockLine product={p} />
 
-            <p className="text-[15px] leading-[1.7] text-pretty text-muted">{p.desc}</p>
+            <p className="max-w-[58ch] text-lead text-pretty text-muted">{p.desc}</p>
 
             <div className={`items-center gap-4 pt-1 ${isSoldOut(p) ? 'hidden' : 'flex'}`}>
-              <span className="eyebrow tracking-[0.2em]">Quantidade</span>
+              <span className="text-sm font-semibold">Quantidade</span>
               <div className="flex border border-line">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  aria-label="Diminuir"
-                  className="size-11 text-lg hover:bg-mist"
+                  disabled={qty <= 1}
+                  aria-label="Diminuir quantidade"
+                  className="flex size-11 items-center justify-center hover:bg-mist disabled:text-line"
                 >
-                  −
+                  <MinusIcon size={15} />
                 </button>
-                <span className="flex size-11 items-center justify-center border-x border-line font-bold" aria-live="polite">
+                <span
+                  className="flex size-11 items-center justify-center border-x border-line font-bold tabular-nums"
+                  aria-live="polite"
+                >
                   {qty}
                 </span>
                 <button
                   onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))}
-                  aria-label="Aumentar"
-                  className="size-11 text-lg hover:bg-mist"
+                  disabled={qty >= MAX_QTY}
+                  aria-label="Aumentar quantidade"
+                  className="flex size-11 items-center justify-center hover:bg-mist disabled:text-line"
                 >
-                  +
+                  <PlusIcon size={15} />
                 </button>
               </div>
             </div>
 
             <div className="flex flex-col gap-2.5">
-              <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-wa h-14 gap-3">
-                <WhatsAppIcon />
-                {requestLabel(p)}
-              </button>
-              <div className="grid grid-cols-2 gap-2.5">
-                <button onClick={share} className="btn btn-outline h-[46px] gap-2 px-2 text-[11px] tracking-[0.14em]">
+              <AddButton product={p} qty={qty} full />
+              {!isSoldOut(p) && (
+                <button
+                  onClick={() => requestWhatsApp(p, qty)}
+                  className="btn btn-outline h-[52px] hover:border-wa hover:bg-wa hover:text-white"
+                >
+                  <WhatsAppIcon size={18} />
+                  Solicitar só este no WhatsApp
+                </button>
+              )}
+              <div className="flex gap-6">
+                <button onClick={share} className={quiet}>
                   <ShareIcon size={15} />
                   Partilhar
                 </button>
-                <button
-                  onClick={() => copy(link, 'Link do produto copiado')}
-                  className="btn btn-outline h-[46px] gap-2 px-2 text-[11px] tracking-[0.14em]"
-                >
+                <button onClick={() => copy(link, 'Link do produto copiado')} className={quiet}>
                   <CopyIcon size={15} />
                   Copiar link
                 </button>
               </div>
-              <p className="mt-1 text-xs leading-[1.6] text-muted">
-                A mensagem inclui o produto, a referência e o link. Confirmamos disponibilidade, pagamento e entrega
-                consigo no WhatsApp.
-              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 bg-mist p-5">
+              <h2 className="font-semibold">O que acontece a seguir</h2>
+              <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm text-muted marker:font-semibold marker:text-navy">
+                <li>Envia-nos o pedido pelo WhatsApp, com a referência e o link já incluídos.</li>
+                <li>Confirmamos consigo a disponibilidade e o preço.</li>
+                <li>Combinamos o pagamento e a entrega. Estamos em Maputo.</li>
+              </ol>
+              <Link to="/entregas-e-pagamentos" className="link-arrow self-start">
+                Entregas e pagamentos <ArrowIcon size={14} strokeWidth={2} />
+              </Link>
             </div>
 
             <div className="flex flex-col border-t border-line pt-5">
-              <span className="eyebrow mb-2">Especificações</span>
+              <h2 className="mb-2 font-semibold">Especificações</h2>
               {[...Object.entries(p.specs), ['Referência', p.ref]].map(([k, v]) => (
                 <div
                   key={k}
@@ -203,14 +213,9 @@ export default function ProductPage() {
 
       <section className="wrap py-[clamp(64px,8vw,112px)]">
         <div className="mb-[clamp(28px,4vw,48px)] flex flex-wrap items-end justify-between gap-4">
-          <div className="flex flex-col gap-3">
-            <span className="eyebrow text-muted">Também pode gostar</span>
-            <h2 className="display text-[clamp(30px,3.4vw,44px)]">
-              {p.accessory ? 'Mais acessórios' : `Mais de ${p.brand}`}
-            </h2>
-          </div>
-          <Link to={shopUrl()} className="border-b border-navy py-2 text-[11px] font-bold tracking-[0.2em] uppercase">
-            Ver todos
+          <h2 className="display text-headline">Também pode gostar</h2>
+          <Link to={shopUrl()} className="link-arrow">
+            Ver todos <ArrowIcon size={14} strokeWidth={2} />
           </Link>
         </div>
         <ProductGrid products={relatedTo(p)} />
@@ -219,14 +224,22 @@ export default function ProductPage() {
       {/* Barra de compra fixa em ecrãs pequenos; o espaçador evita tapar o rodapé. */}
       <div className="h-20 lg:hidden" />
       <div className="fixed inset-x-0 bottom-0 z-[60] flex items-center gap-3.5 border-t border-line bg-white px-4 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,31,51,0.08)] lg:hidden">
-        <div className="flex max-w-[40%] min-w-0 flex-none flex-col">
-          <span className="text-[17px] font-bold whitespace-nowrap">{formatPrice(p.price)}</span>
-          <span className="truncate text-[11px] text-muted">{p.name}</span>
+        <span className="flex-none text-[1.0625rem] font-bold whitespace-nowrap tabular-nums">{formatPrice(p.price)}</span>
+        <div className="min-w-0 flex-1">
+          <AddButton product={p} qty={qty} full short />
         </div>
-        <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-wa h-[52px] flex-1 tracking-[0.12em]">
-          <WhatsAppIcon size={18} className="flex-none" />
-          {requestLabel(p, true)}
-        </button>
+        {count > 0 && (
+          <button
+            onClick={openOrder}
+            aria-label="Ver pedido"
+            className="relative flex size-14 flex-none items-center justify-center border border-navy"
+          >
+            <BagIcon size={22} />
+            <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums">
+              {count}
+            </span>
+          </button>
+        )}
       </div>
     </>
   )

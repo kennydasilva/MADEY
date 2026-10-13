@@ -96,8 +96,8 @@ const pages: Page[] = [
   },
   {
     path: '/entregas-e-pagamentos',
-    title: 'Entregas e pagamentos — MADEY',
-    description: 'Como encomendar, entregas, pagamento e trocas na MADEY.',
+    title: 'Encomendas, entregas e pagamentos — MADEY',
+    description: 'Como juntar artigos ao pedido e encomendar pelo WhatsApp: entregas, pagamento e trocas na MADEY.',
     image: ogImage('hero'),
   },
   ...PRODUCTS.map(productPage),

@@ -3,7 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Footer } from './Footer'
 import { AnnouncementBar, Header } from './Header'
 import { MobileMenu } from './MobileMenu'
-import { QuickView, SearchOverlay, Toast, WhatsAppModal } from './Overlays'
+import { OrderBar, OrderPanel } from './OrderPanel'
+import { SearchOverlay, Toast, WhatsAppModal } from './Overlays'
 
 /** Ao mudar de página volta ao topo; com #âncora desliza até à secção. */
 function useScrollOnNavigate() {
@@ -36,8 +37,9 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <OrderBar />
       <MobileMenu />
-      <QuickView />
+      <OrderPanel />
       <SearchOverlay />
       <WhatsAppModal />
       <Toast />

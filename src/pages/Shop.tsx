@@ -7,7 +7,8 @@ import { GENERAL_MESSAGE, countLabel, whatsappUrl } from '../lib/format'
 import { usePageTitle } from '../lib/title'
 import { EMPTY_FILTERS, filterProducts, filtersToSearch, parseFilters, type ShopFilters } from '../lib/shop'
 
-const PER_PAGE = 6
+// O catálogo cabe numa página; a paginação só aparece quando crescer.
+const PER_PAGE = 12
 
 interface FilterOption {
   label: string
@@ -19,7 +20,7 @@ interface FilterOption {
 function FilterGroup({ title, options }: { title: string; options: FilterOption[] }) {
   return (
     <div className="flex flex-col">
-      <span className="eyebrow mb-2.5">{title}</span>
+      <span className="mb-2.5 text-sm font-bold">{title}</span>
       {options.map((o) => (
         <button
           key={o.label}
@@ -34,7 +35,7 @@ function FilterGroup({ title, options }: { title: string; options: FilterOption[
             {o.on && <CheckIcon size={10} />}
           </span>
           <span className="flex-1">{o.label}</span>
-          <span className="text-xs text-faint">{o.count}</span>
+          <span className="text-caption text-faint tabular-nums">{o.count}</span>
         </button>
       ))}
     </div>
@@ -109,14 +110,14 @@ export default function Shop() {
 
   return (
     <section className="wrap pt-[clamp(36px,5vw,72px)] pb-[clamp(64px,8vw,112px)]">
-      <div className="mb-4 flex gap-2 text-[11px] font-semibold tracking-[0.2em] text-muted uppercase">
-        <Link to="/" className="text-muted hover:text-navy">
+      <nav aria-label="Caminho" className="mb-4 flex gap-2 text-caption text-muted">
+        <Link to="/" className="hover:text-navy">
           Início
         </Link>
         <span>/</span>
-        <span>Loja</span>
-      </div>
-      <h1 className="display mb-[clamp(24px,3vw,36px)] text-[clamp(40px,5vw,64px)] leading-[1.02]">{title}</h1>
+        <span className="text-navy">Loja</span>
+      </nav>
+      <h1 className="display mb-[clamp(24px,3vw,36px)] text-[clamp(2.5rem,1.6rem+3.4vw,4rem)] leading-[1.02]">{title}</h1>
 
       <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-y border-line py-4">
         <div className="flex min-w-[min(100%,280px)] flex-1 flex-wrap items-center gap-x-4 gap-y-3">
@@ -127,7 +128,7 @@ export default function Shop() {
             aria-label="Pesquisar na loja"
             className="h-11 w-[min(320px,100%)] border border-faint bg-white px-4 text-base placeholder:text-faint focus:border-navy lg:text-sm"
           />
-          <span role="status" className="text-[13px] text-muted">
+          <span role="status" className="text-sm text-muted">
             {countLabel(all.length)}
           </span>
           <button
@@ -138,7 +139,7 @@ export default function Shop() {
             {chips.length ? `Filtros (${chips.length})` : 'Filtros'}
           </button>
         </div>
-        <label className="flex items-center gap-2.5 text-[13px] text-muted">
+        <label className="flex items-center gap-2.5 text-sm text-muted">
           Ordenar
           <select
             value={f.sort}
@@ -187,22 +188,19 @@ export default function Shop() {
           {all.length > 0 ? (
             <>
               <ProductGrid products={visible} columns={3} />
-              <div className="mt-14 flex flex-col items-center gap-3.5">
-                <span className="text-xs text-muted">
-                  A mostrar {visible.length} de {all.length}
-                </span>
-                <div className="h-px w-[200px] bg-line">
-                  <div className="h-px bg-navy" style={{ width: `${(visible.length / all.length) * 100}%` }} />
-                </div>
-                {all.length > shown && (
+              {all.length > shown && (
+                <div className="mt-14 flex flex-col items-center gap-3.5">
+                  <span className="text-caption text-muted">
+                    A mostrar {visible.length} de {all.length}
+                  </span>
                   <button
-                    onClick={() => setShown((s) => s + PER_PAGE)}
-                    className="btn btn-outline mt-1.5 h-12 px-7 hover:bg-navy hover:text-white"
+                    onClick={() => setShown((n) => n + PER_PAGE)}
+                    className="btn btn-outline h-12 px-7 hover:bg-navy hover:text-white"
                   >
                     Carregar mais
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="flex flex-col items-center gap-3.5 border border-line px-[clamp(24px,4vw,56px)] py-[clamp(40px,6vw,80px)] text-center">

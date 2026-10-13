@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useOrder } from '../context/order'
 import { useUi } from '../context/ui'
-import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
+import { GENERAL_MESSAGE, itemsLabel, whatsappUrl } from '../lib/format'
 import { useNavItems } from '../lib/nav'
-import { MenuIcon, SearchIcon, WhatsAppIcon } from './Icons'
+import { BagIcon, MenuIcon, SearchIcon, WhatsAppIcon } from './Icons'
 
 export function AnnouncementBar() {
   return (
     <div className="on-dark bg-navy px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.16em] text-white uppercase">
-      Novidades G-Shock e Seiko já disponíveis · Encomende pelo WhatsApp
+      Novidades G-Shock e Seiko já disponíveis<span className="hidden sm:inline"> · Encomende pelo WhatsApp</span>
     </div>
   )
 }
 
 export function Header() {
-  const { openMenu, openSearch } = useUi()
+  const { openMenu, openSearch, openOrder } = useUi()
+  const { count } = useOrder()
   const nav = useNavItems()
   const [scrolled, setScrolled] = useState(false)
 
@@ -55,7 +57,7 @@ export function Header() {
               to={n.to}
               onClick={n.onClick}
               aria-current={n.active ? 'page' : undefined}
-              className={`border-b py-1.5 text-xs font-medium tracking-[0.14em] uppercase hover:border-navy ${n.active ? 'border-navy' : 'border-transparent'}`}
+              className={`border-b py-1.5 text-xs font-semibold tracking-[0.14em] uppercase hover:border-navy ${n.active ? 'border-navy' : 'border-transparent'}`}
             >
               {n.label}
             </Link>
@@ -74,11 +76,28 @@ export function Header() {
             href={whatsappUrl(GENERAL_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className="-mr-2.5 flex size-11 items-center justify-center text-wa hover:bg-mist"
+            aria-label="Falar no WhatsApp"
+            className="flex size-11 items-center justify-center gap-2 hover:bg-mist lg:w-auto lg:px-3"
           >
-            <WhatsAppIcon size={21} />
+            <WhatsAppIcon size={21} className="text-wa" />
+            <span className="hidden text-caption font-semibold lg:inline">WhatsApp</span>
           </a>
+          <button
+            onClick={openOrder}
+            aria-label={count ? `Ver pedido, ${itemsLabel(count)}` : 'Ver pedido'}
+            className="relative -mr-2.5 flex size-11 items-center justify-center hover:bg-mist"
+          >
+            <BagIcon size={22} />
+            {count > 0 && (
+              <span className="absolute top-1 right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums">
+                {count}
+              </span>
+            )}
+          </button>
+          {/* Uma só frase completa para leitores de ecrã sempre que o pedido muda. */}
+          <span role="status" aria-atomic="true" className="sr-only">
+            {count ? `${itemsLabel(count)} no pedido` : ''}
+          </span>
         </div>
       </div>
     </header>

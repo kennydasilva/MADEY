@@ -1,6 +1,6 @@
 # MADEY
 
-Website da MADEY — catálogo de relógios e acessórios com pedidos pelo WhatsApp.
+Website da MADEY — catálogo de relógios e acessórios. O cliente junta artigos ao pedido e envia a lista, com o total, pelo WhatsApp.
 
 Vite + React + TypeScript + Tailwind CSS.
 
@@ -21,6 +21,11 @@ npm run preview  # servir o build
 | Produtos, categorias, intervalos de preço | `src/data/products.ts` |
 | Fotografias | `imagens/` |
 | Cores e tipografia | `src/index.css` (bloco `@theme`) |
+| Passos de "Como encomendar" | `src/components/OrderSteps.tsx` |
+| Texto da mensagem do WhatsApp | `src/lib/format.ts` |
+
+O pedido fica guardado no browser do cliente (`localStorage`), sem servidor nem conta.
+Contexto do produto para trabalho de design: `PRODUCT.md`.
 
 ### Imagens
 

@@ -1,24 +1,25 @@
 import { track } from '@vercel/analytics'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import type { Product } from '../data/products'
-import { buildWhatsAppMessage, whatsappUrl } from '../lib/format'
+import { messageFor, whatsappUrl, type OrderLine } from '../lib/format'
 
 interface WaRequest {
-  product: Product
-  qty: number
+  lines: OrderLine[]
 }
 
 interface UiState {
   menuOpen: boolean
   searchOpen: boolean
-  quick: Product | null
+  orderOpen: boolean
   wa: WaRequest | null
   toast: string | null
   openMenu: () => void
   openSearch: () => void
-  openQuick: (p: Product) => void
+  openOrder: () => void
   /** No telemóvel abre logo o WhatsApp; no desktop mostra primeiro a mensagem para confirmar ou copiar. */
   requestWhatsApp: (p: Product, qty?: number) => void
+  /** Envia o pedido completo, com todos os artigos e o total. */
+  requestOrder: (lines: OrderLine[]) => void
   closeAll: () => void
   flash: (message: string) => void
   copy: (text: string, message: string) => Promise<void>
@@ -29,7 +30,7 @@ const UiContext = createContext<UiState | null>(null)
 export function UiProvider({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [quick, setQuick] = useState<Product | null>(null)
+  const [orderOpen, setOrderOpen] = useState(false)
   const [wa, setWa] = useState<WaRequest | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<number | undefined>(undefined)
@@ -37,7 +38,7 @@ export function UiProvider({ children }: { children: ReactNode }) {
   const closeAll = useCallback(() => {
     setMenuOpen(false)
     setSearchOpen(false)
-    setQuick(null)
+    setOrderOpen(false)
     setWa(null)
   }, [])
 
@@ -65,16 +66,27 @@ export function UiProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [closeAll])
 
-  const overlayOpen = menuOpen || searchOpen || !!quick || !!wa
+  const overlayOpen = menuOpen || searchOpen || orderOpen || !!wa
   useEffect(() => {
     document.body.style.overflow = overlayOpen ? 'hidden' : ''
   }, [overlayOpen])
+
+  const send = useCallback((lines: OrderLine[]) => {
+    setOrderOpen(false)
+    setSearchOpen(false)
+    // O próprio WhatsApp já mostra a mensagem antes de enviar: em ecrãs táteis o modal seria um passo a mais.
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      window.open(whatsappUrl(messageFor(lines)), '_blank', 'noopener')
+      return
+    }
+    setWa({ lines })
+  }, [])
 
   const value = useMemo<UiState>(
     () => ({
       menuOpen,
       searchOpen,
-      quick,
+      orderOpen,
       wa,
       toast,
       openMenu: () => setMenuOpen(true),
@@ -82,23 +94,30 @@ export function UiProvider({ children }: { children: ReactNode }) {
         setMenuOpen(false)
         setSearchOpen(true)
       },
-      openQuick: (p) => setQuick(p),
-      requestWhatsApp: (product, qty = 1) => {
-        setQuick(null)
+      openOrder: () => {
+        setMenuOpen(false)
         setSearchOpen(false)
-        track('pedido_whatsapp', { produto: product.name, referencia: product.ref, estado: product.stock })
-        // O próprio WhatsApp já mostra a mensagem antes de enviar: em ecrãs táteis o modal seria um passo a mais.
-        if (window.matchMedia('(pointer: coarse)').matches) {
-          window.open(whatsappUrl(buildWhatsAppMessage(product, qty)), '_blank', 'noopener')
-          return
-        }
-        setWa({ product, qty })
+        setOrderOpen(true)
+      },
+      requestWhatsApp: (product, qty = 1) => {
+        track('pedido_whatsapp', { produto: product.name, referencia: product.ref, estado: product.stock, artigos: qty })
+        send([{ product, qty }])
+      },
+      requestOrder: (lines) => {
+        if (!lines.length) return
+        track('pedido_whatsapp', {
+          produto: lines.length === 1 ? lines[0].product.name : 'Pedido com vários artigos',
+          referencia: lines.map((l) => l.product.ref).join(', '),
+          artigos: lines.reduce((n, l) => n + l.qty, 0),
+          total: lines.reduce((n, l) => n + l.product.price * l.qty, 0),
+        })
+        send(lines)
       },
       closeAll,
       flash,
       copy,
     }),
-    [menuOpen, searchOpen, quick, wa, toast, closeAll, flash, copy],
+    [menuOpen, searchOpen, orderOpen, wa, toast, closeAll, flash, copy, send],
   )
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>

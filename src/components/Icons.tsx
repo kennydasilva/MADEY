@@ -50,23 +50,6 @@ export const CheckIcon = (p: IconProps) => (
     <path d="M20 6 9 17l-5-5" />
   </Icon>
 )
-export const ChatIcon = (p: IconProps) => (
-  <Icon strokeWidth={1.5} {...p}>
-    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-  </Icon>
-)
-export const LayersIcon = (p: IconProps) => (
-  <Icon strokeWidth={1.5} {...p}>
-    <path d="m12 2 10 5-10 5L2 7l10-5Z" />
-    <path d="m2 12 10 5 10-5M2 17l10 5 10-5" />
-  </Icon>
-)
-export const TagIcon = (p: IconProps) => (
-  <Icon strokeWidth={1.5} {...p}>
-    <path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4Z" />
-    <circle cx="7.5" cy="7.5" r="1" />
-  </Icon>
-)
 export const ShareIcon = (p: IconProps) => (
   <Icon strokeWidth={1.8} {...p}>
     <circle cx="18" cy="5" r="3" />
@@ -86,5 +69,26 @@ export const ImageIcon = (p: IconProps) => (
     <rect x="3" y="3" width="18" height="18" />
     <circle cx="9" cy="9" r="2" />
     <path d="m21 15-5-5L5 21" />
+  </Icon>
+)
+export const BagIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M5 8h14l-1 13H6L5 8Z" />
+    <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+  </Icon>
+)
+export const PlusIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.8} {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Icon>
+)
+export const MinusIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.8} {...p}>
+    <path d="M5 12h14" />
+  </Icon>
+)
+export const TrashIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.7} strokeLinejoin="round" {...p}>
+    <path d="M4 7h16M10 7V4h4v3M6 7l1 14h10l1-14M10 11v6M14 11v6" />
   </Icon>
 )

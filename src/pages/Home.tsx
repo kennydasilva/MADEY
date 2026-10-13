@@ -1,25 +1,34 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowIcon, ChatIcon, LayersIcon, SearchIcon, TagIcon } from '../components/Icons'
+import { ArrowIcon, WhatsAppIcon } from '../components/Icons'
+import { OrderSteps } from '../components/OrderSteps'
 import { Photo } from '../components/Photo'
-import { ProductGrid } from '../components/ProductCard'
+import { AddButton, Price, ProductGrid, StockLine } from '../components/ProductCard'
+import { config } from '../config'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
-import { countLabel } from '../lib/format'
+import { GENERAL_MESSAGE, productPath, whatsappUrl } from '../lib/format'
 import { scrollToId } from '../lib/nav'
 import { shopUrl, sortProducts } from '../lib/shop'
 import { usePageTitle } from '../lib/title'
 
-function SectionHeading({ eyebrow, title, action }: { eyebrow: string; title: string; action?: ReactNode }) {
+const section = 'py-[clamp(64px,8vw,120px)]'
+
+function SectionHeading({ title, action }: { title: string; action?: ReactNode }) {
   return (
-    <div className="mb-[clamp(28px,4vw,48px)] flex flex-wrap items-end justify-between gap-4">
-      <div className="flex flex-col gap-3">
-        <span className="eyebrow text-muted">{eyebrow}</span>
-        <h2 className="display text-[clamp(34px,4vw,52px)] text-balance">{title}</h2>
-      </div>
+    <div className="mb-[clamp(28px,4vw,48px)] flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+      <h2 className="display text-headline text-balance">{title}</h2>
       {action}
     </div>
   )
 }
+
+// A loja própria ("MADEY Selection") não é uma marca de relógios para anunciar no hero.
+const WATCH_BRANDS = BRANDS.filter((b) => !b.startsWith('MADEY'))
+const NEWEST = sortProducts(PRODUCTS, 'novidades').slice(0, 4)
+/** Destaque editorial: o relógio em stock de maior valor que não esteja já nas novidades. */
+const SPOTLIGHT = PRODUCTS.filter((p) => !p.accessory && p.stock === 'in' && !NEWEST.includes(p)).sort(
+  (a, b) => b.price - a.price,
+)[0]
 
 function Hero() {
   return (
@@ -30,25 +39,112 @@ function Hero() {
         alt="Relógio cronógrafo em aço com mostrador azul"
         loading="eager"
         fetchPriority="high"
-        className="h-[340px] w-full object-cover object-[78%_center] sm:h-[460px] lg:absolute lg:inset-0 lg:h-full"
+        className="h-[300px] w-full object-cover object-[78%_center] sm:h-[420px] lg:absolute lg:inset-0 lg:h-full"
       />
-      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-3/5 bg-linear-to-r from-navy-deep/80 to-transparent lg:block" />
-      <div className="wrap relative flex items-center py-[clamp(40px,6vw,96px)] lg:min-h-[clamp(560px,78vh,760px)]">
-        <div className="flex max-w-[560px] flex-col gap-6">
-          <span className="text-[11px] font-semibold tracking-[0.24em] text-line uppercase">Coleção 2026</span>
-          <h1 className="display text-[clamp(48px,5.6vw,84px)] leading-[1.02] tracking-[-0.01em] text-balance">
-            Time, Defined by You.
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-3/5 bg-linear-to-r from-navy-deep/85 to-transparent lg:block" />
+      <div className="wrap relative flex items-center py-[clamp(40px,6vw,96px)] lg:min-h-[clamp(560px,76vh,740px)]">
+        <div className="flex max-w-[700px] flex-col gap-6">
+          <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
+            Relógios escolhidos, entregues em Maputo.
           </h1>
-          <p className="max-w-[36ch] text-[17px] leading-[1.6] text-line">
-            Descubra relógios que unem precisão, carácter e design intemporal.
+          <p className="max-w-[44ch] text-lead text-line">
+            {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais. Junte ao pedido os que
+            quiser e envie a lista pelo WhatsApp.
           </p>
           <div className="mt-2 flex flex-wrap gap-3">
             <Link to={shopUrl()} className="btn btn-light">
-              Explorar coleção
+              Ver relógios
             </Link>
-            <button onClick={() => scrollToId('marcas')} className="btn border-line text-white hover:bg-navy-soft">
-              Descobrir marcas
+            <button onClick={() => scrollToId('como-funciona')} className="btn border-line text-white hover:bg-navy-soft">
+              Como encomendar
             </button>
+          </div>
+          <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/20 pt-5 text-caption text-line">
+            <li>Preços em meticais</li>
+            <li>Pedido pelo WhatsApp, sem criar conta</li>
+            <li>{config.location}</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function Newest() {
+  return (
+    <section className={`wrap ${section}`}>
+      <SectionHeading
+        title="Acabados de chegar"
+        action={
+          <Link to={shopUrl()} className="link-arrow">
+            Ver os {PRODUCTS.length} artigos <ArrowIcon size={14} strokeWidth={2} />
+          </Link>
+        }
+      />
+      <ProductGrid products={NEWEST} />
+    </section>
+  )
+}
+
+function HowItWorks() {
+  return (
+    <section id="como-funciona" className="on-dark bg-navy text-white">
+      <div className={`wrap ${section}`}>
+        <SectionHeading
+          title="Encomendar leva três passos"
+          action={
+            <Link to="/entregas-e-pagamentos" className="link-arrow">
+              Entregas e pagamentos <ArrowIcon size={14} strokeWidth={2} />
+            </Link>
+          }
+        />
+        <OrderSteps dark />
+      </div>
+    </section>
+  )
+}
+
+function Spotlight() {
+  const p = SPOTLIGHT
+  if (!p) return null
+  return (
+    <section className={`wrap ${section}`}>
+      <div className="grid items-center gap-[clamp(28px,5vw,88px)] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <Link to={productPath(p)} className="group relative block aspect-[4/5] overflow-hidden bg-stone sm:aspect-[5/4] lg:aspect-[4/5]">
+          <Photo
+            name={p.image}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            alt={p.name}
+            className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        </Link>
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
+            <h2 className="display text-headline text-balance">{p.name}</h2>
+            <span className="text-muted">
+              {p.brand} · {p.model}
+            </span>
+          </div>
+          <p className="max-w-[52ch] text-lead text-pretty text-muted">{p.desc}</p>
+          <dl className="grid grid-cols-2 gap-x-8 border-t border-line">
+            {Object.entries(p.specs).map(([k, v]) => (
+              <div key={k} className="flex flex-col gap-0.5 border-b border-line py-3.5">
+                <dt className="text-caption text-muted">{k}</dt>
+                <dd className="font-semibold">{v}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+            <Price product={p} className="text-[1.75rem]" />
+            <StockLine product={p} />
+          </div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
+            <div className="sm:w-[280px]">
+              <AddButton product={p} full />
+            </div>
+            <Link to={productPath(p)} className="link-arrow self-start">
+              Ver detalhes <ArrowIcon size={14} strokeWidth={2} />
+            </Link>
           </div>
         </div>
       </div>
@@ -56,159 +152,108 @@ function Hero() {
   )
 }
 
-const COLLECTIONS: { cat: CategoryId; title: string; image: string; dark?: boolean; place: string; sizes?: string }[] = [
-  { cat: 'homem', title: 'Homem', image: 'p-boss', place: 'col-span-2 lg:col-span-1 lg:row-span-2', sizes: '(min-width: 1024px) 50vw, 100vw' },
-  { cat: 'senhora', title: 'Senhora', image: 'c-women', dark: true, place: '' },
-  { cat: 'desporto', title: 'Desporto & Digital', image: 'p-gshock', place: '' },
-  { cat: 'classico', title: 'Clássico & Elegante', image: 'p-prx', place: '' },
-  { cat: 'acessorios', title: 'Acessórios', image: 'p-case', place: '' },
+const count = (cat: CategoryId) => PRODUCTS.filter((p) => p.cats.includes(cat)).length
+
+// Fotografias que não se repetem nas secções vizinhas (novidades e destaque).
+const COLLECTIONS: { cat: CategoryId; title: string; image: string }[] = [
+  { cat: 'homem', title: 'Homem', image: 'p-vintage' },
+  { cat: 'senhora', title: 'Senhora', image: 'c-women' },
+  { cat: 'classico', title: 'Clássico & Elegante', image: 'p-edifice' },
+  { cat: 'acessorios', title: 'Acessórios', image: 'p-case' },
 ]
 
 function Collections() {
   return (
-    <section className="wrap pt-[clamp(64px,8vw,112px)]">
-      <SectionHeading eyebrow="Coleções" title="Encontre o seu estilo" />
-      <div className="grid auto-rows-[200px] grid-cols-2 gap-3 sm:auto-rows-[260px] lg:auto-rows-[clamp(220px,22vw,280px)] lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
-        {COLLECTIONS.map((c) => (
+    <section className="bg-mist">
+      <div className={`wrap ${section}`}>
+        <SectionHeading title="Encontre o seu estilo" />
+        <div className="grid gap-x-3.5 gap-y-8 sm:gap-x-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
           <Link
-            key={c.cat}
-            to={shopUrl({ cats: [c.cat] })}
-            className={`group relative min-w-0 overflow-hidden bg-stone ${c.dark ? 'text-white hover:text-white' : ''} ${c.place}`}
+            to={shopUrl({ cats: ['desporto'] })}
+            className="on-dark group relative flex min-h-[380px] items-end overflow-hidden bg-navy-deep text-white lg:min-h-0"
           >
             <Photo
-              name={c.image}
-              sizes={c.sizes ?? '(min-width: 1024px) 25vw, 50vw'}
-              alt=""
-              className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              name="promo"
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              alt="Relógio desportivo no pulso, com a cidade à noite em fundo"
+              className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
-            <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t to-transparent ${c.dark ? 'h-[45%] from-navy/75' : 'h-1/2 from-white from-15% via-white/80 via-50%'}`}
-            />
-            <div className="absolute inset-x-[clamp(16px,2vw,24px)] bottom-[clamp(14px,2vw,22px)] flex items-end justify-between gap-3">
-              <span className="display text-[clamp(22px,2.4vw,32px)]">{c.title}</span>
-              <ArrowIcon className="mb-1 flex-none transition-transform group-hover:translate-x-1" />
+            <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-navy-deep/90 via-navy-deep/35 via-45% to-transparent" />
+            <div className="relative flex flex-col gap-3 p-[clamp(20px,3vw,40px)]">
+              <h3 className="display text-[clamp(2rem,1.5rem+2vw,3rem)] text-balance">
+                Desporto &amp; Digital: feito para a cidade, pronto para tudo.
+              </h3>
+              <p className="max-w-[46ch] text-line">
+                Resistência, leitura rápida e um design que acompanha cada movimento.
+              </p>
+              <span className="link-arrow mt-2 self-start">
+                Ver {count('desporto')} relógios <ArrowIcon size={14} strokeWidth={2} />
+              </span>
             </div>
           </Link>
-        ))}
-      </div>
-    </section>
-  )
-}
 
-function Featured() {
-  return (
-    <section className="wrap py-[clamp(64px,8vw,112px)]">
-      <SectionHeading
-        eyebrow="Em destaque"
-        title="Seleção MADEY"
-        action={
-          <Link
-            to={shopUrl()}
-            className="flex items-center gap-2.5 border-b border-navy py-2 text-[11px] font-bold tracking-[0.2em] uppercase"
-          >
-            Ver todos <ArrowIcon size={14} strokeWidth={2} />
-          </Link>
-        }
-      />
-      <ProductGrid products={sortProducts(PRODUCTS, 'destaques')} />
-    </section>
-  )
-}
-
-function Brands() {
-  return (
-    <section id="marcas" className="border-t border-line bg-mist">
-      <div className="wrap flex flex-col items-center gap-8 py-[clamp(56px,7vw,96px)]">
-        <span className="eyebrow text-muted">Marcas disponíveis</span>
-        <div className="grid w-full grid-cols-2 border-t border-l border-line sm:grid-cols-3 lg:grid-cols-6">
-          {BRANDS.map((b) => (
-            <Link
-              key={b}
-              to={shopUrl({ brands: [b] })}
-              className="flex h-[clamp(88px,9vw,112px)] flex-col items-center justify-center gap-0.5 border-r border-b border-line bg-white px-3 text-center transition-colors hover:bg-navy hover:text-white"
-            >
-              <span className="display text-[clamp(22px,2vw,28px)] leading-[1.1]">{b}</span>
-              <span className="text-[11px] tracking-[0.08em] opacity-70">
-                {countLabel(PRODUCTS.filter((p) => p.brand === b).length)}
-              </span>
-            </Link>
-          ))}
+          <div className="grid grid-cols-2 gap-x-3.5 gap-y-7 sm:gap-x-6">
+            {COLLECTIONS.map((c) => (
+              <Link key={c.cat} to={shopUrl({ cats: [c.cat] })} className="group flex min-w-0 flex-col gap-3.5">
+                <div className="relative aspect-[5/4] overflow-hidden bg-stone">
+                  <Photo
+                    name={c.image}
+                    sizes="(min-width: 1024px) 22vw, 50vw"
+                    alt=""
+                    className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-serif text-title leading-[1.15] font-medium underline-offset-4 group-hover:underline">
+                    {c.title}
+                  </span>
+                  <ArrowIcon size={16} className="flex-none translate-y-0.5 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-        <p className="max-w-[60ch] text-center text-xs text-muted">
-          A MADEY é uma loja independente e não é distribuidora oficial das marcas apresentadas.
-        </p>
       </div>
     </section>
   )
 }
 
-function Promo() {
+function BrandsAndAsk() {
   return (
-    <section className="on-dark grid bg-navy text-white lg:grid-cols-2">
-      <div className="relative min-h-[clamp(320px,40vw,520px)] bg-navy-deep">
-        <Photo
-          name="promo"
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          alt="Relógio desportivo no pulso, com a cidade à noite em fundo"
-          className="absolute inset-0 size-full object-cover"
-        />
-      </div>
-      <div className="flex items-center px-[clamp(20px,5vw,96px)] py-[clamp(40px,6vw,96px)]">
-        <div className="flex max-w-[480px] flex-col gap-[22px]">
-          <span className="eyebrow text-line">Desporto &amp; Digital</span>
-          <h2 className="display text-[clamp(36px,4vw,56px)] leading-[1.08] text-balance">
-            Feito para a cidade. Pronto para tudo.
-          </h2>
-          <p className="text-base leading-[1.65] text-line">
-            Resistência, leitura rápida e um design que acompanha cada movimento. Conheça a nossa seleção G-Shock e
-            Casio.
+    <section id="marcas" className={`wrap ${section}`}>
+      <div className="grid gap-[clamp(40px,6vw,96px)] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <div className="flex flex-col gap-6">
+          <h2 className="display text-headline">Marcas na loja</h2>
+          <ul className="flex flex-wrap gap-x-[clamp(20px,3vw,40px)] gap-y-1 border-t border-line pt-5">
+            {BRANDS.map((b) => (
+              <li key={b}>
+                <Link
+                  to={shopUrl({ brands: [b] })}
+                  className="display flex min-h-11 items-center text-[clamp(1.5rem,1.2rem+1.2vw,2.125rem)] text-navy underline-offset-[6px] hover:underline"
+                >
+                  {b}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="max-w-[60ch] text-caption text-muted">
+            A MADEY é uma loja independente e não é distribuidora oficial das marcas apresentadas.
           </p>
-          <div className="mt-2 flex">
-            <Link to={shopUrl({ cats: ['desporto'] })} className="btn btn-light">
-              Ver coleção desporto
-            </Link>
-          </div>
         </div>
-      </div>
-    </section>
-  )
-}
 
-const REASONS = [
-  {
-    icon: ChatIcon,
-    title: 'Atendimento personalizado',
-    text: 'Fale diretamente connosco pelo WhatsApp e tire todas as dúvidas sobre tamanho, bracelete e disponibilidade.',
-  },
-  {
-    icon: SearchIcon,
-    title: 'Pedidos fáceis',
-    text: 'Um clique envia-nos o produto, a referência e o preço. Sem formulários, sem contas.',
-  },
-  {
-    icon: LayersIcon,
-    title: 'Coleções selecionadas',
-    text: 'Uma curadoria de modelos com estilo e carácter, do desportivo ao clássico.',
-  },
-  {
-    icon: TagIcon,
-    title: 'Preços claros',
-    text: 'Preço em meticais e informação do produto sempre visíveis, antes de nos contactar.',
-  },
-]
-
-function Why() {
-  return (
-    <section className="wrap py-[clamp(64px,8vw,112px)]">
-      <SectionHeading eyebrow="Porquê a MADEY" title="Uma forma simples de escolher o seu relógio" />
-      <div className="grid gap-x-[clamp(24px,3vw,40px)] gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
-        {REASONS.map((r) => (
-          <div key={r.title} className="flex flex-col gap-3 border-t border-line pt-7">
-            <r.icon size={22} strokeWidth={1.5} />
-            <h3 className="display text-[26px] leading-[1.15]">{r.title}</h3>
-            <p className="text-sm leading-[1.65] text-muted">{r.text}</p>
-          </div>
-        ))}
+        <div className="flex flex-col items-start gap-5 bg-mist p-[clamp(24px,3.5vw,48px)]">
+          <h2 className="display text-[clamp(1.75rem,1.3rem+1.6vw,2.5rem)] text-balance">
+            Não encontra o modelo que procura?
+          </h2>
+          <p className="max-w-[44ch] text-muted">
+            Diga-nos a marca e o modelo. Respondemos pelo WhatsApp e ajudamos a encontrar, incluindo artigos sob
+            encomenda.
+          </p>
+          <a href={whatsappUrl(GENERAL_MESSAGE)} target="_blank" rel="noopener noreferrer" className="btn btn-wa mt-1">
+            <WhatsAppIcon size={18} />
+            Perguntar no WhatsApp
+          </a>
+        </div>
       </div>
     </section>
   )
@@ -219,11 +264,11 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Newest />
+      <HowItWorks />
+      <Spotlight />
       <Collections />
-      <Featured />
-      <Brands />
-      <Promo />
-      <Why />
+      <BrandsAndAsk />
     </>
   )
 }

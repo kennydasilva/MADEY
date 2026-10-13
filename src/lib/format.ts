@@ -5,6 +5,12 @@ import { img } from './images'
 export const formatPrice = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' MT'
 
 export const countLabel = (n: number) => `${n} ${n === 1 ? 'produto' : 'produtos'}`
+export const itemsLabel = (n: number) => `${n} ${n === 1 ? 'artigo' : 'artigos'}`
+
+export interface OrderLine {
+  product: Product
+  qty: number
+}
 
 export const productPath = (p: Product) => `/produto/${p.slug}`
 export const productLink = (p: Product) => config.siteUrl + productPath(p)
@@ -37,6 +43,24 @@ export function buildWhatsAppMessage(p: Product, qty: number) {
   lines.push(`Link: ${productLink(p)}`, '', 'Podem confirmar a disponibilidade e dar-me mais informações?')
   return lines.join('\n')
 }
+
+/** Pedido com vários artigos: uma linha por artigo, com referência e link, e o total somado. */
+export function buildOrderMessage(lines: OrderLine[]) {
+  const out = ['Olá, MADEY! Gostaria de encomendar os seguintes artigos:', '']
+  lines.forEach(({ product: p, qty }, i) => {
+    const sum = qty > 1 ? `${qty} × ${formatPrice(p.price)} = ${formatPrice(p.price * qty)}` : formatPrice(p.price)
+    out.push(`${i + 1}. ${p.name} (${p.model})${p.stock === 'order' ? ' — sob encomenda' : ''}`)
+    out.push(`   Ref. ${p.ref} · ${sum}`)
+    out.push(`   ${productLink(p)}`)
+  })
+  const total = lines.reduce((n, l) => n + l.product.price * l.qty, 0)
+  out.push('', `Total estimado: ${formatPrice(total)}`, '', 'Podem confirmar a disponibilidade, o pagamento e a entrega?')
+  return out.join('\n')
+}
+
+/** Um só artigo usa a mensagem detalhada; vários usam a lista com total. */
+export const messageFor = (lines: OrderLine[]) =>
+  lines.length === 1 ? buildWhatsAppMessage(lines[0].product, lines[0].qty) : buildOrderMessage(lines)
 
 export const GENERAL_MESSAGE = 'Olá, MADEY! Gostaria de mais informações sobre os vossos relógios e acessórios.'
 

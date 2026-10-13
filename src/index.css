@@ -15,6 +15,14 @@
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Manrope', system-ui, sans-serif;
+
+  /* Escala tipográfica: etiqueta, legenda, destaque, nome de produto, título de secção, título de página */
+  --text-label: 0.6875rem;
+  --text-caption: 0.8125rem;
+  --text-lead: 1.125rem;
+  --text-title: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
+  --text-headline: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+  --text-display: clamp(2.75rem, 1.6rem + 3.6vw, 4.5rem);
 }
 
 @layer base {
@@ -23,14 +31,15 @@
     background: #fff;
     color: var(--color-navy);
     font-family: var(--font-sans);
-    font-size: 15px;
-    line-height: 1.55;
+    font-size: 16px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
   html {
     /* O foco e as âncoras nunca ficam escondidos atrás do header fixo. */
     scroll-padding-top: 88px;
+    scrollbar-color: var(--color-faint) transparent;
   }
   button,
   a {
@@ -50,7 +59,12 @@
     outline-offset: 2px;
   }
   ::selection {
-    background: var(--color-line);
+    background: var(--color-navy);
+    color: #fff;
+  }
+  .on-dark ::selection {
+    background: #fff;
+    color: var(--color-navy);
   }
   /* Em fundos azul-marinho o anel de foco escuro desaparecia. */
   .on-dark :focus-visible,
@@ -109,6 +123,28 @@
   }
   .panel-pop {
     animation: panel-pop 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  /* O detalhe do cartão abre de cima para baixo, a partir do cartão que o chamou. */
+  .panel-reveal {
+    animation: panel-reveal 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  /* Link de texto com seta: "Ver todos", "Ver página completa"… */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-block: 8px;
+    border-bottom: 1px solid currentColor;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .link-arrow svg {
+    transition: transform 0.2s;
+  }
+  .link-arrow:hover svg {
+    transform: translateX(4px);
   }
   .eyebrow {
     font-size: 11px;
@@ -194,6 +230,16 @@
   from {
     transform: translateY(-16px);
     opacity: 0;
+  }
+}
+@keyframes panel-reveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: inset(0);
+    opacity: 1;
   }
 }
 @keyframes panel-pop {
