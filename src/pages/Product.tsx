@@ -230,9 +230,10 @@ export default function ProductPage() {
         </div>
         {count > 0 && (
           <button
+            key={count}
             onClick={openOrder}
             aria-label="Ver pedido"
-            className="relative flex size-14 flex-none items-center justify-center border border-navy"
+            className="bump relative flex size-14 flex-none items-center justify-center border border-navy"
           >
             <BagIcon size={22} />
             <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums">

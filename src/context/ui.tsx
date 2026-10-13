@@ -11,6 +11,9 @@ interface UiState {
   menuOpen: boolean
   searchOpen: boolean
   orderOpen: boolean
+  /** Preferência do utilizador para a coluna fixa do pedido em ecrãs largos. */
+  dockOpen: boolean
+  setDockOpen: (open: boolean) => void
   wa: WaRequest | null
   toast: string | null
   openMenu: () => void
@@ -31,6 +34,7 @@ export function UiProvider({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [orderOpen, setOrderOpen] = useState(false)
+  const [dockOpen, setDockOpen] = useState(true)
   const [wa, setWa] = useState<WaRequest | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<number | undefined>(undefined)
@@ -87,6 +91,8 @@ export function UiProvider({ children }: { children: ReactNode }) {
       menuOpen,
       searchOpen,
       orderOpen,
+      dockOpen,
+      setDockOpen,
       wa,
       toast,
       openMenu: () => setMenuOpen(true),
@@ -117,7 +123,7 @@ export function UiProvider({ children }: { children: ReactNode }) {
       flash,
       copy,
     }),
-    [menuOpen, searchOpen, orderOpen, wa, toast, closeAll, flash, copy, send],
+    [menuOpen, searchOpen, orderOpen, dockOpen, wa, toast, closeAll, flash, copy, send],
   )
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useOrder } from '../context/order'
 import { useUi } from '../context/ui'
-import { GENERAL_MESSAGE, itemsLabel, whatsappUrl } from '../lib/format'
+import { GENERAL_MESSAGE, formatPrice, itemsLabel, whatsappUrl } from '../lib/format'
+import { useOrderView } from '../lib/orderView'
 import { useNavItems } from '../lib/nav'
 import { BagIcon, MenuIcon, SearchIcon, WhatsAppIcon } from './Icons'
 
@@ -15,8 +16,9 @@ export function AnnouncementBar() {
 }
 
 export function Header() {
-  const { openMenu, openSearch, openOrder } = useUi()
-  const { count } = useOrder()
+  const { openMenu, openSearch } = useUi()
+  const { count, total } = useOrder()
+  const { docked, toggle } = useOrderView()
   const nav = useNavItems()
   const [scrolled, setScrolled] = useState(false)
 
@@ -77,19 +79,25 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Falar no WhatsApp"
-            className="flex size-11 items-center justify-center gap-2 hover:bg-mist lg:w-auto lg:px-3"
+            className="flex size-11 items-center justify-center gap-2 hover:bg-mist xl:w-auto xl:px-3"
           >
             <WhatsAppIcon size={21} className="text-wa" />
-            <span className="hidden text-caption font-semibold lg:inline">WhatsApp</span>
+            <span className="hidden text-caption font-semibold xl:inline">WhatsApp</span>
           </a>
           <button
-            onClick={openOrder}
+            key={count}
+            onClick={toggle}
             aria-label={count ? `Ver pedido, ${itemsLabel(count)}` : 'Ver pedido'}
-            className="relative -mr-2.5 flex size-11 items-center justify-center hover:bg-mist"
+            aria-expanded={docked || undefined}
+            className={`relative -mr-2.5 flex size-11 items-center justify-center gap-2.5 lg:mr-0 lg:ml-2 lg:w-auto lg:px-4 ${count ? 'bump lg:bg-navy lg:text-white lg:hover:bg-navy-soft' : 'hover:bg-mist lg:border lg:border-line'}`}
           >
-            <BagIcon size={22} />
+            <BagIcon size={21} className="flex-none" />
+            {/* Com a coluna do pedido aberta o total já está à vista: o botão fica curto. */}
+            <span className="hidden text-caption font-semibold whitespace-nowrap tabular-nums lg:inline">
+              {count ? `Pedido · ${count}${docked ? '' : ` · ${formatPrice(total)}`}` : 'Pedido'}
+            </span>
             {count > 0 && (
-              <span className="absolute top-1 right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums">
+              <span className="absolute top-1 right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums lg:hidden">
                 {count}
               </span>
             )}

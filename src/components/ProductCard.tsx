@@ -4,6 +4,7 @@ import { useOrder } from '../context/order'
 import { useUi } from '../context/ui'
 import { STOCK_INFO, badgeOf, isSoldOut, type Product } from '../data/products'
 import { formatPrice, productPath } from '../lib/format'
+import { useOrderView } from '../lib/orderView'
 import { ArrowIcon, CheckIcon, CloseIcon, PlusIcon, WhatsAppIcon } from './Icons'
 import { Photo } from './Photo'
 
@@ -55,8 +56,9 @@ export function AddButton({
   /** Etiquetas curtas para a barra fixa do telemóvel. */
   short?: boolean
 }) {
-  const { add, qtyOf } = useOrder()
-  const { openOrder, requestWhatsApp, flash } = useUi()
+  const { add, qtyOf, count } = useOrder()
+  const { requestWhatsApp, flash, setDockOpen } = useUi()
+  const { show } = useOrderView()
   const inOrder = qtyOf(p)
 
   const size = full
@@ -78,7 +80,7 @@ export function AddButton({
   if (inOrder) {
     return (
       <button
-        onClick={openOrder}
+        onClick={show}
         aria-label={full ? undefined : `${p.name} está no pedido. Ver pedido`}
         className={`${size} ${full ? 'btn-outline' : 'border-navy bg-navy text-white hover:bg-navy-soft'}`}
       >
@@ -90,6 +92,8 @@ export function AddButton({
   return (
     <button
       onClick={() => {
+        // O primeiro artigo abre sempre a coluna do pedido; depois respeita quem a recolheu.
+        if (!count) setDockOpen(true)
         add(p, qty)
         flash(`${p.name} foi adicionado ao pedido`)
       }}
@@ -242,6 +246,16 @@ export function ProductGrid({ products, columns = 4 }: { products: Product[]; co
   const baseId = useId()
   const grid = useRef<HTMLDivElement>(null)
   const open = products.find((p) => p.id === openId)
+  const { docked } = useOrderView()
+  // Com o pedido ao lado há menos largura: uma coluna a menos até o ecrã ser bem largo.
+  const cols =
+    columns === 4
+      ? docked
+        ? 'lg:grid-cols-3 min-[1700px]:grid-cols-4'
+        : 'lg:grid-cols-4'
+      : docked
+        ? 'sm:grid-cols-2 min-[1536px]:grid-cols-3'
+        : ''
 
   const close = () => {
     // O painel desaparece: o foco volta ao nome do relógio que o abriu.
@@ -260,7 +274,7 @@ export function ProductGrid({ products, columns = 4 }: { products: Product[]; co
           close()
         }
       }}
-      className={`grid grid-flow-row-dense grid-cols-2 gap-x-3.5 gap-y-[clamp(36px,4vw,56px)] sm:grid-cols-3 sm:gap-x-6 ${columns === 4 ? 'lg:grid-cols-4' : ''}`}
+      className={`grid grid-flow-row-dense grid-cols-2 gap-x-3.5 gap-y-[clamp(36px,4vw,56px)] sm:grid-cols-3 sm:gap-x-6 ${cols}`}
     >
       {products.map((p) => [
         <ProductCard
