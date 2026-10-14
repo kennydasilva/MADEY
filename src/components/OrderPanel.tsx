@@ -4,7 +4,7 @@ import { useUi } from '../context/ui'
 import { formatPrice, itemsLabel, productPath } from '../lib/format'
 import { useDialog } from '../lib/dialog'
 import { shopUrl } from '../lib/shop'
-import { BagIcon, CloseIcon, MinusIcon, PlusIcon, TrashIcon, WhatsAppIcon } from './Icons'
+import { BagIcon, CloseIcon, MinusIcon, PlusIcon, TrashIcon } from './Icons'
 import { Photo } from './Photo'
 
 /** Conteúdo do pedido, igual no painel por cima da página e na coluna fixa. */
@@ -30,9 +30,7 @@ function OrderContents({ onClose, closeLabel }: { onClose: () => void; closeLabe
         <div className="flex flex-1 flex-col items-start justify-center gap-4 px-6 pb-16">
           <BagIcon size={28} strokeWidth={1.4} className="text-faint" />
           <p className="display text-[1.875rem]">Ainda não escolheu nenhum artigo.</p>
-          <p className="max-w-[36ch] text-muted">
-            Junte relógios e acessórios ao pedido e envie a lista completa pelo WhatsApp, com o total já calculado.
-          </p>
+          <p className="max-w-[36ch] text-muted">Junte relógios e acessórios. O total é calculado na hora.</p>
           <Link to={shopUrl()} onClick={closeAll} className="btn btn-dark mt-2">
             Ver relógios
           </Link>
@@ -107,12 +105,9 @@ function OrderContents({ onClose, closeLabel }: { onClose: () => void; closeLabe
               <span className="font-semibold">Total estimado</span>
               <span className="text-[1.5rem] font-bold tabular-nums">{formatPrice(total)}</span>
             </div>
-            <p className="text-caption text-muted">
-              Preços e disponibilidade são confirmados consigo no WhatsApp, tal como o pagamento e a entrega.
-            </p>
-            <button onClick={() => requestOrder(lines)} className="btn btn-wa mt-1 h-14 gap-3">
-              <WhatsAppIcon />
-              Solicitar no WhatsApp
+            <p className="text-caption text-muted">Disponibilidade, pagamento e entrega são confirmados consigo.</p>
+            <button onClick={() => requestOrder(lines)} className="btn btn-dark mt-1 h-14">
+              Solicitar pedido
             </button>
             <button
               onClick={clear}
@@ -171,14 +166,14 @@ export function OrderBar() {
 
   return (
     <>
-      <div className="h-[68px] bg-navy lg:hidden" />
+      <div className="h-[68px] lg:hidden" />
       <button
         key={count}
         onClick={openOrder}
-        className="on-dark panel-pop fixed inset-x-0 bottom-0 z-[60] flex items-center justify-between gap-4 bg-navy px-5 pt-3.5 pb-[calc(14px+env(safe-area-inset-bottom))] text-left text-white shadow-[0_-8px_24px_rgba(20,31,51,0.18)] lg:hidden"
+        className="on-dark panel-pop fixed inset-x-0 bottom-0 z-[60] flex items-center justify-between gap-4 bg-gold px-5 pt-3.5 pb-[calc(14px+env(safe-area-inset-bottom))] text-left text-white shadow-[0_-8px_24px_rgba(20,31,51,0.18)] lg:hidden"
       >
         <span className="flex flex-col leading-tight">
-          <span className="text-caption text-line">{itemsLabel(count)} no pedido</span>
+          <span className="text-caption text-white/85">{itemsLabel(count)} no pedido</span>
           <span className="text-[1.0625rem] font-bold tabular-nums">{formatPrice(total)}</span>
         </span>
         <span className="flex h-10 items-center gap-2 border border-white px-4 text-label font-bold tracking-[0.14em] uppercase">

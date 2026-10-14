@@ -4,7 +4,6 @@ import { whatsappDisplay } from '../config'
 import { useUi } from '../context/ui'
 import { PRODUCTS } from '../data/products'
 import {
-  GENERAL_MESSAGE,
   formatPrice,
   itemsLabel,
   messageFor,
@@ -50,7 +49,7 @@ export function SearchOverlay() {
   const results = term ? PRODUCTS.filter((p) => matchesQuery(p, term)) : []
   const seeAll = () => {
     closeAll()
-    navigate(shopUrl({ q: term }))
+    navigate(shopUrl(results.length ? { q: term } : {}))
   }
 
   return (
@@ -125,15 +124,9 @@ export function SearchOverlay() {
               <span role="status" className="text-[15px]">
                 Sem resultados para “{term}”.
               </span>
-              <a
-                href={whatsappUrl(GENERAL_MESSAGE)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline h-11 px-[18px] text-[11px] tracking-[0.14em]"
-              >
-                <WhatsAppIcon size={16} className="text-wa" />
-                Perguntar no WhatsApp
-              </a>
+              <button onClick={seeAll} className="link-arrow">
+                Ver todos os relógios
+              </button>
             </div>
           )}
         </div>
@@ -150,7 +143,7 @@ export function WhatsAppModal() {
   const single = lines.length === 1 ? lines[0] : null
   const message = messageFor(lines)
   const total = lines.reduce((n, l) => n + l.product.price * l.qty, 0)
-  const title = single ? requestLabel(single.product) : 'Solicitar pedido'
+  const title = single ? requestLabel(single.product) : 'Enviar pedido pelo WhatsApp'
 
   const shareWithPhoto = async () => {
     if (!single) return
@@ -251,7 +244,7 @@ export function WhatsAppModal() {
           </div>
           <p className="border-t border-line pt-3.5 text-xs leading-[1.6] text-muted">
             {single
-              ? 'O WhatsApp não anexa fotografias automaticamente através de links. A mensagem inclui o link do produto e a referência. No telemóvel, use “Partilhar com foto” para enviar também a imagem.'
+              ? 'A mensagem leva a referência e o link do artigo. No telemóvel, “Partilhar com foto” envia também a imagem.'
               : 'A mensagem leva a referência e o link de cada artigo. O pedido continua guardado neste dispositivo até o limpar.'}
           </p>
         </div>
@@ -266,7 +259,7 @@ export function Toast() {
   return (
     <div
       role="status"
-      className="fixed bottom-24 left-1/2 z-[110] max-w-[calc(100vw-32px)] -translate-x-1/2 bg-navy px-5 py-3.5 text-[13px] font-semibold text-white shadow-[0_12px_32px_rgba(20,31,51,0.3)] lg:bottom-6"
+      className="fixed bottom-24 left-1/2 z-[110] max-w-[calc(100vw-32px)] -translate-x-1/2 bg-gold px-5 py-3.5 text-[13px] font-semibold text-white shadow-[0_12px_32px_rgba(20,31,51,0.3)] lg:bottom-6"
     >
       {toast}
     </div>

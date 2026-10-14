@@ -9,7 +9,7 @@ import { CATEGORIES, PRODUCTS, type Product } from '../src/data/products.ts'
 const DIST = 'dist'
 const SITE = config.siteUrl
 const SITE_TITLE = 'MADEY — Relógios e acessórios'
-const SITE_DESC = 'Relógios e acessórios selecionados em Maputo. Escolha online, encomende pelo WhatsApp.'
+const SITE_DESC = 'Relógios e acessórios selecionados em Maputo, com preços em meticais.'
 
 // Cópias com nome estável (os ficheiros do build levam hash) para og:image.
 cpSync('imagens', join(DIST, 'og'), { recursive: true })
@@ -97,7 +97,7 @@ const pages: Page[] = [
   {
     path: '/entregas-e-pagamentos',
     title: 'Encomendas, entregas e pagamentos — MADEY',
-    description: 'Como juntar artigos ao pedido e encomendar pelo WhatsApp: entregas, pagamento e trocas na MADEY.',
+    description: 'Entregas, pagamento e trocas na MADEY, em Maputo.',
     image: ogImage('hero'),
   },
   ...PRODUCTS.map(productPage),

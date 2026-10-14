@@ -1,13 +1,11 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowIcon, WhatsAppIcon } from '../components/Icons'
-import { OrderSteps } from '../components/OrderSteps'
+import { ArrowIcon } from '../components/Icons'
+import { Logo } from '../components/Logo'
 import { Photo } from '../components/Photo'
 import { AddButton, Price, ProductGrid, StockLine } from '../components/ProductCard'
-import { config } from '../config'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
-import { GENERAL_MESSAGE, productPath, whatsappUrl } from '../lib/format'
-import { scrollToId } from '../lib/nav'
+import { productPath } from '../lib/format'
 import { shopUrl, sortProducts } from '../lib/shop'
 import { usePageTitle } from '../lib/title'
 
@@ -43,27 +41,17 @@ function Hero() {
       />
       <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-3/5 bg-linear-to-r from-navy-deep/85 to-transparent lg:block" />
       <div className="wrap relative flex items-center py-[clamp(40px,6vw,96px)] lg:min-h-[clamp(560px,76vh,740px)]">
-        <div className="flex max-w-[700px] flex-col gap-6">
+        <div className="flex max-w-[660px] flex-col gap-7">
+          <Logo variant="mark" className="h-14 text-gold-light lg:h-16" />
           <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
             Relógios escolhidos, entregues em Maputo.
           </h1>
-          <p className="max-w-[44ch] text-lead text-line">
-            {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais. Junte ao pedido os que
-            quiser e envie a lista pelo WhatsApp.
+          <p className="max-w-[40ch] text-lead text-line">
+            {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais.
           </p>
-          <div className="mt-2 flex flex-wrap gap-3">
-            <Link to={shopUrl()} className="btn btn-light">
-              Ver relógios
-            </Link>
-            <button onClick={() => scrollToId('como-funciona')} className="btn border-line text-white hover:bg-navy-soft">
-              Como encomendar
-            </button>
-          </div>
-          <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-white/20 pt-5 text-caption text-line">
-            <li>Preços em meticais</li>
-            <li>Pedido pelo WhatsApp, sem criar conta</li>
-            <li>{config.location}</li>
-          </ul>
+          <Link to={shopUrl()} className="btn btn-dark mt-1 self-start">
+            Ver relógios
+          </Link>
         </div>
       </div>
     </section>
@@ -82,24 +70,6 @@ function Newest() {
         }
       />
       <ProductGrid products={NEWEST} />
-    </section>
-  )
-}
-
-function HowItWorks() {
-  return (
-    <section id="como-funciona" className="on-dark bg-navy text-white">
-      <div className={`wrap ${section}`}>
-        <SectionHeading
-          title="Encomendar leva três passos"
-          action={
-            <Link to="/entregas-e-pagamentos" className="link-arrow">
-              Entregas e pagamentos <ArrowIcon size={14} strokeWidth={2} />
-            </Link>
-          }
-        />
-        <OrderSteps dark />
-      </div>
     </section>
   )
 }
@@ -126,14 +96,6 @@ function Spotlight() {
             </span>
           </div>
           <p className="max-w-[52ch] text-lead text-pretty text-muted">{p.desc}</p>
-          <dl className="grid grid-cols-2 gap-x-8 border-t border-line">
-            {Object.entries(p.specs).map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-0.5 border-b border-line py-3.5">
-                <dt className="text-caption text-muted">{k}</dt>
-                <dd className="font-semibold">{v}</dd>
-              </div>
-            ))}
-          </dl>
           <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
             <Price product={p} className="text-[1.75rem]" />
             <StockLine product={p} />
@@ -183,9 +145,6 @@ function Collections() {
               <h3 className="display text-[clamp(2rem,1.5rem+2vw,3rem)] text-balance">
                 Desporto &amp; Digital: feito para a cidade, pronto para tudo.
               </h3>
-              <p className="max-w-[46ch] text-line">
-                Resistência, leitura rápida e um design que acompanha cada movimento.
-              </p>
               <span className="link-arrow mt-2 self-start">
                 Ver {count('desporto')} relógios <ArrowIcon size={14} strokeWidth={2} />
               </span>
@@ -218,42 +177,26 @@ function Collections() {
   )
 }
 
-function BrandsAndAsk() {
+function Brands() {
   return (
     <section id="marcas" className={`wrap ${section}`}>
-      <div className="grid gap-[clamp(40px,6vw,96px)] lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div className="flex flex-col gap-6">
-          <h2 className="display text-headline">Marcas na loja</h2>
-          <ul className="flex flex-wrap gap-x-[clamp(20px,3vw,40px)] gap-y-1 border-t border-line pt-5">
-            {BRANDS.map((b) => (
-              <li key={b}>
-                <Link
-                  to={shopUrl({ brands: [b] })}
-                  className="display flex min-h-11 items-center text-[clamp(1.5rem,1.2rem+1.2vw,2.125rem)] text-navy underline-offset-[6px] hover:underline"
-                >
-                  {b}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="max-w-[60ch] text-caption text-muted">
-            A MADEY é uma loja independente e não é distribuidora oficial das marcas apresentadas.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-start gap-5 bg-mist p-[clamp(24px,3.5vw,48px)]">
-          <h2 className="display text-[clamp(1.75rem,1.3rem+1.6vw,2.5rem)] text-balance">
-            Não encontra o modelo que procura?
-          </h2>
-          <p className="max-w-[44ch] text-muted">
-            Diga-nos a marca e o modelo. Respondemos pelo WhatsApp e ajudamos a encontrar, incluindo artigos sob
-            encomenda.
-          </p>
-          <a href={whatsappUrl(GENERAL_MESSAGE)} target="_blank" rel="noopener noreferrer" className="btn btn-wa mt-1">
-            <WhatsAppIcon size={18} />
-            Perguntar no WhatsApp
-          </a>
-        </div>
+      <div className="flex flex-col gap-6">
+        <h2 className="display text-headline">Marcas na loja</h2>
+        <ul className="flex flex-wrap gap-x-[clamp(20px,3vw,40px)] gap-y-1 border-t border-line pt-5">
+          {BRANDS.map((b) => (
+            <li key={b}>
+              <Link
+                to={shopUrl({ brands: [b] })}
+                className="display flex min-h-11 items-center text-[clamp(1.5rem,1.2rem+1.2vw,2.125rem)] text-navy underline-offset-[6px] hover:text-gold hover:underline"
+              >
+                {b}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="max-w-[60ch] text-caption text-muted">
+          A MADEY é uma loja independente e não é distribuidora oficial das marcas apresentadas.
+        </p>
       </div>
     </section>
   )
@@ -265,10 +208,9 @@ export default function Home() {
     <>
       <Hero />
       <Newest />
-      <HowItWorks />
       <Spotlight />
       <Collections />
-      <BrandsAndAsk />
+      <Brands />
     </>
   )
 }

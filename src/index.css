@@ -12,9 +12,13 @@
   --color-wa: #17853f;
   --color-wa-dark: #126b33;
   --color-sale: #b3261e;
+  /* Dourado do logótipo: o mais escuro serve em fundo branco (5:1), o claro em azul-marinho. */
+  --color-gold: #a47435;
+  --color-gold-light: #d2ad72;
+  --color-gold-dark: #87591f;
 
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-serif: 'Cormorant', Georgia, serif;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
 
   /* Escala tipográfica: etiqueta, legenda, destaque, nome de produto, título de secção, título de página */
   --text-label: 0.6875rem;
@@ -59,7 +63,7 @@
     outline-offset: 2px;
   }
   ::selection {
-    background: var(--color-navy);
+    background: var(--color-gold);
     color: #fff;
   }
   .on-dark ::selection {
@@ -150,6 +154,14 @@
   .link-arrow:hover svg {
     transform: translateX(4px);
   }
+  /* O logótipo é uma máscara: a cor vem de `color`, por isso serve em fundo claro e escuro. */
+  .logo {
+    display: block;
+    flex: none;
+    background-color: currentColor;
+    mask: var(--logo) center / contain no-repeat;
+    -webkit-mask: var(--logo) center / contain no-repeat;
+  }
   .eyebrow {
     font-size: 11px;
     font-weight: 600;
@@ -188,12 +200,13 @@
     border-color: var(--color-line);
   }
   .btn-dark {
-    background: var(--color-navy);
+    background: var(--color-gold);
     color: #fff;
-    border-color: var(--color-navy);
+    border-color: var(--color-gold);
   }
   .btn-dark:hover {
-    background: var(--color-navy-soft);
+    background: var(--color-gold-dark);
+    border-color: var(--color-gold-dark);
   }
   .btn-outline {
     background: #fff;

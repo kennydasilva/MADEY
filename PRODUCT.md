@@ -15,11 +15,18 @@ WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar 
 ## O que tem de continuar verdade
 
 - Preços em meticais (MT), sempre visíveis antes do contacto.
-- O WhatsApp é o único canal de encomenda. O verde fica reservado a essa ação.
+- O WhatsApp é o único canal de encomenda, mas só é nomeado no momento de enviar o pedido (janela final). Antes disso o site fala em "Solicitar pedido". O verde fica reservado a essa janela.
 - Cada produto tem página própria: é o link enviado na mensagem e o que o Google indexa.
 - Artigos "Sob encomenda" entram no pedido com essa indicação; "Esgotado" não entra e oferece "Avisar-me".
 - A MADEY não é distribuidora oficial das marcas e o site diz isso.
 - Nada de testemunhos, números, garantias, prazos ou formas de pagamento que a loja não tenha confirmado.
+
+## Marca
+
+- Logótipo em `LOGO MADEY/`; recortes transparentes em `public/brand/` (monograma, palavra, conjunto), usados como máscara para mudar de cor.
+- Cores: as de sempre (azul-marinho, branco, cinzentos) mais o dourado do logótipo (`--color-gold`). Botões e elementos cheios são dourados; as secções escuras ficam azul-marinho.
+- Letra: Cormorant (títulos) + Montserrat (texto), par "Luxury Serif" da UI Pro Max.
+- Pouco texto: o site serve para ver os relógios e pedir.
 
 ## Voz
 

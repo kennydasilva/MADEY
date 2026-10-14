@@ -5,7 +5,7 @@ import { useUi } from '../context/ui'
 import { STOCK_INFO, badgeOf, isSoldOut, type Product } from '../data/products'
 import { formatPrice, productPath } from '../lib/format'
 import { useOrderView } from '../lib/orderView'
-import { ArrowIcon, CheckIcon, CloseIcon, PlusIcon, WhatsAppIcon } from './Icons'
+import { ArrowIcon, CheckIcon, CloseIcon, PlusIcon } from './Icons'
 import { Photo } from './Photo'
 
 export function Badge({ badge, className = '' }: { badge?: string; className?: string }) {
@@ -23,8 +23,8 @@ export function Badge({ badge, className = '' }: { badge?: string; className?: s
 export function Price({ product, className = '' }: { product: Product; className?: string }) {
   return (
     <div className={`flex flex-wrap items-baseline gap-x-2 tabular-nums ${className}`}>
-      <span className={`font-bold ${product.was ? 'text-sale' : ''}`}>{formatPrice(product.price)}</span>
-      {product.was && <span className="text-caption text-faint line-through">{formatPrice(product.was)}</span>}
+      <span className={`font-bold whitespace-nowrap ${product.was ? 'text-sale' : ''}`}>{formatPrice(product.price)}</span>
+      {product.was && <span className="text-caption whitespace-nowrap text-faint line-through">{formatPrice(product.was)}</span>}
     </div>
   )
 }
@@ -42,7 +42,7 @@ export function StockLine({ product, className = '' }: { product: Product; class
 
 /**
  * Botão de juntar ao pedido. Depois de adicionado passa a abrir o pedido;
- * um artigo esgotado pede aviso pelo WhatsApp em vez de entrar na lista.
+ * um artigo esgotado pede aviso em vez de entrar na lista.
  */
 export function AddButton({
   product: p,
@@ -70,10 +70,9 @@ export function AddButton({
       <button
         onClick={() => requestWhatsApp(p)}
         aria-label={full ? undefined : `Avisar-me quando voltar: ${p.name}`}
-        className={`${size} ${full ? 'btn-wa' : 'border-line hover:border-wa hover:bg-wa hover:text-white'}`}
+        className={`${size} ${full ? 'btn-outline' : 'border-line hover:border-navy'}`}
       >
-        <WhatsAppIcon size={full ? 20 : 15} className="flex-none" />
-        {full && !short ? 'Avisar-me no WhatsApp' : 'Avisar-me'}
+        {full && !short ? 'Avisar-me quando voltar' : 'Avisar-me'}
       </button>
     )
   }
@@ -82,7 +81,7 @@ export function AddButton({
       <button
         onClick={show}
         aria-label={full ? undefined : `${p.name} está no pedido. Ver pedido`}
-        className={`${size} ${full ? 'btn-outline' : 'border-navy bg-navy text-white hover:bg-navy-soft'}`}
+        className={`${size} ${full ? 'btn-outline' : 'border-gold bg-gold text-white hover:bg-gold-dark'}`}
       >
         <CheckIcon size={full ? 14 : 11} className="flex-none" />
         {full ? (short ? `No pedido (${inOrder})` : `No pedido (${inOrder}) · Ver pedido`) : 'No pedido'}
@@ -98,7 +97,7 @@ export function AddButton({
         flash(`${p.name} foi adicionado ao pedido`)
       }}
       aria-label={full ? undefined : `Adicionar ao pedido: ${p.name}`}
-      className={`${size} ${full ? 'btn-dark' : 'border-line hover:border-navy hover:bg-navy hover:text-white'}`}
+      className={`${size} ${full ? 'btn-dark' : 'border-line hover:border-gold hover:bg-gold hover:text-white'}`}
     >
       <PlusIcon size={full ? 18 : 14} className="flex-none" />
       {full && !short ? 'Adicionar ao pedido' : 'Adicionar'}
@@ -152,7 +151,7 @@ function ProductCard({ product: p, open, panelId, onToggle }: CardProps) {
         {p.brand} · {p.model}
       </span>
 
-      <div className="mt-auto flex flex-col gap-3 pt-3.5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-auto flex flex-col gap-3 pt-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
         <Price product={p} />
         <AddButton product={p} />
       </div>
@@ -202,26 +201,13 @@ function CardDetail({ product: p, id, onClose }: { product: Product; id: string;
 
         <p className="max-w-[58ch] text-pretty text-muted">{p.desc}</p>
 
-        <dl className="grid grid-cols-2 gap-x-6 border-t border-line">
-          {Object.entries(p.specs).map(([k, v]) => (
-            <div key={k} className="flex flex-col gap-0.5 border-b border-line py-3">
-              <dt className="text-caption text-muted">{k}</dt>
-              <dd className="text-sm font-semibold">{v}</dd>
-            </div>
-          ))}
-        </dl>
-
         <div className="mt-auto flex flex-wrap gap-2.5 pt-1">
           <div className="min-w-[240px] flex-1">
             <AddButton product={p} full />
           </div>
           {!isSoldOut(p) && (
-            <button
-              onClick={() => requestWhatsApp(p)}
-              className="btn btn-outline h-14 min-w-[220px] flex-1 px-5 hover:border-wa hover:bg-wa hover:text-white"
-            >
-              <WhatsAppIcon size={18} className="flex-none" />
-              Solicitar só este
+            <button onClick={() => requestWhatsApp(p)} className="btn btn-outline h-14 min-w-[220px] flex-1 px-5">
+              Solicitar agora
             </button>
           )}
         </div>

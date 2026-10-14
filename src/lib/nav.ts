@@ -22,7 +22,6 @@ export function useNavItems(): NavItem[] {
   const only = (c: CategoryId) => inShop && f.cats.length === 1 && f.cats[0] === c && !f.brands.length
 
   return [
-    { label: 'Início', to: '/', active: pathname === '/' },
     { label: 'Loja', to: shopUrl(), active: inShop && !f.cats.length && !f.brands.length },
     { label: 'Marcas', to: '/#marcas', active: inShop && f.brands.length > 0 },
     { label: 'Acessórios', to: shopUrl({ cats: ['acessorios'] }), active: only('acessorios') },

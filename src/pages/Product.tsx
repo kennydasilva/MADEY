@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowIcon, BagIcon, CopyIcon, MinusIcon, PlusIcon, ShareIcon, WhatsAppIcon } from '../components/Icons'
+import { ArrowIcon, BagIcon, CopyIcon, MinusIcon, PlusIcon, ShareIcon } from '../components/Icons'
 import { Photo } from '../components/Photo'
 import { AddButton, Badge, ProductGrid, StockLine } from '../components/ProductCard'
 import { MAX_QTY, useOrder } from '../context/order'
@@ -121,7 +121,7 @@ export default function ProductPage() {
               {p.was && (
                 <>
                   <span className="text-faint line-through">{formatPrice(p.was)}</span>
-                  <span className="bg-navy px-2 py-1 text-label font-bold tracking-[0.14em] text-white uppercase">
+                  <span className="bg-gold px-2 py-1 text-label font-bold tracking-[0.14em] text-white uppercase">
                     Poupa {formatPrice(p.was - p.price)}
                   </span>
                 </>
@@ -163,12 +163,8 @@ export default function ProductPage() {
             <div className="flex flex-col gap-2.5">
               <AddButton product={p} qty={qty} full />
               {!isSoldOut(p) && (
-                <button
-                  onClick={() => requestWhatsApp(p, qty)}
-                  className="btn btn-outline h-[52px] hover:border-wa hover:bg-wa hover:text-white"
-                >
-                  <WhatsAppIcon size={18} />
-                  Solicitar só este no WhatsApp
+                <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-outline h-[52px]">
+                  Solicitar agora
                 </button>
               )}
               <div className="flex gap-6">
@@ -181,18 +177,6 @@ export default function ProductPage() {
                   Copiar link
                 </button>
               </div>
-            </div>
-
-            <div className="flex flex-col gap-3 bg-mist p-5">
-              <h2 className="font-semibold">O que acontece a seguir</h2>
-              <ol className="flex list-decimal flex-col gap-1.5 pl-5 text-sm text-muted marker:font-semibold marker:text-navy">
-                <li>Envia-nos o pedido pelo WhatsApp, com a referência e o link já incluídos.</li>
-                <li>Confirmamos consigo a disponibilidade e o preço.</li>
-                <li>Combinamos o pagamento e a entrega. Estamos em Maputo.</li>
-              </ol>
-              <Link to="/entregas-e-pagamentos" className="link-arrow self-start">
-                Entregas e pagamentos <ArrowIcon size={14} strokeWidth={2} />
-              </Link>
             </div>
 
             <div className="flex flex-col border-t border-line pt-5">
@@ -236,7 +220,7 @@ export default function ProductPage() {
             className="bump relative flex size-14 flex-none items-center justify-center border border-navy"
           >
             <BagIcon size={22} />
-            <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-navy px-1 text-label leading-none font-bold text-white tabular-nums">
+            <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold px-1 text-label leading-none font-bold text-white tabular-nums">
               {count}
             </span>
           </button>

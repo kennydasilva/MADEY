@@ -189,9 +189,9 @@ export const BRANDS = [...new Set(PRODUCTS.map((p) => p.brand))]
 
 export const STOCK_INFO: Record<Stock, { label: string; note: string; dot: string }> = {
   in: { label: 'Em stock', note: '', dot: 'bg-wa' },
-  low: { label: 'Poucas unidades', note: '— confirme no WhatsApp', dot: 'bg-navy' },
-  order: { label: 'Sob encomenda', note: '— prazo confirmado no WhatsApp', dot: 'bg-faint' },
-  out: { label: 'Esgotado', note: '— avisamos quando voltar', dot: 'bg-sale' },
+  low: { label: 'Poucas unidades', note: '', dot: 'bg-navy' },
+  order: { label: 'Sob encomenda', note: '', dot: 'bg-faint' },
+  out: { label: 'Esgotado', note: '', dot: 'bg-sale' },
 }
 
 export const isSoldOut = (p: Product) => p.stock === 'out'

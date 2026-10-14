@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Footer } from './Footer'
-import { AnnouncementBar, Header } from './Header'
+import { Header } from './Header'
 import { MobileMenu } from './MobileMenu'
 import { useOrderView } from '../lib/orderView'
 import { OrderBar, OrderDock, OrderPanel } from './OrderPanel'
@@ -34,7 +34,6 @@ export function Layout() {
       <a href="#conteudo" className="skip-link">
         Saltar para o conteúdo
       </a>
-      <AnnouncementBar />
       <Header />
       <main id="conteudo" tabIndex={-1} className="focus-visible:outline-none">
         <Outlet />

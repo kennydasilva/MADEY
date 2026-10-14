@@ -15,9 +15,8 @@ export interface OrderLine {
 export const productPath = (p: Product) => `/produto/${p.slug}`
 export const productLink = (p: Product) => config.siteUrl + productPath(p)
 
-/** Texto do botão de pedido: esgotados pedem aviso em vez de compra. */
-export const requestLabel = (p: Product, short = false) =>
-  isSoldOut(p) ? (short ? 'Avisar-me' : 'Avisar-me no WhatsApp') : short ? 'Solicitar' : 'Solicitar no WhatsApp'
+/** Título da janela de envio, o único sítio onde o WhatsApp é nomeado antes de abrir. */
+export const requestLabel = (p: Product) => (isSoldOut(p) ? 'Pedir aviso pelo WhatsApp' : 'Enviar pedido pelo WhatsApp')
 
 export function buildWhatsAppMessage(p: Product, qty: number) {
   if (isSoldOut(p)) {

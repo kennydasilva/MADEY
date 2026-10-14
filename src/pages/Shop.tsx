@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { CheckIcon, CloseIcon, WhatsAppIcon } from '../components/Icons'
+import { CheckIcon, CloseIcon } from '../components/Icons'
 import { ProductGrid } from '../components/ProductCard'
 import { BRANDS, CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, categoryLabel, type SortId } from '../data/products'
-import { GENERAL_MESSAGE, countLabel, whatsappUrl } from '../lib/format'
+import { countLabel } from '../lib/format'
 import { usePageTitle } from '../lib/title'
 import { EMPTY_FILTERS, filterProducts, filtersToSearch, parseFilters, type ShopFilters } from '../lib/shop'
 
@@ -30,7 +30,7 @@ function FilterGroup({ title, options }: { title: string; options: FilterOption[
           className="flex min-h-11 items-center gap-3 text-left text-sm lg:min-h-9"
         >
           <span
-            className={`flex size-4 flex-none items-center justify-center border text-white ${o.on ? 'border-navy bg-navy' : 'border-faint bg-white'}`}
+            className={`flex size-4 flex-none items-center justify-center border text-white ${o.on ? 'border-gold bg-gold' : 'border-faint bg-white'}`}
           >
             {o.on && <CheckIcon size={10} />}
           </span>
@@ -134,7 +134,7 @@ export default function Shop() {
           <button
             onClick={() => setPanelOpen((o) => !o)}
             aria-expanded={panelOpen}
-            className={`flex h-11 items-center gap-2 border border-navy px-4 text-[11px] font-bold tracking-[0.16em] uppercase lg:hidden ${panelOpen ? 'bg-navy text-white' : 'bg-white'}`}
+            className={`flex h-11 items-center gap-2 border border-navy px-4 text-[11px] font-bold tracking-[0.16em] uppercase lg:hidden ${panelOpen ? 'bg-gold border-gold text-white' : 'bg-white'}`}
           >
             {chips.length ? `Filtros (${chips.length})` : 'Filtros'}
           </button>
@@ -195,7 +195,7 @@ export default function Shop() {
                   </span>
                   <button
                     onClick={() => setShown((n) => n + PER_PAGE)}
-                    className="btn btn-outline h-12 px-7 hover:bg-navy hover:text-white"
+                    className="btn btn-outline h-12 px-7 hover:border-gold hover:bg-gold hover:text-white"
                   >
                     Carregar mais
                   </button>
@@ -205,24 +205,10 @@ export default function Shop() {
           ) : (
             <div className="flex flex-col items-center gap-3.5 border border-line px-[clamp(24px,4vw,56px)] py-[clamp(40px,6vw,80px)] text-center">
               <h2 className="display text-[clamp(28px,3vw,38px)]">Nenhum produto encontrado</h2>
-              <p className="max-w-[44ch] text-muted">
-                Experimente remover um filtro ou pesquisar por marca ou modelo. Procura algo específico? Pergunte-nos —
-                ajudamos a encontrar.
-              </p>
-              <div className="mt-2 flex flex-wrap justify-center gap-2.5">
-                <button onClick={clearAll} className="btn btn-dark h-12 px-6">
-                  Limpar filtros
-                </button>
-                <a
-                  href={whatsappUrl(GENERAL_MESSAGE)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline h-12 px-6 hover:border-wa hover:bg-wa hover:text-white"
-                >
-                  <WhatsAppIcon size={16} />
-                  Perguntar no WhatsApp
-                </a>
-              </div>
+              <p className="max-w-[44ch] text-muted">Experimente remover um filtro ou pesquisar por marca ou modelo.</p>
+              <button onClick={clearAll} className="btn btn-dark mt-2 h-12 px-6">
+                Limpar filtros
+              </button>
             </div>
           )}
         </div>
