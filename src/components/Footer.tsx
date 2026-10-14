@@ -1,12 +1,9 @@
-import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { config, whatsappDisplay } from '../config'
 import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
 import { shopUrl } from '../lib/shop'
 import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './Icons'
 import { Logo } from './Logo'
-
-const link = 'self-start py-2 text-white underline-offset-4 hover:underline lg:py-1'
 
 const SHOP_LINKS = [
   { label: 'Todos os relógios', to: shopUrl() },
@@ -21,64 +18,60 @@ const SOCIAL = [
   { label: 'WhatsApp', href: whatsappUrl(GENERAL_MESSAGE), Icon: WhatsAppIcon },
 ].filter((s) => s.href)
 
-function Group({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="flex flex-col gap-1">
-      <h2 className="mb-3 font-serif text-[1.375rem] leading-none font-medium text-gold-light">{title}</h2>
-      {children}
-    </div>
-  )
-}
-
-/** Rodapé em quatro colunas iguais (marca, loja, contacto, redes) e a nota legal por baixo. */
+/**
+ * Rodapé centrado, como o próprio logótipo: marca, uma linha de links, as redes e a nota legal,
+ * cada grupo separado por espaço em vez de colunas.
+ */
 export function Footer() {
   return (
-    <footer id="contacto" className="on-dark bg-navy text-sm text-white">
-      <div className="wrap">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-[clamp(56px,7vw,88px)] lg:grid-cols-4">
-          <div className="col-span-2 flex flex-col items-start gap-5 lg:col-span-1">
-            <Logo variant="full" className="h-24 text-gold-light" />
-            <p className="max-w-[30ch] leading-[1.7] text-line">Relógios e acessórios selecionados, com preços em meticais.</p>
-          </div>
+    <footer id="contacto" className="on-dark bg-navy text-white">
+      <div className="wrap flex flex-col items-center pt-[clamp(64px,8vw,112px)] text-center">
+        <Logo variant="full" className="h-28 text-gold-light sm:h-32" />
+        <p className="mt-6 max-w-[34ch] text-line">Relógios e acessórios selecionados, com preços em meticais.</p>
 
-          <Group title="Loja">
-            {SHOP_LINKS.map((l) => (
-              <Link key={l.label} to={l.to} className={link}>
-                {l.label}
-              </Link>
-            ))}
-          </Group>
+        <span aria-hidden="true" className="mt-10 h-px w-16 bg-gold-light/60" />
 
-          <Group title="Contacto">
-            <a href={`tel:+${config.whatsappNumber}`} className={`${link} tabular-nums`}>
-              {whatsappDisplay}
-            </a>
-            <span className="py-2 text-line lg:py-1">{config.location}</span>
-          </Group>
+        <nav aria-label="Rodapé" className="mt-10 flex flex-wrap justify-center gap-x-[clamp(24px,3vw,44px)] gap-y-3">
+          {SHOP_LINKS.map((l) => (
+            <Link
+              key={l.label}
+              to={l.to}
+              className="py-1.5 text-xs font-semibold tracking-[0.16em] uppercase underline-offset-[6px] hover:text-gold-light hover:underline"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
 
-          <Group title="Siga-nos">
-            <ul className="flex gap-3">
-              {SOCIAL.map(({ label, href, Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="flex size-11 items-center justify-center rounded-full border border-gold-light/60 text-gold-light transition-colors hover:border-gold-light hover:bg-gold-light hover:text-navy"
-                  >
-                    <Icon size={20} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Group>
-        </div>
+        <ul className="mt-10 flex gap-4">
+          {SOCIAL.map(({ label, href, Icon }) => (
+            <li key={label}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex size-12 items-center justify-center rounded-full border border-gold-light/50 text-gold-light transition-colors hover:border-gold-light hover:bg-gold-light hover:text-navy"
+              >
+                <Icon size={20} />
+              </a>
+            </li>
+          ))}
+        </ul>
 
-        <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-xs leading-[1.6] text-line md:flex-row md:items-center md:justify-between md:gap-8">
-          <span>© 2026 MADEY</span>
-          <span>Loja independente, não é distribuidora oficial das marcas. Preços sujeitos a confirmação.</span>
-        </div>
+        <p className="mt-8 text-sm text-line">
+          <a href={`tel:+${config.whatsappNumber}`} className="text-white tabular-nums underline-offset-4 hover:underline">
+            {whatsappDisplay}
+          </a>
+          <span aria-hidden="true" className="mx-3 text-gold-light/60">
+            ·
+          </span>
+          {config.location}
+        </p>
+
+        <p className="mt-[clamp(56px,7vw,88px)] w-full border-t border-white/15 py-6 text-xs leading-[1.6] text-line">
+          © 2026 MADEY · Loja independente, não é distribuidora oficial das marcas. Preços sujeitos a confirmação.
+        </p>
       </div>
     </footer>
   )
