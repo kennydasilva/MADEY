@@ -63,7 +63,7 @@ export function SearchOverlay() {
         className="panel-top max-h-[88vh] overflow-y-auto bg-white"
       >
         <div className="mx-auto max-w-[880px] px-[clamp(20px,4vw,48px)] pt-5 pb-8">
-          <div className="flex items-center gap-3.5 border-b border-navy">
+          <div className="flex items-center gap-3.5 border-b border-gold">
             <SearchIcon size={22} className="flex-none" />
             <input
               ref={input}
@@ -85,7 +85,7 @@ export function SearchOverlay() {
                   <button
                     key={label}
                     onClick={() => setQ(label)}
-                    className="h-11 border border-faint px-3.5 text-[13px] hover:border-navy sm:h-9"
+                    className="h-11 border border-faint px-3.5 text-[13px] hover:border-gold sm:h-9"
                   >
                     {label}
                   </button>

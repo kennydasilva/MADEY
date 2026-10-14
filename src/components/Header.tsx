@@ -53,7 +53,7 @@ export function Header() {
           </nav>
         </div>
 
-        <Link to="/" aria-label="MADEY, página inicial" className="flex items-center gap-3 text-gold">
+        <Link to="/" aria-label="MADEY, página inicial" className="flex items-center gap-3 text-brand">
           <Logo variant="mark" className={`transition-[height] duration-200 ${scrolled ? 'h-8' : 'h-9 lg:h-12'}`} />
           <Logo
             variant="word"

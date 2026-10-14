@@ -126,7 +126,7 @@ export default function Shop() {
             onChange={(e) => update({ q: e.target.value })}
             placeholder="Pesquisar marca, modelo…"
             aria-label="Pesquisar na loja"
-            className="h-11 w-[min(320px,100%)] border border-faint bg-white px-4 text-base placeholder:text-faint focus:border-navy lg:text-sm"
+            className="h-11 w-[min(320px,100%)] border border-faint bg-white px-4 text-base placeholder:text-faint focus:border-gold lg:text-sm"
           />
           <span role="status" className="text-sm text-muted">
             {countLabel(all.length)}
@@ -134,7 +134,7 @@ export default function Shop() {
           <button
             onClick={() => setPanelOpen((o) => !o)}
             aria-expanded={panelOpen}
-            className={`flex h-11 items-center gap-2 border border-navy px-4 text-[11px] font-bold tracking-[0.16em] uppercase lg:hidden ${panelOpen ? 'bg-gold border-gold text-white' : 'bg-white'}`}
+            className={`flex h-11 items-center gap-2 border border-gold px-4 text-[11px] font-bold tracking-[0.16em] uppercase lg:hidden ${panelOpen ? 'bg-gold border-gold text-white' : 'bg-white'}`}
           >
             {chips.length ? `Filtros (${chips.length})` : 'Filtros'}
           </button>
@@ -162,7 +162,7 @@ export default function Shop() {
               key={c.label}
               onClick={c.remove}
               aria-label={`Remover filtro ${c.label}`}
-              className="flex h-10 items-center gap-2 border border-line bg-mist px-3 text-xs font-semibold hover:border-navy lg:h-8"
+              className="flex h-10 items-center gap-2 border border-line bg-mist px-3 text-xs font-semibold hover:border-gold lg:h-8"
             >
               {c.label}
               <CloseIcon size={12} strokeWidth={2.4} />

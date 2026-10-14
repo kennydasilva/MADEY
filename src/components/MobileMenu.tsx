@@ -14,7 +14,7 @@ export function MobileMenu() {
   return (
     <div ref={ref} role="dialog" aria-modal="true" aria-label="Menu" className="overlay-in fixed inset-0 z-[90] flex flex-col overflow-y-auto bg-white">
       <div className="flex h-16 flex-none items-center justify-between border-b border-line px-5">
-        <span className="flex items-center gap-3 text-gold">
+        <span className="flex items-center gap-3 text-brand">
           <Logo variant="mark" className="h-9" />
           <Logo variant="word" className="h-[18px]" />
         </span>

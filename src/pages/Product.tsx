@@ -96,7 +96,7 @@ export default function ProductPage() {
                     key={src}
                     onClick={() => setPhoto(i)}
                     aria-label={`Fotografia ${i + 1}`}
-                    className={`size-[88px] overflow-hidden border bg-stone ${photo === i ? 'border-navy' : 'border-line'}`}
+                    className={`size-[88px] overflow-hidden border bg-stone ${photo === i ? 'border-gold' : 'border-line'}`}
                   >
                     <Photo name={src} sizes="88px" alt="" className="size-full object-cover" />
                   </button>
@@ -217,7 +217,7 @@ export default function ProductPage() {
             key={count}
             onClick={openOrder}
             aria-label="Ver pedido"
-            className="bump relative flex size-14 flex-none items-center justify-center border border-navy"
+            className="bump relative flex size-14 flex-none items-center justify-center border border-gold"
           >
             <BagIcon size={22} />
             <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold px-1 text-label leading-none font-bold text-white tabular-nums">

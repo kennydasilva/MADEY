@@ -7,15 +7,18 @@
   --color-line: #d9dee5;
   --color-mist: #f4f5f7;
   --color-stone: #e8e9eb;
-  --color-muted: #5e6875;
-  --color-faint: #656e7b;
+  /* Texto secundário em dourado suave (5:1 em branco), em vez de cinzento. */
+  --color-muted: #806446;
+  --color-faint: #8a6d45;
   --color-wa: #17853f;
   --color-wa-dark: #126b33;
   --color-sale: #b3261e;
-  /* Dourado do logótipo: o mais escuro serve em fundo branco (5:1), o claro em azul-marinho. */
-  --color-gold: #a47435;
+  /* Dourado: o do logótipo fica só no logótipo (4:1 não chega para texto pequeno);
+     o texto e os botões usam um tom um pouco mais fundo (5:1 em branco), o claro serve em azul-marinho. */
+  --color-brand: #a47435;
+  --color-gold: #93662b;
+  --color-gold-dark: #7a5520;
   --color-gold-light: #d2ad72;
-  --color-gold-dark: #87591f;
 
   --font-serif: 'Cormorant', Georgia, serif;
   --font-sans: 'Montserrat', system-ui, sans-serif;

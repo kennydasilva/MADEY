@@ -100,7 +100,7 @@ function OrderContents({ onClose, closeLabel }: { onClose: () => void; closeLabe
             ))}
           </ul>
 
-          <div className="flex flex-none flex-col gap-3 border-t border-navy px-6 pt-5 pb-[calc(20px+env(safe-area-inset-bottom))]">
+          <div className="flex flex-none flex-col gap-3 border-t border-gold px-6 pt-5 pb-[calc(20px+env(safe-area-inset-bottom))]">
             <div className="flex items-baseline justify-between gap-4">
               <span className="font-semibold">Total estimado</span>
               <span className="text-[1.5rem] font-bold tabular-nums">{formatPrice(total)}</span>

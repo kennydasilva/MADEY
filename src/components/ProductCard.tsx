@@ -70,7 +70,7 @@ export function AddButton({
       <button
         onClick={() => requestWhatsApp(p)}
         aria-label={full ? undefined : `Avisar-me quando voltar: ${p.name}`}
-        className={`${size} ${full ? 'btn-outline' : 'border-line hover:border-navy'}`}
+        className={`${size} ${full ? 'btn-outline' : 'border-line hover:border-gold'}`}
       >
         {full && !short ? 'Avisar-me quando voltar' : 'Avisar-me'}
       </button>
