@@ -194,9 +194,6 @@ function Brands() {
             </li>
           ))}
         </ul>
-        <p className="max-w-[60ch] text-caption text-muted">
-          A MADEY é uma loja independente e não é distribuidora oficial das marcas apresentadas.
-        </p>
       </div>
     </section>
   )

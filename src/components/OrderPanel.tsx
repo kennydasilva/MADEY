@@ -166,7 +166,7 @@ export function OrderBar() {
 
   return (
     <>
-      <div className="h-[68px] lg:hidden" />
+      <div className="h-[68px] bg-navy lg:hidden" />
       <button
         key={count}
         onClick={openOrder}

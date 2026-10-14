@@ -1,62 +1,66 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { config, whatsappDisplay } from '../config'
-import { BRANDS, CATEGORIES } from '../data/products'
 import { shopUrl } from '../lib/shop'
 import { Logo } from './Logo'
 
-const linkClass = 'self-start py-2.5 text-sm lg:py-[5px] text-white underline-offset-[3px] hover:underline'
+const link = 'self-start py-2 text-white underline-offset-4 hover:underline lg:py-1'
 
-export function Footer() {
-  const columns = [
-    { title: 'Categorias', links: CATEGORIES.map((c) => ({ label: c.label, to: shopUrl({ cats: [c.id] }) })) },
-    { title: 'Marcas', links: BRANDS.map((b) => ({ label: b, to: shopUrl({ brands: [b] }) })) },
-    {
-      title: 'Loja',
-      links: [
-        { label: 'Início', to: '/' },
-        { label: 'Ver todos', to: shopUrl() },
-        { label: 'Novidades', to: shopUrl({ sort: 'novidades' }) },
-        { label: 'Entregas e pagamentos', to: '/entregas-e-pagamentos' },
-      ],
-    },
-  ]
+const SHOP_LINKS = [
+  { label: 'Todos os relógios', to: shopUrl() },
+  { label: 'Novidades', to: shopUrl({ sort: 'novidades' }) },
+  { label: 'Acessórios', to: shopUrl({ cats: ['acessorios'] }) },
+  { label: 'Entregas e pagamentos', to: '/entregas-e-pagamentos' },
+]
 
+function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <footer id="contacto" className="on-dark bg-navy text-white">
-      <div className="wrap pt-[clamp(56px,7vw,88px)]">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-11 pb-14 lg:grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))]">
-          <div className="col-span-2 flex flex-col items-start gap-5 lg:col-span-1">
-            <Logo variant="full" className="h-24 text-gold-light" />
-            <p className="max-w-[36ch] text-sm leading-[1.7] text-line">
-              Relógios e acessórios selecionados, com preços em meticais.
-            </p>
-            <div className="flex flex-col gap-1 text-sm">
-              <a href={`tel:+${config.whatsappNumber}`} className="self-start text-white underline-offset-[3px] hover:underline">
-                {whatsappDisplay}
-              </a>
-              <span className="text-line">{config.location}</span>
-            </div>
+    <div className="flex flex-col gap-1">
+      <h2 className="mb-2 font-serif text-[1.375rem] leading-none font-medium text-gold-light">{title}</h2>
+      {children}
+    </div>
+  )
+}
+
+/** Rodapé curto: a marca à esquerda, dois grupos de links à direita e a nota legal por baixo. */
+export function Footer() {
+  return (
+    <footer id="contacto" className="on-dark bg-navy text-sm text-white">
+      <div className="wrap">
+        <div className="grid gap-12 py-[clamp(56px,7vw,96px)] md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+          <div className="flex flex-col items-start gap-5">
+            <Logo variant="full" className="h-24 text-gold-light lg:h-28" />
+            <p className="max-w-[32ch] leading-[1.7] text-line">Relógios e acessórios selecionados, com preços em meticais.</p>
           </div>
 
-          {columns.map((col) => (
-            <div key={col.title} className="flex flex-col gap-0.5">
-              <span className="eyebrow mb-3 text-line">{col.title}</span>
-              {col.links.map((l) => (
-                <Link key={l.label} to={l.to} className={linkClass}>
+          <div className="grid grid-cols-2 gap-x-[clamp(40px,6vw,96px)] gap-y-10">
+            <Group title="Loja">
+              {SHOP_LINKS.map((l) => (
+                <Link key={l.label} to={l.to} className={link}>
                   {l.label}
                 </Link>
               ))}
-              {col.title === 'Loja' && config.instagramUrl && (
-                <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+            </Group>
+            <Group title="Contacto">
+              <a href={`tel:+${config.whatsappNumber}`} className={`${link} tabular-nums`}>
+                {whatsappDisplay}
+              </a>
+              {config.instagramUrl && (
+                <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className={link}>
                   Instagram
                 </a>
               )}
-            </div>
-          ))}
+              <span className="py-2 text-line lg:py-1">{config.location}</span>
+            </Group>
+          </div>
         </div>
-        <div className="border-t border-navy-soft pt-[22px] pb-7 text-xs text-line">
-          © 2026 MADEY. Preços e disponibilidade sujeitos a confirmação. Marcas mencionadas pertencem aos respetivos
-          proprietários.
+
+        <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-xs leading-[1.6] text-line md:flex-row md:justify-between md:gap-8">
+          <span className="flex-none">© 2026 MADEY</span>
+          <span className="max-w-[80ch] md:text-right">
+            Loja independente, não é distribuidora oficial das marcas apresentadas. Preços e disponibilidade sujeitos a
+            confirmação.
+          </span>
         </div>
       </div>
     </footer>
