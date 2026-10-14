@@ -7,7 +7,9 @@ export const config = {
    * nas meta tags e no sitemap — tem de ser o endereço onde o site está mesmo publicado.
    */
   siteUrl: 'https://madey.vercel.app',
-  instagramUrl: '',
+  /** Perfis nas redes sociais: trocar pelos endereços reais da loja. */
+  instagramUrl: 'https://www.instagram.com/',
+  facebookUrl: 'https://www.facebook.com/',
   location: 'Maputo, Moçambique',
 }
 

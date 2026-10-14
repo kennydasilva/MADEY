@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { config, whatsappDisplay } from '../config'
+import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
 import { shopUrl } from '../lib/shop'
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './Icons'
 import { Logo } from './Logo'
 
 const link = 'self-start py-2 text-white underline-offset-4 hover:underline lg:py-1'
@@ -13,54 +15,69 @@ const SHOP_LINKS = [
   { label: 'Entregas e pagamentos', to: '/entregas-e-pagamentos' },
 ]
 
+const SOCIAL = [
+  { label: 'Instagram', href: config.instagramUrl, Icon: InstagramIcon },
+  { label: 'Facebook', href: config.facebookUrl, Icon: FacebookIcon },
+  { label: 'WhatsApp', href: whatsappUrl(GENERAL_MESSAGE), Icon: WhatsAppIcon },
+].filter((s) => s.href)
+
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-1">
-      <h2 className="mb-2 font-serif text-[1.375rem] leading-none font-medium text-gold-light">{title}</h2>
+      <h2 className="mb-3 font-serif text-[1.375rem] leading-none font-medium text-gold-light">{title}</h2>
       {children}
     </div>
   )
 }
 
-/** Rodapé curto: a marca à esquerda, dois grupos de links à direita e a nota legal por baixo. */
+/** Rodapé em quatro colunas iguais (marca, loja, contacto, redes) e a nota legal por baixo. */
 export function Footer() {
   return (
     <footer id="contacto" className="on-dark bg-navy text-sm text-white">
       <div className="wrap">
-        <div className="grid gap-12 py-[clamp(56px,7vw,96px)] md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
-          <div className="flex flex-col items-start gap-5">
-            <Logo variant="full" className="h-24 text-gold-light lg:h-28" />
-            <p className="max-w-[32ch] leading-[1.7] text-line">Relógios e acessórios selecionados, com preços em meticais.</p>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-[clamp(56px,7vw,88px)] lg:grid-cols-4">
+          <div className="col-span-2 flex flex-col items-start gap-5 lg:col-span-1">
+            <Logo variant="full" className="h-24 text-gold-light" />
+            <p className="max-w-[30ch] leading-[1.7] text-line">Relógios e acessórios selecionados, com preços em meticais.</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-[clamp(40px,6vw,96px)] gap-y-10">
-            <Group title="Loja">
-              {SHOP_LINKS.map((l) => (
-                <Link key={l.label} to={l.to} className={link}>
-                  {l.label}
-                </Link>
+          <Group title="Loja">
+            {SHOP_LINKS.map((l) => (
+              <Link key={l.label} to={l.to} className={link}>
+                {l.label}
+              </Link>
+            ))}
+          </Group>
+
+          <Group title="Contacto">
+            <a href={`tel:+${config.whatsappNumber}`} className={`${link} tabular-nums`}>
+              {whatsappDisplay}
+            </a>
+            <span className="py-2 text-line lg:py-1">{config.location}</span>
+          </Group>
+
+          <Group title="Siga-nos">
+            <ul className="flex gap-3">
+              {SOCIAL.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="flex size-11 items-center justify-center rounded-full border border-gold-light/60 text-gold-light transition-colors hover:border-gold-light hover:bg-gold-light hover:text-navy"
+                  >
+                    <Icon size={20} />
+                  </a>
+                </li>
               ))}
-            </Group>
-            <Group title="Contacto">
-              <a href={`tel:+${config.whatsappNumber}`} className={`${link} tabular-nums`}>
-                {whatsappDisplay}
-              </a>
-              {config.instagramUrl && (
-                <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className={link}>
-                  Instagram
-                </a>
-              )}
-              <span className="py-2 text-line lg:py-1">{config.location}</span>
-            </Group>
-          </div>
+            </ul>
+          </Group>
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-xs leading-[1.6] text-line md:flex-row md:justify-between md:gap-8">
-          <span className="flex-none">© 2026 MADEY</span>
-          <span className="max-w-[80ch] md:text-right">
-            Loja independente, não é distribuidora oficial das marcas apresentadas. Preços e disponibilidade sujeitos a
-            confirmação.
-          </span>
+        <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-xs leading-[1.6] text-line md:flex-row md:items-center md:justify-between md:gap-8">
+          <span>© 2026 MADEY</span>
+          <span>Loja independente, não é distribuidora oficial das marcas. Preços sujeitos a confirmação.</span>
         </div>
       </div>
     </footer>

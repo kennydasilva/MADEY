@@ -24,6 +24,18 @@ export const WhatsAppIcon = (p: IconProps) => (
     <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
   </Icon>
 )
+export const InstagramIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <path d="M17.5 6.5h.01" />
+  </Icon>
+)
+export const FacebookIcon = (p: IconProps) => (
+  <Icon strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </Icon>
+)
 export const SearchIcon = (p: IconProps) => (
   <Icon strokeWidth={1.8} strokeLinecap="round" {...p}>
     <circle cx="11" cy="11" r="7" />

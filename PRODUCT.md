@@ -34,7 +34,7 @@ Português europeu/moçambicano, tratamento formal e direto, sem slogans em ingl
 
 ## Por confirmar com a loja
 
-- Número de WhatsApp real e Instagram (`src/config.ts` tem valores de exemplo).
+- Número de WhatsApp real e links do Instagram e do Facebook (`src/config.ts` tem valores de exemplo; os ícones do rodapé apontam para as páginas iniciais das redes).
 - Catálogo real: produtos, preços, stock (o atual é de exemplo).
 - Autenticidade e garantia dos relógios.
 - Formas de pagamento, zonas, prazos e custo de entrega.
