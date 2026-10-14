@@ -42,7 +42,7 @@ function Hero() {
       <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-3/5 bg-linear-to-r from-navy-deep/85 to-transparent lg:block" />
       <div className="wrap relative flex items-center py-[clamp(40px,6vw,96px)] lg:min-h-[clamp(560px,76vh,740px)]">
         <div className="flex max-w-[660px] flex-col gap-7">
-          <Logo variant="mark" className="h-14 text-gold-light lg:h-16" />
+          <Logo variant="mark" className="hidden h-16 self-start text-gold-light lg:block" />
           <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
             Relógios escolhidos, entregues em Maputo.
           </h1>
