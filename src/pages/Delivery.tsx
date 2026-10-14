@@ -51,7 +51,7 @@ export default function Delivery() {
       <div className="mt-[clamp(40px,5vw,64px)] flex flex-wrap items-center justify-between gap-6">
         <p className="text-muted">
           Contacto:{' '}
-          <a href={`tel:+${config.whatsappNumber}`} className="font-semibold text-navy underline underline-offset-4">
+          <a href={`tel:+${config.whatsappNumber}`} className="font-semibold text-gold underline underline-offset-4">
             {whatsappDisplay}
           </a>
         </p>

@@ -111,11 +111,11 @@ export default function Shop() {
   return (
     <section className="wrap pt-[clamp(36px,5vw,72px)] pb-[clamp(64px,8vw,112px)]">
       <nav aria-label="Caminho" className="mb-4 flex gap-2 text-caption text-muted">
-        <Link to="/" className="hover:text-navy">
+        <Link to="/" className="hover:text-gold">
           Início
         </Link>
         <span>/</span>
-        <span className="text-navy">Loja</span>
+        <span className="text-gold">Loja</span>
       </nav>
       <h1 className="display mb-[clamp(24px,3vw,36px)] text-[clamp(2.5rem,1.6rem+3.4vw,4rem)] leading-[1.02]">{title}</h1>
 
@@ -144,7 +144,7 @@ export default function Shop() {
           <select
             value={f.sort}
             onChange={(e) => update({ sort: e.target.value as SortId })}
-            className="h-11 rounded-none border border-faint bg-white px-3 text-base text-navy lg:text-sm"
+            className="h-11 rounded-none border border-faint bg-white px-3 text-base text-gold lg:text-sm"
           >
             {SORTS.map((s) => (
               <option key={s.id} value={s.id}>

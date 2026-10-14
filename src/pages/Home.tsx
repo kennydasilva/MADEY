@@ -187,7 +187,7 @@ function Brands() {
             <li key={b}>
               <Link
                 to={shopUrl({ brands: [b] })}
-                className="display flex min-h-11 items-center text-[clamp(1.5rem,1.2rem+1.2vw,2.125rem)] text-navy underline-offset-[6px] hover:text-gold hover:underline"
+                className="display flex min-h-11 items-center text-[clamp(1.5rem,1.2rem+1.2vw,2.125rem)] text-gold underline-offset-[6px] hover:text-gold-dark hover:underline"
               >
                 {b}
               </Link>

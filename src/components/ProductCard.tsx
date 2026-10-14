@@ -13,7 +13,7 @@ export function Badge({ badge, className = '' }: { badge?: string; className?: s
   const promo = badge === 'Promoção'
   return (
     <span
-      className={`pointer-events-none px-2.5 py-1.5 text-label leading-none font-bold tracking-[0.14em] uppercase ${promo ? 'bg-sale text-white' : 'bg-white text-navy'} ${className}`}
+      className={`pointer-events-none px-2.5 py-1.5 text-label leading-none font-bold tracking-[0.14em] uppercase ${promo ? 'bg-sale text-white' : 'bg-white text-gold'} ${className}`}
     >
       {badge}
     </span>

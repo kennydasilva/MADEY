@@ -111,7 +111,7 @@ function OrderContents({ onClose, closeLabel }: { onClose: () => void; closeLabe
             </button>
             <button
               onClick={clear}
-              className="self-center px-2 py-2 text-caption text-muted underline underline-offset-4 hover:text-navy"
+              className="self-center px-2 py-2 text-caption text-muted underline underline-offset-4 hover:text-gold"
             >
               Limpar pedido
             </button>

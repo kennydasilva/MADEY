@@ -45,7 +45,7 @@ export default function ProductPage() {
 
   const gallery = galleryOf(p)
   const link = productLink(p)
-  const crumb = 'text-muted hover:text-navy'
+  const crumb = 'text-muted hover:text-gold'
   const quiet = 'flex h-11 items-center gap-2 text-caption font-semibold underline-offset-4 hover:underline'
 
   const share = async () => {
@@ -73,7 +73,7 @@ export default function ProductPage() {
             {p.brand}
           </Link>
           <span>/</span>
-          <span className="text-navy">{p.name}</span>
+          <span className="text-gold">{p.name}</span>
         </nav>
 
         <div className="grid items-start gap-[clamp(28px,5vw,80px)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
@@ -109,7 +109,7 @@ export default function ProductPage() {
             <div className="flex flex-col gap-2.5">
               <h1 className="display text-headline text-balance">{p.name}</h1>
               <span className="text-muted">
-                <Link to={shopUrl({ brands: [p.brand] })} className="underline underline-offset-4 hover:text-navy">
+                <Link to={shopUrl({ brands: [p.brand] })} className="underline underline-offset-4 hover:text-gold">
                   {p.brand}
                 </Link>{' '}
                 · {p.model} · Ref. {p.ref}

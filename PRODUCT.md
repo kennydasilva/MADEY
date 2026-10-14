@@ -24,7 +24,7 @@ WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar 
 ## Marca
 
 - Logótipo em `LOGO MADEY/`; recortes transparentes em `public/brand/` (monograma, palavra, conjunto), usados como máscara para mudar de cor.
-- Cores: as de sempre (azul-marinho, branco, cinzentos) mais o dourado do logótipo (`--color-gold`). Botões e elementos cheios são dourados; as secções escuras ficam azul-marinho.
+- Cores: as de sempre (azul-marinho, branco, cinzentos) mais o dourado do logótipo (`--color-gold`). Botões, elementos cheios e o texto principal são dourados; o texto secundário fica cinzento e as secções escuras ficam azul-marinho.
 - Letra: Cormorant (títulos) + Montserrat (texto), par "Luxury Serif" da UI Pro Max.
 - Pouco texto: o site serve para ver os relógios e pedir.
 
