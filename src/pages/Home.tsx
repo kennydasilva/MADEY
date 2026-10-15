@@ -177,7 +177,7 @@ function Collections() {
   )
 }
 
-/** Cada marca com quantos artigos tem; sem fotografia, para não repetir as das secções acima. */
+/** Cada marca com quantos artigos tem. */
 const BRAND_CARDS = BRANDS.map((b) => {
   const items = PRODUCTS.filter((p) => p.brand === b)
   const onlyWatches = items.every((p) => !p.accessory)
@@ -185,23 +185,35 @@ const BRAND_CARDS = BRANDS.map((b) => {
   return { brand: b, label: onlyWatches ? `${n} ${n === 1 ? 'relógio' : 'relógios'}` : `${n} ${n === 1 ? 'artigo' : 'artigos'}` }
 })
 
+/**
+ * Índice de marcas, como numa revista: nomes grandes em linhas, não cartões iguais nem fotografias repetidas.
+ * Ao passar o rato o dourado enche a linha da esquerda para a direita; a seta fica sempre visível para o toque.
+ */
 function Brands() {
   return (
     <section id="marcas" className={`wrap ${section}`}>
       <SectionHeading title="Compre por marca" />
-      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
+      <ul className="-mx-4 grid lg:grid-cols-2 lg:gap-x-12">
         {BRAND_CARDS.map((c) => (
-          <li key={c.brand}>
+          <li key={c.brand} className="border-b border-line first:border-t lg:nth-2:border-t">
             <Link
               to={shopUrl({ brands: [c.brand] })}
-              className="group flex h-full min-h-[148px] flex-col justify-between gap-6 border border-line p-5 transition-colors hover:border-gold hover:bg-gold hover:text-white"
+              className="group relative flex items-center justify-between gap-6 overflow-hidden px-4 py-[clamp(20px,2.4vw,32px)]"
             >
-              <span className="display text-[clamp(1.5rem,1.2rem+0.8vw,1.875rem)] leading-[1.05] text-balance">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+              />
+              <span className="display relative text-[clamp(2rem,1.4rem+2.2vw,3.25rem)] leading-none transition-[color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 group-hover:text-white">
                 {c.brand}
               </span>
-              <span className="flex items-center justify-between gap-2 text-caption font-semibold text-muted group-hover:text-white">
-                {c.label}
-                <ArrowIcon size={16} className="flex-none transition-transform group-hover:translate-x-1" />
+              <span className="relative flex flex-none items-center gap-4">
+                <span className="text-label font-bold tracking-[0.16em] text-muted uppercase transition-colors duration-300 group-hover:text-white">
+                  {c.label}
+                </span>
+                <span className="flex size-11 items-center justify-center rounded-full border border-gold/50 transition-colors duration-300 group-hover:border-white group-hover:text-white">
+                  <ArrowIcon size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                </span>
               </span>
             </Link>
           </li>
