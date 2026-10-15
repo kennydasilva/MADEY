@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { CheckIcon, CloseIcon } from '../components/Icons'
 import { ProductGrid } from '../components/ProductCard'
-import { BRANDS, CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, categoryLabel, type SortId } from '../data/products'
+import { BRANDS, FILTER_CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, categoryLabel, inCategory, type SortId } from '../data/products'
 import { countLabel } from '../lib/format'
 import { usePageTitle } from '../lib/title'
 import { EMPTY_FILTERS, filterProducts, filtersToSearch, parseFilters, type ShopFilters } from '../lib/shop'
@@ -81,11 +81,11 @@ export default function Shop() {
   const groups = [
     {
       title: 'Categoria',
-      options: CATEGORIES.map((c) => ({
-        label: c.label,
-        count: PRODUCTS.filter((p) => p.cats.includes(c.id)).length,
-        on: f.cats.includes(c.id),
-        toggle: () => toggle('cats', c.id),
+      options: FILTER_CATEGORIES.map((c) => ({
+        label: categoryLabel(c),
+        count: PRODUCTS.filter((p) => inCategory(p, c)).length,
+        on: f.cats.includes(c),
+        toggle: () => toggle('cats', c),
       })),
     },
     {
@@ -95,15 +95,6 @@ export default function Shop() {
         count: PRODUCTS.filter((p) => p.brand === b).length,
         on: f.brands.includes(b),
         toggle: () => toggle('brands', b),
-      })),
-    },
-    {
-      title: 'Preço',
-      options: PRICE_RANGES.map((r) => ({
-        label: r.label,
-        count: PRODUCTS.filter((p) => p.price >= r.min && p.price < r.max).length,
-        on: f.price === r.id,
-        toggle: () => update({ price: f.price === r.id ? null : r.id }),
       })),
     },
   ]

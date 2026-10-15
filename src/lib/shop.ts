@@ -1,4 +1,4 @@
-import { CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, type CategoryId, type Product, type SortId } from '../data/products'
+import { CATEGORIES, PRICE_RANGES, PRODUCTS, SORTS, inCategory, type CategoryId, type Product, type SortId } from '../data/products'
 
 export interface ShopFilters {
   cats: CategoryId[]
@@ -58,7 +58,7 @@ export function filterProducts(f: ShopFilters) {
     PRODUCTS.filter((p) => {
       if (f.q.trim() && !matchesQuery(p, f.q)) return false
       if (f.brands.length && !f.brands.includes(p.brand)) return false
-      if (f.cats.length && !f.cats.some((c) => p.cats.includes(c))) return false
+      if (f.cats.length && !f.cats.some((c) => inCategory(p, c))) return false
       if (range && !(p.price >= range.min && p.price < range.max)) return false
       return true
     }),

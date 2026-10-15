@@ -1,4 +1,4 @@
-export type CategoryId = 'homem' | 'senhora' | 'desporto' | 'classico' | 'acessorios'
+export type CategoryId = 'relogios' | 'homem' | 'senhora' | 'desporto' | 'classico' | 'acessorios'
 export type Stock = 'in' | 'low' | 'order' | 'out'
 export type Badge = 'Promoção' | 'Poucas unidades' | 'Sob encomenda'
 
@@ -25,6 +25,7 @@ export interface Product {
 }
 
 export const CATEGORIES: { id: CategoryId; label: string; short: string }[] = [
+  { id: 'relogios', label: 'Relógios', short: 'Relógios' },
   { id: 'homem', label: 'Relógios de Homem', short: 'Homem' },
   { id: 'senhora', label: 'Relógios de Senhora', short: 'Senhora' },
   { id: 'desporto', label: 'Desporto & Digital', short: 'Desporto & Digital' },
@@ -200,4 +201,10 @@ export const badgeOf = (p: Product): string | undefined => (isSoldOut(p) ? 'Esgo
 
 export const productBySlug = (slug: string) => PRODUCTS.find((p) => p.slug === slug)
 export const productById = (id: number) => PRODUCTS.find((p) => p.id === id)
+/** Os filtros da loja só mostram estas duas; as outras continuam a servir as coleções da página inicial. */
+export const FILTER_CATEGORIES: CategoryId[] = ['relogios', 'acessorios']
+
+/** "Relógios" é tudo o que não é acessório; as outras categorias vêm dos dados de cada produto. */
+export const inCategory = (p: Product, c: CategoryId) => (c === 'relogios' ? !p.accessory : p.cats.includes(c))
+
 export const categoryLabel = (id: CategoryId) => CATEGORIES.find((c) => c.id === id)?.label ?? id

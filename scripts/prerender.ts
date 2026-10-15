@@ -4,7 +4,7 @@
 import { cpSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { config } from '../src/config.ts'
-import { CATEGORIES, PRODUCTS, type Product } from '../src/data/products.ts'
+import { PRODUCTS, type Product } from '../src/data/products.ts'
 
 const DIST = 'dist'
 const SITE = config.siteUrl
@@ -91,7 +91,7 @@ const pages: Page[] = [
   {
     path: '/loja',
     title: 'Todos os relógios — MADEY',
-    description: `Catálogo MADEY: ${CATEGORIES.map((c) => c.label.toLowerCase()).join(', ')}.`,
+    description: `Catálogo MADEY: relógios e acessórios.`,
     image: ogImage('hero'),
   },
   {
