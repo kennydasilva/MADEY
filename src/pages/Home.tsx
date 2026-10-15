@@ -123,10 +123,7 @@ function Story() {
         <div className="flex flex-col items-start gap-6">
           <h2 className="display text-headline text-balance text-gold-light">Fazemos entregas para todo o Moçambique.</h2>
           <p className="max-w-[46ch] text-lead text-pretty text-line">
-            {/* Hífen inseparável: "G-Shock" não parte ao fim da linha. */}
-            A MADEY é uma loja independente de relógios e acessórios. Juntamos{' '}
-            {WATCH_BRANDS.slice(0, 4).join(', ').replace(/-/g, '\u2011')} e outras marcas num só lugar, com o preço em
-            meticais à vista.
+            A MADEY é uma loja independente de relógios e acessórios, com o preço em meticais à vista.
           </p>
           <p className="max-w-[46ch] text-pretty text-line">
             Escolha o relógio, toque em Solicitar e combinamos consigo a disponibilidade, o pagamento e a entrega.
