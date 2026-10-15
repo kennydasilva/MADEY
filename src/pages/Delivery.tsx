@@ -16,11 +16,11 @@ const TOPICS = [
   },
   {
     title: 'Sob encomenda',
-    text: 'Os artigos marcados “Sob encomenda” não estão em stock imediato. Pode juntá-los ao pedido; indicamos o prazo previsto antes de avançar.',
+    text: 'Os artigos marcados “Sob encomenda” não estão em stock imediato. Pode solicitá-los na mesma; indicamos o prazo previsto antes de avançar.',
   },
   {
     title: 'Esgotados',
-    text: 'Um artigo esgotado não entra no pedido. Toque em “Avisar-me” e dizemos-lhe quando voltar a estar disponível.',
+    text: 'Num artigo esgotado, toque em “Avisar-me” e dizemos-lhe quando voltar a estar disponível.',
   },
   {
     title: 'Trocas e devoluções',
@@ -36,7 +36,7 @@ export default function Delivery() {
         Entregas e pagamentos
       </h1>
       <p className="mt-5 max-w-[48ch] text-lead text-muted">
-        Sem pagamento no site e sem conta para criar. Escolhe, envia o pedido e combinamos o resto consigo.
+        Sem pagamento no site e sem conta para criar. Toque no relógio que quer e combinamos o resto consigo.
       </p>
 
       <dl className="mt-[clamp(40px,5vw,72px)] border-t border-line">

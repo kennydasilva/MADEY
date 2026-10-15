@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowIcon, BagIcon, CopyIcon, MinusIcon, PlusIcon, ShareIcon } from '../components/Icons'
+import { ArrowIcon, CopyIcon, ShareIcon } from '../components/Icons'
 import { Photo } from '../components/Photo'
-import { AddButton, Badge, ProductGrid, StockLine } from '../components/ProductCard'
-import { MAX_QTY, useOrder } from '../context/order'
+import { Badge, ProductGrid, RequestLink, StockLine, requestText } from '../components/ProductCard'
 import { useUi } from '../context/ui'
-import { PRODUCTS, badgeOf, isSoldOut, productBySlug, type Product } from '../data/products'
+import { PRODUCTS, badgeOf, productBySlug, type Product } from '../data/products'
 import { formatPrice, productLink } from '../lib/format'
 import { img } from '../lib/images'
 import { shopUrl } from '../lib/shop'
@@ -29,14 +28,11 @@ function galleryOf(p: Product) {
 export default function ProductPage() {
   const { slug = '' } = useParams()
   const p = productBySlug(slug)
-  const { requestWhatsApp, copy, openOrder } = useUi()
-  const { count } = useOrder()
+  const { copy } = useUi()
   const [photo, setPhoto] = useState(0)
-  const [qty, setQty] = useState(1)
 
   useEffect(() => {
     setPhoto(0)
-    setQty(1)
   }, [slug])
 
   usePageTitle(p ? `${p.name} · ${p.brand}` : 'Página não encontrada')
@@ -132,41 +128,10 @@ export default function ProductPage() {
 
             <p className="max-w-[58ch] text-lead text-pretty text-muted">{p.desc}</p>
 
-            <div className={`items-center gap-4 pt-1 ${isSoldOut(p) ? 'hidden' : 'flex'}`}>
-              <span className="text-sm font-semibold">Quantidade</span>
-              <div className="flex border border-line">
-                <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  disabled={qty <= 1}
-                  aria-label="Diminuir quantidade"
-                  className="flex size-11 items-center justify-center hover:bg-mist disabled:text-line"
-                >
-                  <MinusIcon size={15} />
-                </button>
-                <span
-                  className="flex size-11 items-center justify-center border-x border-line font-bold tabular-nums"
-                  aria-live="polite"
-                >
-                  {qty}
-                </span>
-                <button
-                  onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))}
-                  disabled={qty >= MAX_QTY}
-                  aria-label="Aumentar quantidade"
-                  className="flex size-11 items-center justify-center hover:bg-mist disabled:text-line"
-                >
-                  <PlusIcon size={15} />
-                </button>
-              </div>
-            </div>
-
             <div className="flex flex-col gap-2.5">
-              <AddButton product={p} qty={qty} full />
-              {!isSoldOut(p) && (
-                <button onClick={() => requestWhatsApp(p, qty)} className="btn btn-outline h-[52px]">
-                  Solicitar agora
-                </button>
-              )}
+              <RequestLink product={p} className="btn btn-dark h-14">
+                {requestText(p)}
+              </RequestLink>
               <div className="flex gap-6">
                 <button onClick={share} className={quiet}>
                   <ShareIcon size={15} />
@@ -205,26 +170,13 @@ export default function ProductPage() {
         <ProductGrid products={relatedTo(p)} />
       </section>
 
-      {/* Barra de compra fixa em ecrãs pequenos; o espaçador evita tapar o rodapé. */}
+      {/* Botão de pedido fixo em ecrãs pequenos; o espaçador evita tapar o rodapé. */}
       <div className="h-20 lg:hidden" />
       <div className="fixed inset-x-0 bottom-0 z-[60] flex items-center gap-3.5 border-t border-line bg-white px-4 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,31,51,0.08)] lg:hidden">
         <span className="flex-none text-[1.0625rem] font-bold whitespace-nowrap tabular-nums">{formatPrice(p.price)}</span>
-        <div className="min-w-0 flex-1">
-          <AddButton product={p} qty={qty} full short />
-        </div>
-        {count > 0 && (
-          <button
-            key={count}
-            onClick={openOrder}
-            aria-label="Ver pedido"
-            className="bump relative flex size-14 flex-none items-center justify-center border border-gold"
-          >
-            <BagIcon size={22} />
-            <span className="absolute top-1.5 right-1.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold px-1 text-label leading-none font-bold text-white tabular-nums">
-              {count}
-            </span>
-          </button>
-        )}
+        <RequestLink product={p} className="btn btn-dark h-14 min-w-0 flex-1 px-3">
+          {requestText(p)}
+        </RequestLink>
       </div>
     </>
   )

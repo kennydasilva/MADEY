@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowIcon } from '../components/Icons'
 import { Logo } from '../components/Logo'
 import { Photo } from '../components/Photo'
-import { AddButton, Price, ProductGrid, StockLine } from '../components/ProductCard'
+import { Price, ProductGrid, RequestLink, StockLine, requestText } from '../components/ProductCard'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
 import { productPath } from '../lib/format'
 import { shopUrl, sortProducts } from '../lib/shop'
@@ -101,9 +101,9 @@ function Spotlight() {
             <StockLine product={p} />
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
-            <div className="sm:w-[280px]">
-              <AddButton product={p} full />
-            </div>
+            <RequestLink product={p} className="btn btn-dark h-14 sm:w-[280px]">
+              {requestText(p)}
+            </RequestLink>
             <Link to={productPath(p)} className="link-arrow self-start">
               Ver detalhes <ArrowIcon size={14} strokeWidth={2} />
             </Link>

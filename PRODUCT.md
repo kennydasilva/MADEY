@@ -3,9 +3,10 @@
 ## O que é
 
 Catálogo online de relógios e acessórios de uma loja independente em Maputo, Moçambique.
-Não há pagamento nem conta no site: o cliente junta artigos a um pedido e envia a lista,
-com referências e total, pelo WhatsApp. Disponibilidade, pagamento e entrega são
-combinados na conversa.
+Não há pagamento, conta nem carrinho no site: tocar num relógio (ou em "Solicitar") abre
+logo o WhatsApp com a mensagem desse relógio já escrita (nome, preço, referência, link).
+Disponibilidade, pagamento e entrega são combinados na conversa. O cliente da loja pediu
+esta simplicidade (2026-10-15) para ninguém desistir a meio; não voltar a pôr carrinho.
 
 ## Quem usa
 
@@ -15,9 +16,9 @@ WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar 
 ## O que tem de continuar verdade
 
 - Preços em meticais (MT), sempre visíveis antes do contacto.
-- O WhatsApp é o único canal de encomenda, mas só é nomeado no momento de enviar o pedido (janela final). Antes disso o site fala em "Solicitar pedido". O verde fica reservado a essa janela.
+- O WhatsApp é o único canal de encomenda. Os botões dizem só "Solicitar"; o WhatsApp abre direto, sem janela intermédia.
 - Cada produto tem página própria: é o link enviado na mensagem e o que o Google indexa.
-- Artigos "Sob encomenda" entram no pedido com essa indicação; "Esgotado" não entra e oferece "Avisar-me".
+- Artigos "Sob encomenda" podem ser solicitados; "Esgotado" mostra "Avisar-me" e envia um pedido de aviso.
 - A MADEY não é distribuidora oficial das marcas e o site diz isso.
 - Nada de testemunhos, números, garantias, prazos ou formas de pagamento que a loja não tenha confirmado.
 

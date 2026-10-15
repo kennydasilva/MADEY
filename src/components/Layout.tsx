@@ -3,9 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { MobileMenu } from './MobileMenu'
-import { useOrderView } from '../lib/orderView'
-import { OrderBar, OrderDock, OrderPanel } from './OrderPanel'
-import { SearchOverlay, Toast, WhatsAppModal } from './Overlays'
+import { SearchOverlay, Toast } from './Overlays'
 
 /** Ao mudar de página volta ao topo; com #âncora desliza até à secção. */
 function useScrollOnNavigate() {
@@ -27,10 +25,8 @@ function useScrollOnNavigate() {
 
 export function Layout() {
   useScrollOnNavigate()
-  const { docked } = useOrderView()
   return (
-    // Com o pedido fixo ao lado, a página inteira cede-lhe a largura em vez de ficar tapada.
-    <div className={`min-h-screen ${docked ? 'pr-[360px]' : ''}`}>
+    <div className="min-h-screen">
       <a href="#conteudo" className="skip-link">
         Saltar para o conteúdo
       </a>
@@ -39,12 +35,8 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <OrderBar />
-      {docked && <OrderDock />}
       <MobileMenu />
-      <OrderPanel />
       <SearchOverlay />
-      <WhatsAppModal />
       <Toast />
     </div>
   )

@@ -1,23 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { whatsappDisplay } from '../config'
 import { useUi } from '../context/ui'
 import { PRODUCTS } from '../data/products'
-import {
-  formatPrice,
-  itemsLabel,
-  messageFor,
-  productLink,
-  productPath,
-  requestLabel,
-  whatsappUrl,
-} from '../lib/format'
+import { formatPrice, productPath } from '../lib/format'
 import { useDialog } from '../lib/dialog'
-import { img } from '../lib/images'
 import { matchesQuery, shopUrl } from '../lib/shop'
-import { CloseIcon, CopyIcon, ImageIcon, SearchIcon, WhatsAppIcon } from './Icons'
+import { CloseIcon, SearchIcon } from './Icons'
 import { Photo } from './Photo'
-import { AddButton } from './ProductCard'
+import { RequestLink, requestText } from './ProductCard'
 
 const POPULAR = ['G-Shock', 'Tissot PRX', 'Seiko 5', 'Cronógrafo', 'Vintage', 'Estojo']
 
@@ -107,7 +97,12 @@ export function SearchOverlay() {
                     <span className="text-caption text-muted">{p.brand}</span>
                     <span className="text-sm font-bold">{formatPrice(p.price)}</span>
                   </Link>
-                  <AddButton product={p} />
+                  <RequestLink
+                    product={p}
+                    className="flex h-11 flex-none items-center border border-gold px-3.5 text-label font-bold tracking-[0.14em] uppercase hover:bg-gold hover:text-white sm:h-10"
+                  >
+                    {requestText(p)}
+                  </RequestLink>
                 </div>
               ))}
               <button
@@ -129,124 +124,6 @@ export function SearchOverlay() {
               </button>
             </div>
           )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export function WhatsAppModal() {
-  const { wa, closeAll, copy, flash } = useUi()
-  const ref = useDialog<HTMLDivElement>(!!wa)
-  if (!wa) return null
-  const { lines } = wa
-  const single = lines.length === 1 ? lines[0] : null
-  const message = messageFor(lines)
-  const total = lines.reduce((n, l) => n + l.product.price * l.qty, 0)
-  const title = single ? requestLabel(single.product) : 'Enviar pedido pelo WhatsApp'
-
-  const shareWithPhoto = async () => {
-    if (!single) return
-    const p = single.product
-    try {
-      if (!navigator.share) return await copy(message, 'Partilha indisponível aqui — mensagem copiada')
-      const blob = await (await fetch(img(p.image))).blob()
-      const file = new File([blob], `${p.ref}.jpg`, { type: blob.type || 'image/jpeg' })
-      const withFile = navigator.canShare?.({ files: [file] })
-      await navigator.share(withFile ? { text: message, files: [file] } : { text: message, url: productLink(p) })
-    } catch (e) {
-      // Cancelar a partilha não é um erro; qualquer outra falha cai na cópia.
-      if ((e as Error)?.name !== 'AbortError') copy(message, 'Mensagem copiada — cole-a no WhatsApp')
-    }
-  }
-
-  const small = 'btn btn-outline h-[46px] gap-2 px-2 text-[11px] tracking-[0.12em]'
-
-  return (
-    <div onClick={closeAll} className="overlay-in fixed inset-0 z-[100] grid place-items-center bg-navy/60 p-4">
-      <div
-        ref={ref}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        className="panel-pop flex max-h-[calc(100dvh-32px)] w-[min(540px,100%)] flex-col overflow-y-auto bg-white shadow-[0_24px_60px_rgba(20,31,51,0.3)]"
-      >
-        <div className="flex items-center justify-between border-b border-line py-3 pr-3 pl-7">
-          <h2 className="font-serif text-[26px] font-medium">{title}</h2>
-          <CloseButton />
-        </div>
-        <div className="flex flex-col gap-[18px] px-7 pt-[22px] pb-7">
-          {single ? (
-            <div className="grid grid-cols-[76px_minmax(0,1fr)] items-center gap-4">
-              <Photo name={single.product.image} sizes="76px" alt="" className="size-[76px] bg-stone object-cover" />
-              <div className="flex min-w-0 flex-col gap-0.5">
-                <span className="font-serif text-[22px] leading-[1.15] font-medium">{single.product.name}</span>
-                <span className="text-caption text-muted">
-                  {single.product.brand} · Ref. {single.product.ref}
-                </span>
-                <span className="text-sm font-bold tabular-nums">
-                  {single.qty > 1
-                    ? `${single.qty} × ${formatPrice(single.product.price)}`
-                    : formatPrice(single.product.price)}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <div className="flex">
-                {lines.slice(0, 4).map((l) => (
-                  <Photo
-                    key={l.product.id}
-                    name={l.product.image}
-                    sizes="56px"
-                    alt=""
-                    className="-mr-2 size-14 border-2 border-white bg-stone object-cover"
-                  />
-                ))}
-              </div>
-              <div className="ml-3 flex flex-col">
-                <span className="text-caption text-muted">{itemsLabel(lines.reduce((n, l) => n + l.qty, 0))}</span>
-                <span className="font-bold tabular-nums">Total estimado: {formatPrice(total)}</span>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col gap-2">
-            <span className="eyebrow tracking-[0.2em]">Mensagem para {whatsappDisplay}</span>
-            <div className="border border-line bg-mist px-[18px] py-4 text-[13px] leading-[1.6] break-words whitespace-pre-wrap">
-              {message}
-            </div>
-          </div>
-          <a
-            href={whatsappUrl(message)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => {
-              closeAll()
-              flash('A abrir o WhatsApp…')
-            }}
-            className="btn btn-wa h-14 gap-3"
-          >
-            <WhatsAppIcon />
-            Abrir WhatsApp
-          </a>
-          <div className={`grid gap-2.5 ${single ? 'grid-cols-2' : ''}`}>
-            {single && (
-              <button onClick={shareWithPhoto} className={small}>
-                <ImageIcon size={15} />
-                Partilhar com foto
-              </button>
-            )}
-            <button onClick={() => copy(message, 'Mensagem copiada — cole-a no WhatsApp')} className={small}>
-              <CopyIcon size={15} />
-              Copiar mensagem
-            </button>
-          </div>
-          <p className="border-t border-line pt-3.5 text-xs leading-[1.6] text-muted">
-            {single
-              ? 'A mensagem leva a referência e o link do artigo. No telemóvel, “Partilhar com foto” envia também a imagem.'
-              : 'A mensagem leva a referência e o link de cada artigo. O pedido continua guardado neste dispositivo até o limpar.'}
-          </p>
         </div>
       </div>
     </div>
