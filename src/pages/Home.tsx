@@ -177,40 +177,32 @@ function Collections() {
   )
 }
 
-/** Cada marca com a fotografia de um dos seus relógios (acessórios só se não houver relógio). */
+/** Cada marca com quantos artigos tem; sem fotografia, para não repetir as das secções acima. */
 const BRAND_CARDS = BRANDS.map((b) => {
   const items = PRODUCTS.filter((p) => p.brand === b)
-  const cover = items.find((p) => !p.accessory) ?? items[0]
-  const watches = items.filter((p) => !p.accessory).length
-  return { brand: b, image: cover.image, label: watches === items.length ? `${items.length} ${items.length === 1 ? 'relógio' : 'relógios'}` : `${items.length} artigos` }
+  const onlyWatches = items.every((p) => !p.accessory)
+  const n = items.length
+  return { brand: b, label: onlyWatches ? `${n} ${n === 1 ? 'relógio' : 'relógios'}` : `${n} ${n === 1 ? 'artigo' : 'artigos'}` }
 })
 
 function Brands() {
   return (
     <section id="marcas" className={`wrap ${section}`}>
       <SectionHeading title="Compre por marca" />
-      <ul className="grid grid-cols-2 gap-x-3.5 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-6">
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
         {BRAND_CARDS.map((c) => (
           <li key={c.brand}>
-            <Link to={shopUrl({ brands: [c.brand] })} className="group flex flex-col gap-3.5">
-              <div className="relative aspect-square overflow-hidden bg-stone">
-                <Photo
-                  name={c.image}
-                  sizes="(min-width: 1024px) 200px, (min-width: 640px) 33vw, 50vw"
-                  alt=""
-                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                />
-                <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-300 group-hover:scale-x-100" />
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="font-serif text-title leading-[1.15] font-medium underline-offset-4 group-hover:underline">
-                  {c.brand}
-                </span>
-                <span className="flex items-center gap-2 text-caption font-semibold text-muted group-hover:text-gold">
-                  Ver {c.label}
-                  <ArrowIcon size={14} className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </div>
+            <Link
+              to={shopUrl({ brands: [c.brand] })}
+              className="group flex h-full min-h-[148px] flex-col justify-between gap-6 border border-line p-5 transition-colors hover:border-gold hover:bg-gold hover:text-white"
+            >
+              <span className="display text-[clamp(1.5rem,1.2rem+0.8vw,1.875rem)] leading-[1.05] text-balance">
+                {c.brand}
+              </span>
+              <span className="flex items-center justify-between gap-2 text-caption font-semibold text-muted group-hover:text-white">
+                {c.label}
+                <ArrowIcon size={16} className="flex-none transition-transform group-hover:translate-x-1" />
+              </span>
             </Link>
           </li>
         ))}
