@@ -16,7 +16,7 @@ WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar 
 ## O que tem de continuar verdade
 
 - Preços em meticais (MT), sempre visíveis antes do contacto.
-- O WhatsApp é o único canal de encomenda. Os botões dizem só "Solicitar"; o WhatsApp abre direto, sem janela intermédia.
+- O WhatsApp é o único canal de encomenda. Os botões dizem só "Solicitar", são verdes (cor reservada a esta ação) e abrem o WhatsApp direto, sem janela intermédia.
 - Cada produto tem página própria: é o link enviado na mensagem e o que o Google indexa.
 - Artigos "Sob encomenda" podem ser solicitados; "Esgotado" mostra "Avisar-me" e envia um pedido de aviso.
 - A MADEY não é distribuidora oficial das marcas e o site diz isso.

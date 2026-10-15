@@ -89,9 +89,10 @@ function ProductCard({ product: p }: { product: Product }) {
         {p.brand} · {p.model}
       </span>
 
-      <div className="mt-auto flex flex-col gap-3 pt-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+      {/* Preço em cima e botão a toda a largura por baixo: alinhados em todos os cartões, mesmo com dois preços. */}
+      <div className="mt-auto flex flex-col gap-3 pt-3.5">
         <Price product={p} />
-        <span className="flex h-11 items-center justify-center border border-gold px-4 text-label font-bold tracking-[0.14em] uppercase transition-colors group-hover:bg-gold group-hover:text-white sm:h-10">
+        <span className="flex h-11 w-full items-center justify-center bg-wa text-label font-bold tracking-[0.14em] text-white uppercase transition-colors group-hover:bg-wa-dark">
           {requestText(p)}
         </span>
       </div>

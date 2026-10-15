@@ -129,7 +129,7 @@ export default function ProductPage() {
             <p className="max-w-[58ch] text-lead text-pretty text-muted">{p.desc}</p>
 
             <div className="flex flex-col gap-2.5">
-              <RequestLink product={p} className="btn btn-dark h-14">
+              <RequestLink product={p} className="btn btn-wa h-14">
                 {requestText(p)}
               </RequestLink>
               <div className="flex gap-6">
@@ -174,7 +174,7 @@ export default function ProductPage() {
       <div className="h-20 lg:hidden" />
       <div className="fixed inset-x-0 bottom-0 z-[60] flex items-center gap-3.5 border-t border-line bg-white px-4 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,31,51,0.08)] lg:hidden">
         <span className="flex-none text-[1.0625rem] font-bold whitespace-nowrap tabular-nums">{formatPrice(p.price)}</span>
-        <RequestLink product={p} className="btn btn-dark h-14 min-w-0 flex-1 px-3">
+        <RequestLink product={p} className="btn btn-wa h-14 min-w-0 flex-1 px-3">
           {requestText(p)}
         </RequestLink>
       </div>

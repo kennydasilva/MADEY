@@ -101,7 +101,7 @@ function Spotlight() {
             <StockLine product={p} />
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
-            <RequestLink product={p} className="btn btn-dark h-14 sm:w-[280px]">
+            <RequestLink product={p} className="btn btn-wa h-14 sm:w-[280px]">
               {requestText(p)}
             </RequestLink>
             <Link to={productPath(p)} className="link-arrow self-start">

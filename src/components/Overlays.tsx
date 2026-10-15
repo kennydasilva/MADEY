@@ -99,7 +99,7 @@ export function SearchOverlay() {
                   </Link>
                   <RequestLink
                     product={p}
-                    className="flex h-11 flex-none items-center border border-gold px-3.5 text-label font-bold tracking-[0.14em] uppercase hover:bg-gold hover:text-white sm:h-10"
+                    className="flex h-11 flex-none items-center bg-wa px-3.5 text-label font-bold tracking-[0.14em] text-white uppercase hover:bg-wa-dark sm:h-10"
                   >
                     {requestText(p)}
                   </RequestLink>
