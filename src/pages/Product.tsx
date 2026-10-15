@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowIcon, CopyIcon, ShareIcon } from '../components/Icons'
 import { Photo } from '../components/Photo'
-import { Badge, ProductGrid, RequestLink, StockLine, requestText } from '../components/ProductCard'
+import { Badge, ProductGrid, RequestLabel, RequestLink, StockLine } from '../components/ProductCard'
 import { useUi } from '../context/ui'
 import { PRODUCTS, badgeOf, productBySlug, type Product } from '../data/products'
 import { formatPrice, productLink } from '../lib/format'
@@ -130,7 +130,7 @@ export default function ProductPage() {
 
             <div className="flex flex-col gap-2.5">
               <RequestLink product={p} className="btn btn-wa h-14">
-                {requestText(p)}
+                <RequestLabel product={p} />
               </RequestLink>
               <div className="flex gap-6">
                 <button onClick={share} className={quiet}>
@@ -175,7 +175,7 @@ export default function ProductPage() {
       <div className="fixed inset-x-0 bottom-0 z-[60] flex items-center gap-3.5 border-t border-line bg-white px-4 pt-2.5 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,31,51,0.08)] lg:hidden">
         <span className="flex-none text-[1.0625rem] font-bold whitespace-nowrap tabular-nums">{formatPrice(p.price)}</span>
         <RequestLink product={p} className="btn btn-wa h-14 min-w-0 flex-1 px-3">
-          {requestText(p)}
+          <RequestLabel product={p} />
         </RequestLink>
       </div>
     </>

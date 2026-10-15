@@ -4,7 +4,7 @@ import { ArrowIcon } from '../components/Icons'
 import { Logo } from '../components/Logo'
 import { MozambiqueClock } from '../components/MozambiqueClock'
 import { Photo } from '../components/Photo'
-import { Price, ProductGrid, RequestLink, StockLine, requestText } from '../components/ProductCard'
+import { Price, ProductGrid, RequestLabel, RequestLink, StockLine } from '../components/ProductCard'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
 import { productPath } from '../lib/format'
 import { shopUrl, sortProducts } from '../lib/shop'
@@ -103,7 +103,7 @@ function Spotlight() {
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7">
             <RequestLink product={p} className="btn btn-wa h-14 sm:w-[280px]">
-              {requestText(p)}
+              <RequestLabel product={p} />
             </RequestLink>
             <Link to={productPath(p)} className="link-arrow self-start">
               Ver detalhes <ArrowIcon size={14} strokeWidth={2} />

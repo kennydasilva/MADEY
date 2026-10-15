@@ -7,7 +7,7 @@ import { useDialog } from '../lib/dialog'
 import { matchesQuery, shopUrl } from '../lib/shop'
 import { CloseIcon, SearchIcon } from './Icons'
 import { Photo } from './Photo'
-import { RequestLink, requestText } from './ProductCard'
+import { RequestLabel, RequestLink } from './ProductCard'
 
 const POPULAR = ['G-Shock', 'Tissot PRX', 'Seiko 5', 'Cronógrafo', 'Vintage', 'Estojo']
 
@@ -99,9 +99,9 @@ export function SearchOverlay() {
                   </Link>
                   <RequestLink
                     product={p}
-                    className="flex h-11 flex-none items-center bg-wa px-3.5 text-label font-bold tracking-[0.14em] text-white uppercase hover:bg-wa-dark sm:h-10"
+                    className="flex h-11 flex-none items-center gap-2 bg-wa px-3.5 text-label font-bold tracking-[0.14em] text-white uppercase hover:bg-wa-dark sm:h-10"
                   >
-                    {requestText(p)}
+                    <RequestLabel product={p} size={15} />
                   </RequestLink>
                 </div>
               ))}

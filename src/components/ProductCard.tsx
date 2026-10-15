@@ -2,6 +2,7 @@ import { track } from '@vercel/analytics'
 import type { ReactNode } from 'react'
 import { STOCK_INFO, badgeOf, isSoldOut, type Product } from '../data/products'
 import { buildWhatsAppMessage, formatPrice, whatsappUrl } from '../lib/format'
+import { WhatsAppIcon } from './Icons'
 import { Photo } from './Photo'
 
 export function Badge({ badge, className = '' }: { badge?: string; className?: string }) {
@@ -39,6 +40,16 @@ export function StockLine({ product, className = '' }: { product: Product; class
 
 /** Texto da ação: um esgotado pede aviso em vez de encomenda. */
 export const requestText = (p: Product) => (isSoldOut(p) ? 'Avisar-me' : 'Solicitar')
+
+/** Ícone do WhatsApp e texto do botão, iguais em todos os botões que abrem a conversa. */
+export function RequestLabel({ product, size = 18 }: { product: Product; size?: number }) {
+  return (
+    <>
+      <WhatsAppIcon size={size} className="flex-none" />
+      {requestText(product)}
+    </>
+  )
+}
 
 /**
  * Link direto para o WhatsApp com a mensagem do relógio já escrita: um toque e a conversa abre.
@@ -92,8 +103,8 @@ function ProductCard({ product: p }: { product: Product }) {
       {/* Preço em cima e botão a toda a largura por baixo: alinhados em todos os cartões, mesmo com dois preços. */}
       <div className="mt-auto flex flex-col gap-3 pt-3.5">
         <Price product={p} />
-        <span className="flex h-11 w-full items-center justify-center bg-wa text-label font-bold tracking-[0.14em] text-white uppercase transition-colors group-hover:bg-wa-dark">
-          {requestText(p)}
+        <span className="flex h-11 w-full items-center justify-center gap-2 bg-wa text-label font-bold tracking-[0.14em] text-white uppercase transition-colors group-hover:bg-wa-dark">
+          <RequestLabel product={p} size={16} />
         </span>
       </div>
     </RequestLink>
