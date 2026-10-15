@@ -11,12 +11,22 @@ const VARIANTS = {
 }
 
 /** Logótipo MADEY na cor do texto à volta (dourado por omissão). Defina a altura com `className`. */
-export function Logo({ variant = 'word', className = '' }: { variant?: keyof typeof VARIANTS; className?: string }) {
+export function Logo({
+  variant = 'word',
+  className = '',
+  decorative = false,
+}: {
+  variant?: keyof typeof VARIANTS
+  className?: string
+  /** Escondido dos leitores de ecrã quando o que está à volta já tem nome. */
+  decorative?: boolean
+}) {
   const v = VARIANTS[variant]
   return (
     <span
-      role="img"
-      aria-label="MADEY"
+      role={decorative ? undefined : 'img'}
+      aria-label={decorative ? undefined : 'MADEY'}
+      aria-hidden={decorative || undefined}
       className={`logo ${className}`}
       style={{ '--logo': `url(${v.src})`, aspectRatio: v.ratio } as CSSProperties}
     />
