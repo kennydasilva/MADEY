@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Logo } from './Logo'
 
-/** Horas, minutos e segundos atuais em Maputo, seja qual for o fuso do visitante. */
-function maputoTime() {
+/** Horas, minutos e segundos atuais em Moçambique (um só fuso, o de Maputo), seja qual for o fuso do visitante. */
+function mozambiqueTime() {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Africa/Maputo',
     hour: 'numeric',
@@ -16,12 +16,12 @@ function maputoTime() {
 
 const TICKS = Array.from({ length: 60 }, (_, i) => i)
 
-/** Mostrador desenhado em SVG com a hora real de Maputo; o monograma da MADEY fica no lugar da marca. */
-export function MaputoClock({ className = '' }: { className?: string }) {
-  const [t, setT] = useState(maputoTime)
+/** Mostrador desenhado em SVG com a hora real de Moçambique; o monograma da MADEY fica no lugar da marca. */
+export function MozambiqueClock({ className = '' }: { className?: string }) {
+  const [t, setT] = useState(mozambiqueTime)
 
   useEffect(() => {
-    const id = window.setInterval(() => setT(maputoTime()), 1000)
+    const id = window.setInterval(() => setT(mozambiqueTime()), 1000)
     return () => window.clearInterval(id)
   }, [])
 
@@ -32,7 +32,7 @@ export function MaputoClock({ className = '' }: { className?: string }) {
 
   return (
     <figure className={`flex flex-col items-center gap-5 ${className}`}>
-      <div role="img" aria-label={`Hora atual em Maputo: ${label}`} className="relative aspect-square w-full">
+      <div role="img" aria-label={`Hora atual em Moçambique: ${label}`} className="relative aspect-square w-full">
         <svg viewBox="0 0 200 200" className="absolute inset-0 size-full" aria-hidden="true">
           <circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" strokeOpacity="0.55" strokeWidth="0.8" />
           <circle cx="100" cy="100" r="91" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="0.5" />
@@ -72,7 +72,7 @@ export function MaputoClock({ className = '' }: { className?: string }) {
         <Logo variant="mark" decorative className="absolute top-[27%] left-1/2 h-[13%] -translate-x-1/2" />
       </div>
       <figcaption className="text-label font-bold tracking-[0.2em] text-line uppercase tabular-nums">
-        Agora em Maputo · {label}
+        Agora em Moçambique · {label}
       </figcaption>
     </figure>
   )

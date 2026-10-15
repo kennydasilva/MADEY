@@ -8,7 +8,7 @@ import { usePageTitle } from '../lib/title'
 const TOPICS = [
   {
     title: 'Entregas',
-    text: 'Estamos em Maputo. A zona, o prazo e o custo de entrega são confirmados consigo antes de fechar a encomenda.',
+    text: 'Entregamos em todo Moçambique. O prazo e o custo de entrega para a sua zona são confirmados consigo antes de fechar a encomenda.',
   },
   {
     title: 'Pagamento',

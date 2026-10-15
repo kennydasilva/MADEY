@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowIcon } from '../components/Icons'
 import { Logo } from '../components/Logo'
-import { MaputoClock } from '../components/MaputoClock'
+import { MozambiqueClock } from '../components/MozambiqueClock'
 import { Photo } from '../components/Photo'
 import { Price, ProductGrid, RequestLink, StockLine, requestText } from '../components/ProductCard'
 import { BRANDS, PRODUCTS, type CategoryId } from '../data/products'
@@ -45,7 +45,7 @@ function Hero() {
         <div className="flex max-w-[660px] flex-col gap-7">
           <Logo variant="mark" className="hidden h-16 self-start text-gold-light lg:block" />
           <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
-            Relógios escolhidos, entregues em Maputo.
+            Relógios escolhidos, entregues em todo Moçambique.
           </h1>
           <p className="max-w-[40ch] text-lead text-line">
             {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais.
@@ -115,13 +115,13 @@ function Spotlight() {
   )
 }
 
-/** A loja em poucas linhas, ao lado de um relógio com a hora real de Maputo: mostra onde estamos em vez de o dizer. */
+/** A loja em poucas linhas, ao lado de um relógio com a hora real de Moçambique. */
 function Story() {
   return (
     <section className="on-dark bg-navy text-white">
       <div className={`wrap ${section} grid items-center gap-[clamp(48px,7vw,112px)] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]`}>
         <div className="flex flex-col items-start gap-6">
-          <h2 className="display text-headline text-balance text-gold-light">O seu próximo relógio está em Maputo.</h2>
+          <h2 className="display text-headline text-balance text-gold-light">O seu próximo relógio, entregue em todo Moçambique.</h2>
           <p className="max-w-[46ch] text-lead text-pretty text-line">
             {/* Hífen inseparável: "G-Shock" não parte ao fim da linha. */}
             A MADEY é uma loja independente de relógios e acessórios. Juntamos{' '}
@@ -135,7 +135,7 @@ function Story() {
             Ver todos os relógios <ArrowIcon size={14} strokeWidth={2} />
           </Link>
         </div>
-        <MaputoClock className="mx-auto w-full max-w-[300px] text-gold-light sm:max-w-[400px]" />
+        <MozambiqueClock className="mx-auto w-full max-w-[300px] text-gold-light sm:max-w-[400px]" />
       </div>
     </section>
   )

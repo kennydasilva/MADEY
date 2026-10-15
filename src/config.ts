@@ -10,7 +10,7 @@ export const config = {
   /** Perfis nas redes sociais: trocar pelos endereços reais da loja. */
   instagramUrl: 'https://www.instagram.com/',
   facebookUrl: 'https://www.facebook.com/',
-  location: 'Maputo, Moçambique',
+  location: 'Entregas em todo Moçambique',
 }
 
 export const whatsappDisplay = (() => {

@@ -2,7 +2,8 @@
 
 ## O que é
 
-Catálogo online de relógios e acessórios de uma loja independente em Maputo, Moçambique.
+Catálogo online de relógios e acessórios de uma loja independente em Moçambique, com entregas
+em todo o país (confirmado pelo cliente da loja, 2026-10-15). O site diz "Moçambique", nunca só "Maputo".
 Não há pagamento, conta nem carrinho no site: tocar num relógio (ou em "Solicitar") abre
 logo o WhatsApp com a mensagem desse relógio já escrita (nome, preço, referência, link).
 Disponibilidade, pagamento e entrega são combinados na conversa. O cliente da loja pediu
@@ -10,7 +11,7 @@ esta simplicidade (2026-10-15) para ninguém desistir a meio; não voltar a pôr
 
 ## Quem usa
 
-Compradores em Maputo, sobretudo no telemóvel, que chegam por um link partilhado no
+Compradores em todo Moçambique, sobretudo no telemóvel, que chegam por um link partilhado no
 WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar com a loja.)
 
 ## O que tem de continuar verdade

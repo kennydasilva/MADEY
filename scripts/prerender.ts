@@ -9,7 +9,7 @@ import { PRODUCTS, type Product } from '../src/data/products.ts'
 const DIST = 'dist'
 const SITE = config.siteUrl
 const SITE_TITLE = 'MADEY — Relógios e acessórios'
-const SITE_DESC = 'Relógios e acessórios selecionados em Maputo, com preços em meticais.'
+const SITE_DESC = 'Relógios e acessórios selecionados, entregues em todo Moçambique, com preços em meticais.'
 
 // Cópias com nome estável (os ficheiros do build levam hash) para og:image.
 cpSync('imagens', join(DIST, 'og'), { recursive: true })
@@ -97,7 +97,7 @@ const pages: Page[] = [
   {
     path: '/entregas-e-pagamentos',
     title: 'Encomendas, entregas e pagamentos — MADEY',
-    description: 'Entregas, pagamento e trocas na MADEY, em Maputo.',
+    description: 'Entregas em todo Moçambique, pagamento e trocas na MADEY.',
     image: ogImage('hero'),
   },
   ...PRODUCTS.map(productPage),
