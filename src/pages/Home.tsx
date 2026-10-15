@@ -115,56 +115,25 @@ function Spotlight() {
   )
 }
 
-// Conselhos gerais sobre relógios, não promessas da loja; cada um leva aos relógios certos.
-const GUIDE: { title: string; text: string; link: string; to: string }[] = [
-  {
-    title: 'Para o dia a dia',
-    text: 'Um mostrador limpo, uma caixa entre 38 e 42\u00a0mm e uma bracelete em aço ou pele acompanham do trabalho ao fim de semana.',
-    link: 'Clássico & Elegante',
-    to: shopUrl({ cats: ['classico'] }),
-  },
-  {
-    title: 'Para desporto',
-    text: 'Procure resistência à água de pelo menos 100\u00a0m, um vidro resistente e uma bracelete em resina ou borracha.',
-    link: 'Desporto & Digital',
-    to: shopUrl({ cats: ['desporto'] }),
-  },
-  {
-    title: 'Para oferecer',
-    text: 'Na dúvida, um clássico em aço com mostrador simples combina com quase tudo e com quase todos.',
-    link: 'Todos os relógios',
-    to: shopUrl(),
-  },
-]
-
-/** Pequeno guia para escolher, ao lado de um relógio desenhado com a hora real de Maputo. */
-function Guide() {
+/** A loja em poucas linhas, ao lado de um relógio com a hora real de Maputo: mostra onde estamos em vez de o dizer. */
+function Story() {
   return (
     <section className="on-dark bg-navy text-white">
-      <div className={`wrap ${section} grid items-center gap-[clamp(48px,7vw,112px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]`}>
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
-            <h2 className="display text-headline text-balance text-gold-light">Como escolher o seu relógio</h2>
-            <p className="max-w-[44ch] text-lead text-pretty text-line">
-              Antes do modelo, pense onde o vai usar. É isso que decide o tamanho, o material e a bracelete.
-            </p>
-          </div>
-          <dl className="border-t border-white/15">
-            {GUIDE.map((g) => (
-              <div key={g.title} className="grid gap-x-8 gap-y-2 border-b border-white/15 py-5 sm:grid-cols-[minmax(0,11rem)_minmax(0,1fr)]">
-                <dt className="font-serif text-[1.5rem] leading-[1.15] font-medium text-white">{g.title}</dt>
-                <dd className="flex flex-col items-start gap-2.5">
-                  <span className="max-w-[48ch] text-pretty text-line">{g.text}</span>
-                  <Link
-                    to={g.to}
-                    className="flex items-center gap-2 text-caption font-semibold text-gold-light underline-offset-4 hover:underline"
-                  >
-                    {g.link} <ArrowIcon size={14} />
-                  </Link>
-                </dd>
-              </div>
-            ))}
-          </dl>
+      <div className={`wrap ${section} grid items-center gap-[clamp(48px,7vw,112px)] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]`}>
+        <div className="flex flex-col items-start gap-6">
+          <h2 className="display text-headline text-balance text-gold-light">O seu próximo relógio está em Maputo.</h2>
+          <p className="max-w-[46ch] text-lead text-pretty text-line">
+            {/* Hífen inseparável: "G-Shock" não parte ao fim da linha. */}
+            A MADEY é uma loja independente de relógios e acessórios. Juntamos{' '}
+            {WATCH_BRANDS.slice(0, 4).join(', ').replace(/-/g, '\u2011')} e outras marcas num só lugar, com o preço em
+            meticais à vista.
+          </p>
+          <p className="max-w-[46ch] text-pretty text-line">
+            Escolha o relógio, toque em Solicitar e combinamos consigo a disponibilidade, o pagamento e a entrega.
+          </p>
+          <Link to={shopUrl()} className="link-arrow mt-2 text-white">
+            Ver todos os relógios <ArrowIcon size={14} strokeWidth={2} />
+          </Link>
         </div>
         <MaputoClock className="mx-auto w-full max-w-[300px] text-gold-light sm:max-w-[400px]" />
       </div>
@@ -288,7 +257,7 @@ export default function Home() {
       <Hero />
       <Newest />
       <Spotlight />
-      <Guide />
+      <Story />
       <Collections />
       <Brands />
     </>
