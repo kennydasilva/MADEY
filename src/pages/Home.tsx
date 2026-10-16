@@ -49,7 +49,7 @@ function Hero() {
       <div className="wrap relative flex items-center py-[clamp(40px,6vw,96px)] lg:min-h-[clamp(560px,76vh,740px)]">
         <div className="flex max-w-[660px] flex-col gap-7">
           <Logo variant="mark" className="hidden h-16 self-start text-gold-light lg:block" />
-          <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
+          <h1 className="display text-display leading-[1.08] tracking-[-0.01em] text-balance">
             O seu estilo merece excelência.
           </h1>
           <p className="max-w-[40ch] text-lead text-line">

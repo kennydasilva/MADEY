@@ -108,7 +108,7 @@ export default function Shop() {
         <span>/</span>
         <span className="text-gold">Loja</span>
       </nav>
-      <h1 className="display mb-[clamp(24px,3vw,36px)] text-[clamp(2.5rem,1.6rem+3.4vw,4rem)] leading-[1.02]">{title}</h1>
+      <h1 className="display mb-[clamp(24px,3vw,36px)] text-[clamp(2.125rem,1.4rem+2.9vw,3.375rem)] leading-[1.08]">{title}</h1>
 
       <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-y border-line py-4">
         <div className="flex min-w-[min(100%,280px)] flex-1 flex-wrap items-center gap-x-4 gap-y-3">

@@ -32,7 +32,7 @@ export function MobileMenu() {
               n.onClick?.(e)
             }}
             aria-current={n.active ? 'page' : undefined}
-            className="flex min-h-[60px] items-center justify-between border-b border-line font-serif text-[28px] font-medium"
+            className="flex min-h-[60px] items-center justify-between border-b border-line font-serif text-[24px]"
           >
             {n.label}
             <ArrowIcon size={18} className="text-faint" />

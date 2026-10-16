@@ -93,7 +93,7 @@ export function SearchOverlay() {
                 >
                   <Photo name={p.image} sizes="72px" alt="" className="size-[72px] bg-stone object-cover" />
                   <Link to={productPath(p)} onClick={closeAll} className="flex min-w-0 flex-col gap-0.5">
-                    <span className="font-serif text-xl leading-tight font-medium">{p.name}</span>
+                    <span className="font-serif text-lg leading-tight font-medium">{p.name}</span>
                     <span className="text-caption text-muted">{p.brand}</span>
                     <span className="text-sm font-bold">{formatPrice(p.price)}</span>
                   </Link>

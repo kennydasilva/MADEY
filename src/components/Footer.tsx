@@ -24,7 +24,7 @@ const SOCIAL = [
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-1">
-      <h2 className="mb-3 font-serif text-[1.375rem] leading-none font-medium text-gold-light">{title}</h2>
+      <h2 className="mb-3 font-serif text-[1.1875rem] leading-none font-medium text-gold-light">{title}</h2>
       {children}
     </div>
   )

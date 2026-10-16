@@ -32,7 +32,7 @@ export default function Delivery() {
   usePageTitle('Entregas e pagamentos')
   return (
     <section className="wrap pt-[clamp(36px,5vw,72px)] pb-[clamp(64px,8vw,112px)]">
-      <h1 className="display max-w-[18ch] text-[clamp(2.5rem,1.6rem+3.4vw,4rem)] leading-[1.02] text-balance">
+      <h1 className="display max-w-[18ch] text-[clamp(2.125rem,1.4rem+2.9vw,3.375rem)] leading-[1.08] text-balance">
         Entregas e pagamentos
       </h1>
       <p className="mt-5 max-w-[48ch] text-lead text-muted">
