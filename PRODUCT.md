@@ -40,7 +40,7 @@ Português europeu/moçambicano, tratamento formal e direto, sem slogans em ingl
 
 ## Por confirmar com a loja
 
-- Preço do BOSS Prateado (o do site é provisório); os outros 7 relógios já têm o preço da loja. Os relógios e as fotografias são reais (2026-10-16); o estojo de viagem ainda é de exemplo.
+- O estojo de viagem ainda é de exemplo (os 8 relógios, as fotografias e os preços são reais, 2026-10-16).
 - Autenticidade e garantia dos relógios.
 - Formas de pagamento, zonas, prazos e custo de entrega.
 - Mais fotografias por produto (hoje há uma).

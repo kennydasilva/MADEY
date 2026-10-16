@@ -47,8 +47,8 @@ export const SORTS = [
 ] as const
 export type SortId = (typeof SORTS)[number]['id']
 
-// Relógios em stock na loja (fotografias reais, 2026-10-16). Preços enviados pela loja no
-// WhatsApp, exceto o BOSS Prateado (ainda provisório). As especificações dizem só o que se vê no relógio.
+// Relógios em stock na loja (fotografias e preços reais, 2026-10-16).
+// As especificações dizem só o que se vê no relógio.
 export const PRODUCTS: Product[] = [
   {
     id: 1,
@@ -171,7 +171,7 @@ export const PRODUCTS: Product[] = [
     model: 'Três ponteiros com data',
     image: 'p-boss-prateado',
     cats: ['homem', 'classico'],
-    price: 13900,
+    price: 3800,
     stock: 'in',
     added: 20261009,
     featured: 8,
