@@ -226,9 +226,9 @@ function Brands() {
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
               />
-              <span className="relative flex h-[clamp(52px,5vw,72px)] items-center transition-[color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [--logo-h:clamp(26px,2.6vw,38px)] group-hover:translate-x-2 group-hover:text-white">
+              <span className="relative flex h-[clamp(52px,5vw,72px)] items-center transition-[color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [--logo-h:clamp(26px,2.6vw,38px)] group-hover:translate-x-2 group-focus-visible:translate-x-2 group-hover:text-white group-focus-visible:text-white">
                 {hasBrandLogo(c.brand) ? (
                   <BrandLogo brand={c.brand} />
                 ) : c.brand.startsWith('MADEY') ? (
@@ -241,11 +241,11 @@ function Brands() {
                 )}
               </span>
               <span className="relative flex flex-none items-center gap-4">
-                <span className="text-label font-bold tracking-[0.16em] text-muted uppercase transition-colors duration-300 group-hover:text-white">
+                <span className="text-label font-bold tracking-[0.16em] text-muted uppercase transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
                   {c.label}
                 </span>
-                <span className="flex size-11 items-center justify-center rounded-full border border-gold/50 transition-colors duration-300 group-hover:border-white group-hover:text-white">
-                  <ArrowIcon size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                <span className="flex size-11 items-center justify-center rounded-full border border-gold/50 transition-colors duration-300 group-hover:border-white group-focus-visible:border-white group-hover:text-white group-focus-visible:text-white">
+                  <ArrowIcon size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5" />
                 </span>
               </span>
             </Link>

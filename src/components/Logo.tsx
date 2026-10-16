@@ -10,8 +10,14 @@ const VARIANTS = {
   full: { src: '/brand/lockup.png', ratio: 1200 / 769 },
 }
 
-// Logótipos das marcas que vendemos, em public/brand/marcas/: `cor/` com as cores de cada marca,
+// Logótipos das marcas que vendemos, em src/assets/marcas/: `cor/` com as cores de cada marca,
 // e ao lado a mesma forma numa só cor, para pintar com a cor do texto (ratio = largura / altura).
+// Importados (não em public/) para o Vite os servir sempre e lhes dar um nome novo quando mudam.
+const glob = (files: Record<string, string>) =>
+  Object.fromEntries(Object.entries(files).map(([path, url]) => [path.split('/').pop()!, url]))
+const MONO = glob(import.meta.glob<string>('../assets/marcas/*.svg', { eager: true, query: '?url', import: 'default' }))
+const COLOR = glob(import.meta.glob<string>('../assets/marcas/cor/*.svg', { eager: true, query: '?url', import: 'default' }))
+
 const BRAND_LOGOS: Record<string, { file: string; ratio: number }> = {
   Casio: { file: 'casio.svg', ratio: 5.28 },
   'G-Shock': { file: 'gshock.svg', ratio: 3.86 },
@@ -24,7 +30,7 @@ export const hasBrandLogo = (brand: string) => brand in BRAND_LOGOS
 
 /**
  * Logótipo de uma marca com as cores dela; dentro de um elemento `group`, ao passar o rato
- * troca para a cor do texto. A altura vem de `--logo-h`, corrigida para que todos ocupem mais ou
+ * ou ao chegar lá com o teclado troca para a cor do texto. A altura vem de `--logo-h`, corrigida para que todos ocupem mais ou
  * menos a mesma área: um logótipo largo fica mais baixo, um compacto mais alto.
  */
 export function BrandLogo({ brand, className = '' }: { brand: string; className?: string }) {
@@ -36,14 +42,14 @@ export function BrandLogo({ brand, className = '' }: { brand: string; className?
       style={{ aspectRatio: v.ratio, height: `calc(var(--logo-h, 40px) * ${Math.sqrt(5 / v.ratio).toFixed(3)})` }}
     >
       <img
-        src={`/brand/marcas/cor/${v.file}`}
+        src={COLOR[v.file]}
         alt={brand}
-        className="size-full transition-opacity duration-300 group-hover:opacity-0"
+        className="size-full transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0"
       />
       <span
         aria-hidden="true"
-        className="logo absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ '--logo': `url(/brand/marcas/${v.file})` } as CSSProperties}
+        className="logo absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+        style={{ '--logo': `url("${MONO[v.file]}")` } as CSSProperties}
       />
     </span>
   )
