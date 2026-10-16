@@ -136,7 +136,7 @@ export const PRODUCTS: Product[] = [
     ref: 'MADEY-006',
     brand: 'Casio',
     name: 'Edifice Solar Safira',
-    model: 'Edifice, energia solar',
+    model: 'EFS-S570D-1A',
     image: 'p-edifice-solar',
     cats: ['homem', 'desporto'],
     price: 11500,
