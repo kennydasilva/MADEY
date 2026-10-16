@@ -45,7 +45,7 @@ function Hero() {
         <div className="flex max-w-[660px] flex-col gap-7">
           <Logo variant="mark" className="hidden h-16 self-start text-gold-light lg:block" />
           <h1 className="display text-display leading-[1.02] tracking-[-0.01em] text-balance">
-            Relógios escolhidos. Fazemos entregas para todo o Moçambique.
+            O seu estilo merece excelência.
           </h1>
           <p className="max-w-[40ch] text-lead text-line">
             {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais.
