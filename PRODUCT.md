@@ -30,13 +30,16 @@ WhatsApp ou nas redes sociais. (Inferido do código e do mercado; por confirmar 
 - Letra: Cormorant (títulos) + Montserrat (texto), par "Luxury Serif" da UI Pro Max.
 - Pouco texto: o site serve para ver os relógios e pedir.
 
+## Contactos (reais, confirmados 2026-10-16)
+
+WhatsApp +258 86 059 6569; Instagram @madey_mz; TikTok @madey6156. Não há Facebook. Ficam em `src/config.ts`.
+
 ## Voz
 
 Português europeu/moçambicano, tratamento formal e direto, sem slogans em inglês.
 
 ## Por confirmar com a loja
 
-- Número de WhatsApp real e links do Instagram e do Facebook (`src/config.ts` tem valores de exemplo; os ícones do rodapé apontam para as páginas iniciais das redes).
 - Catálogo real: produtos, preços, stock (o atual é de exemplo).
 - Autenticidade e garantia dos relógios.
 - Formas de pagamento, zonas, prazos e custo de entrega.

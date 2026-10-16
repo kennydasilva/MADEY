@@ -32,9 +32,11 @@ export const InstagramIcon = (p: IconProps) => (
     <path d="M17.5 6.5h.01" />
   </Icon>
 )
-export const FacebookIcon = (p: IconProps) => (
+/** Nota musical do TikTok, em traço como o Instagram. */
+export const TikTokIcon = (p: IconProps) => (
   <Icon strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" {...p}>
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    <path d="M14.5 2.5v13a4.5 4.5 0 1 1-4.5-4.5" />
+    <path d="M14.5 2.5c.4 3 2.6 5.3 5.5 5.6" />
   </Icon>
 )
 export const SearchIcon = (p: IconProps) => (

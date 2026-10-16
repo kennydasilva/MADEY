@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { config, whatsappDisplay } from '../config'
 import { GENERAL_MESSAGE, whatsappUrl } from '../lib/format'
 import { shopUrl } from '../lib/shop'
-import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './Icons'
+import { InstagramIcon, TikTokIcon, WhatsAppIcon } from './Icons'
 import { Logo } from './Logo'
 
 const link = 'self-start py-2 text-white underline-offset-4 hover:underline lg:py-1'
@@ -17,7 +17,7 @@ const SHOP_LINKS = [
 
 const SOCIAL = [
   { label: 'Instagram', href: config.instagramUrl, Icon: InstagramIcon },
-  { label: 'Facebook', href: config.facebookUrl, Icon: FacebookIcon },
+  { label: 'TikTok', href: config.tiktokUrl, Icon: TikTokIcon },
   { label: 'WhatsApp', href: whatsappUrl(GENERAL_MESSAGE), Icon: WhatsAppIcon },
 ].filter((s) => s.href)
 
