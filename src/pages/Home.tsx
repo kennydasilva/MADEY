@@ -23,6 +23,11 @@ function SectionHeading({ title, action }: { title: string; action?: ReactNode }
 
 // A loja própria ("MADEY Selection") não é uma marca de relógios para anunciar no hero.
 const WATCH_BRANDS = BRANDS.filter((b) => !b.startsWith('MADEY'))
+/** "G-Shock, Casio e Hugo Boss"; com mais de quatro marcas, as quatro primeiras "e outras marcas". */
+const BRAND_LINE =
+  WATCH_BRANDS.length > 4
+    ? `${WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas`
+    : `${WATCH_BRANDS.slice(0, -1).join(', ')} e ${WATCH_BRANDS.at(-1)}`
 const NEWEST = sortProducts(PRODUCTS, 'novidades').slice(0, 4)
 /** Destaque editorial: o relógio em stock de maior valor que não esteja já nas novidades. */
 const SPOTLIGHT = PRODUCTS.filter((p) => !p.accessory && p.stock === 'in' && !NEWEST.includes(p)).sort(
@@ -48,7 +53,7 @@ function Hero() {
             O seu estilo merece excelência.
           </h1>
           <p className="max-w-[40ch] text-lead text-line">
-            {WATCH_BRANDS.slice(0, 4).join(', ')} e outras marcas, com preço em meticais.
+            {BRAND_LINE}, com preço em meticais.
           </p>
           <Link to={shopUrl()} className="btn btn-dark mt-1 self-start">
             Ver relógios
@@ -141,12 +146,14 @@ function Story() {
 const count = (cat: CategoryId) => PRODUCTS.filter((p) => p.cats.includes(cat)).length
 
 // Fotografias que não se repetem nas secções vizinhas (novidades e destaque).
-const COLLECTIONS: { cat: CategoryId; title: string; image: string }[] = [
-  { cat: 'homem', title: 'Homem', image: 'p-vintage' },
+// Uma coleção sem artigos (hoje, Senhora) não aparece.
+type Collection = { cat: CategoryId; title: string; image: string }
+const COLLECTIONS = ([
+  { cat: 'homem', title: 'Homem', image: 'p-edifice-solar' },
   { cat: 'senhora', title: 'Senhora', image: 'c-women' },
-  { cat: 'classico', title: 'Clássico & Elegante', image: 'p-edifice' },
+  { cat: 'classico', title: 'Clássico & Elegante', image: 'p-boss-prateado' },
   { cat: 'acessorios', title: 'Acessórios', image: 'p-case' },
-]
+] satisfies Collection[]).filter((c) => count(c.cat) > 0)
 
 function Collections() {
   return (
@@ -176,24 +183,32 @@ function Collections() {
           </Link>
 
           <div className="grid grid-cols-2 gap-x-3.5 gap-y-7 sm:gap-x-6">
-            {COLLECTIONS.map((c) => (
-              <Link key={c.cat} to={shopUrl({ cats: [c.cat] })} className="group flex min-w-0 flex-col gap-3.5">
-                <div className="relative aspect-[5/4] overflow-hidden bg-stone">
-                  <Photo
-                    name={c.image}
-                    sizes="(min-width: 1024px) 22vw, 50vw"
-                    alt=""
-                    className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                </div>
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="font-serif text-title leading-[1.15] font-medium underline-offset-4 group-hover:underline">
-                    {c.title}
-                  </span>
-                  <ArrowIcon size={16} className="flex-none translate-y-0.5 transition-transform group-hover:translate-x-1" />
-                </div>
-              </Link>
-            ))}
+            {COLLECTIONS.map((c, i) => {
+              // Se sobra uma coleção sozinha na última linha, ocupa a largura toda.
+              const wide = COLLECTIONS.length % 2 === 1 && i === COLLECTIONS.length - 1
+              return (
+                <Link
+                  key={c.cat}
+                  to={shopUrl({ cats: [c.cat] })}
+                  className={`group flex min-w-0 flex-col gap-3.5 ${wide ? 'col-span-2' : ''}`}
+                >
+                  <div className={`relative overflow-hidden bg-stone ${wide ? 'aspect-[5/2]' : 'aspect-[5/4]'}`}>
+                    <Photo
+                      name={c.image}
+                      sizes="(min-width: 1024px) 22vw, 50vw"
+                      alt=""
+                      className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="font-serif text-title leading-[1.15] font-medium underline-offset-4 group-hover:underline">
+                      {c.title}
+                    </span>
+                    <ArrowIcon size={16} className="flex-none translate-y-0.5 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>

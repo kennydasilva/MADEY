@@ -40,7 +40,7 @@ Português europeu/moçambicano, tratamento formal e direto, sem slogans em ingl
 
 ## Por confirmar com a loja
 
-- Catálogo real: produtos, preços, stock (o atual é de exemplo).
+- Preços dos 9 relógios em stock (os do site são provisórios). Os relógios e as fotografias são reais (2026-10-16); o estojo de viagem ainda é de exemplo.
 - Autenticidade e garantia dos relógios.
 - Formas de pagamento, zonas, prazos e custo de entrega.
 - Mais fotografias por produto (hoje há uma).
