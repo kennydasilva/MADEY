@@ -48,8 +48,7 @@ export const SORTS = [
 export type SortId = (typeof SORTS)[number]['id']
 
 // Relógios em stock na loja (fotografias reais, 2026-10-16). Preços enviados pela loja no
-// WhatsApp, exceto Casio Multifunções Creme, Edifice Octogonal e BOSS Prateado (ainda
-// provisórios). As especificações dizem só o que se vê no relógio.
+// WhatsApp, exceto Edifice Octogonal e BOSS Prateado (ainda provisórios). As especificações dizem só o que se vê no relógio.
 export const PRODUCTS: Product[] = [
   {
     id: 1,
@@ -104,7 +103,7 @@ export const PRODUCTS: Product[] = [
     slug: 'casio-multifuncoes-creme-data',
     ref: 'MADEY-004',
     brand: 'Casio',
-    name: 'Casio Multifunções Creme com Data',
+    name: 'Casio Multifunções Creme',
     model: 'Luneta serrilhada, WR 50M',
     image: 'p-casio-creme-data',
     cats: ['homem', 'classico'],
@@ -178,22 +177,6 @@ export const PRODUCTS: Product[] = [
     featured: 8,
     desc: 'Mostrador prateado sunray, índices em aço e data às 6 horas, numa caixa redonda polida com bracelete em pele preta. Para o escritório e para a noite.',
     specs: { Mostrador: 'Prateado sunray', Funções: 'Data', Caixa: 'Aço inoxidável', Bracelete: 'Pele preta' },
-  },
-  {
-    id: 9,
-    slug: 'casio-multifuncoes-creme',
-    ref: 'MADEY-009',
-    brand: 'Casio',
-    name: 'Casio Multifunções Creme',
-    model: 'Luneta serrilhada, WR 50M',
-    image: 'p-casio-creme',
-    cats: ['homem', 'classico'],
-    price: 4500,
-    stock: 'in',
-    added: 20261008,
-    featured: 9,
-    desc: 'Mostrador creme com ponteiros e índices em rosé e três pequenos mostradores, com luneta serrilhada e bracelete em aço.',
-    specs: { Mostrador: 'Creme, detalhes rosé', Funções: 'Dia, 24 horas, data', 'Resistência à água': '50 m', Bracelete: 'Aço inoxidável' },
   },
   {
     id: 10,
