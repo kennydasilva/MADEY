@@ -48,7 +48,7 @@ export const SORTS = [
 export type SortId = (typeof SORTS)[number]['id']
 
 // Relógios em stock na loja (fotografias reais, 2026-10-16). Preços enviados pela loja no
-// WhatsApp, exceto Edifice Octogonal e BOSS Prateado (ainda provisórios). As especificações dizem só o que se vê no relógio.
+// WhatsApp, exceto o BOSS Prateado (ainda provisório). As especificações dizem só o que se vê no relógio.
 export const PRODUCTS: Product[] = [
   {
     id: 1,
@@ -155,7 +155,7 @@ export const PRODUCTS: Product[] = [
     model: 'Edifice, vidro de safira',
     image: 'p-edifice-octogonal',
     cats: ['homem', 'desporto'],
-    price: 10500,
+    price: 3850,
     stock: 'in',
     added: 20261010,
     featured: 7,
