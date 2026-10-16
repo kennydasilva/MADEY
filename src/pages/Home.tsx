@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowIcon } from '../components/Icons'
-import { Logo } from '../components/Logo'
+import { BrandLogo, Logo, hasBrandLogo } from '../components/Logo'
 import { MozambiqueClock } from '../components/MozambiqueClock'
 import { Photo } from '../components/Photo'
 import { Price, ProductGrid, RequestLabel, RequestLink, StockLine } from '../components/ProductCard'
@@ -228,8 +228,17 @@ function Brands() {
                 aria-hidden="true"
                 className="absolute inset-0 origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
               />
-              <span className="display relative text-[clamp(2rem,1.4rem+2.2vw,3.25rem)] leading-none transition-[color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 group-hover:text-white">
-                {c.brand}
+              <span className="relative flex h-[clamp(52px,5vw,72px)] items-center transition-[color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] [--logo-h:clamp(26px,2.6vw,38px)] group-hover:translate-x-2 group-hover:text-white">
+                {hasBrandLogo(c.brand) ? (
+                  <BrandLogo brand={c.brand} />
+                ) : c.brand.startsWith('MADEY') ? (
+                  <span role="img" aria-label={c.brand} className="flex flex-col items-start gap-1.5">
+                    <Logo variant="word" decorative className="h-[var(--logo-h)]" />
+                    <span className="text-[10px] leading-none font-bold tracking-[0.32em] uppercase">Selection</span>
+                  </span>
+                ) : (
+                  <span className="display text-[clamp(2rem,1.4rem+2.2vw,3.25rem)] leading-none">{c.brand}</span>
+                )}
               </span>
               <span className="relative flex flex-none items-center gap-4">
                 <span className="text-label font-bold tracking-[0.16em] text-muted uppercase transition-colors duration-300 group-hover:text-white">
