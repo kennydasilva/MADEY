@@ -47,8 +47,9 @@ export const SORTS = [
 ] as const
 export type SortId = (typeof SORTS)[number]['id']
 
-// Relógios em stock na loja (fotografias reais, 2026-10-16). Os preços são provisórios:
-// confirmar com a loja. As especificações dizem só o que se vê no relógio.
+// Relógios em stock na loja (fotografias reais, 2026-10-16). Preços enviados pela loja no
+// WhatsApp, exceto Casio Multifunções Creme, Edifice Octogonal e BOSS Prateado (ainda
+// provisórios). As especificações dizem só o que se vê no relógio.
 export const PRODUCTS: Product[] = [
   {
     id: 1,
@@ -59,7 +60,7 @@ export const PRODUCTS: Product[] = [
     model: 'Analógico, caixa octogonal',
     image: 'p-gshock-dourado',
     cats: ['homem', 'desporto'],
-    price: 8500,
+    price: 2000,
     stock: 'in',
     added: 20261016,
     featured: 1,
@@ -75,7 +76,7 @@ export const PRODUCTS: Product[] = [
     model: 'Edifice, vidro de safira',
     image: 'p-edifice-taquimetro',
     cats: ['homem', 'desporto'],
-    price: 12500,
+    price: 3850,
     stock: 'in',
     added: 20261015,
     featured: 2,
@@ -91,7 +92,7 @@ export const PRODUCTS: Product[] = [
     model: 'Três ponteiros com data',
     image: 'p-boss-azul',
     cats: ['homem', 'classico'],
-    price: 14500,
+    price: 3850,
     stock: 'in',
     added: 20261014,
     featured: 3,
@@ -107,7 +108,7 @@ export const PRODUCTS: Product[] = [
     model: 'Luneta serrilhada, WR 50M',
     image: 'p-casio-creme-data',
     cats: ['homem', 'classico'],
-    price: 4900,
+    price: 3000,
     stock: 'in',
     added: 20261013,
     featured: 4,
@@ -123,7 +124,7 @@ export const PRODUCTS: Product[] = [
     model: 'Swiss Made, com data',
     image: 'p-boss-champanhe',
     cats: ['homem', 'classico'],
-    price: 16500,
+    price: 3850,
     stock: 'in',
     added: 20261012,
     featured: 5,
@@ -139,7 +140,7 @@ export const PRODUCTS: Product[] = [
     model: 'EFS-S570D-1A',
     image: 'p-edifice-solar',
     cats: ['homem', 'desporto'],
-    price: 11500,
+    price: 3850,
     stock: 'in',
     added: 20261011,
     featured: 6,
